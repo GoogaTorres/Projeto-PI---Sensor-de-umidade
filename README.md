@@ -1,16 +1,16 @@
+
 ![Banner SPTECH](https://media.licdn.com/dms/image/v2/D4D3DAQFOlekSjtAe1g/image-scale_191_1128/B4DZc1zAjaHwAg-/0/1748954254399/sptechschool_cover?e=2147483647&v=beta&t=OiWtuPAWgJSTAUC-it1nsGS4YE_La2rgaFCPlAe_Zxo)
 -----
 
 # <span style="font-size: 1.3em"> 💻 | Projeto de Pesquisa e Inovação 2026/01 </span>
 
 <p style ="font-size: 1.1em"><b>👉 Projeto de Pesquisa e Inovação da turma de 1ADSB da SPTECH com os integrantes: </b><br>
-<b>Andressa</b>  Lustro <br>
-<b>Anthony</b>  Batista <br>
-<b>Elisandro</b>  Santana <br>
-<b>Gustavo</b>  Torres <br>
-<b>Matheus</b>  Maceu <br>
-<b>Pietro</b>  Dell'Arno <br>
-<b>Tawan</b> Lander <br></p> 
+<b>Arthur</b>  Almeida Souza <br>
+<b>Gabriel</b>  Eduardo dos Santos Fonseca <br>
+<b>Gustavo</b>  Torres de Moraes <br>
+<b>Iago</b>  da Silva Soares <br>
+<b>Kauã</b>  Andrade de Lima Oliveira <br>
+<b>Nicolas</b>  Augusto da Silva <br></p> 
 
 # <span style="font-size: 1.1em"> 🧩 | Situação Atual
 ![Status](https://img.shields.io/badge/Status-🚧_Em_Desenvolvimento-yellow?style=for-the-badge)
