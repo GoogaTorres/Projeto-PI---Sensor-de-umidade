@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFF2E8;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+/* Barra de navegação */
+
+header {
+    background-color: #FFF2E8;
+    height: 50px;
+    width: 100%;
+    padding: 2px;
+    box-shadow: 0px 3px 5px rgb(187, 187, 187);;
+    position: fixed;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+
+
+.nav_botao {
+    font-size: 20px;
+    background-color: transparent;
+    border: 0px;
+    margin: 0px 10px;
+}
+
+.btn_login {
+    width: 120px;
+    height: 40px;
+    padding: 7px;
+    background-color: #FCC752;
+    border-radius: 30px;
+}
+
+
+/* ------------------------------------------------ */
+/* content */
+
+
+.background_img {
+    height: 0px;
+}
+
+.servicos {
+    margin-bottom: 100px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 45px;
+}
+
+.titulo h1 {
+    font-weight: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(2, 65, 2);
+}
+
+
+.blocos {
+    display: flex;
+    justify-content: center;
+}
+
+.blocos .cards {
+    height: 450px;
+    width: 300px;
+    border-radius: 50px;
+    background-color: #f7d6b1;
+    border: 5px;
+    box-shadow: 0px 6px 5px rgb(187, 187, 187);;
+    margin: 0px 15px;
+    overflow: hidden;  /*para que a imagem de fundo não vaze para fora do card*/
+}
+
+
+.cards img {
+    height: 200px;
+    
+}
+
+.cards .descricaoETitulo {
+    margin: 10px;
+}
+
+/*Sobre nós/        -------SafeSoja-----          */
+
+.sobre_nos {
+    margin-bottom: 100px;
+}
+
+.sobre_nos .sobrenos_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.sobre_nos img {
+    height: 100%;
+    margin-left: -240px;
+}
+
+.sobrenos_img {
+    background-color: aqua;
+    height: 550px;
+    width: 700px;
+    overflow: hidden;
+    border-radius: 40px 0px 0px 40px;
+    display: flex;
+}
+
+.descricaoSobre_nos p {
+    width: 580px;
+    padding-left: 200px;
+    font-size: 25px;
+    margin: 0;
+}
+
+.descricaoSobre_nos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;   /*distancia entre os paragrafos*/
+}
+
+/*-----------------como funciona?-------------*/
+
+.como_funciona .comofunciona_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
