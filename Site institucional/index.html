@@ -1,156 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./scripts/script.js">
 </head>
+
 <body>
     <header>
-        <div class="header"> 
+        <div class="header">
             <div class="logo">
-                <img src="./Logo_da_Safe_Soja.png">
+                <img src="./images/Logo_da_Safe_Soja.png">
             </div>
             <div class="botoes">
-                <button class="nav_botao">Serviços</button>
-                <button class="nav_botao">Projeto</button>
-               <button class="nav_botao" onclick="window.location.href='http://127.0.0.1:5500/beneficios.html'">Benefícios</button>
-                <button class="nav_botao"  onclick="window.location.href='http://127.0.0.1:5500/Equipe.html'">Nossa equipe</button>
-                <button onclick="window.location.href='http://127.0.0.1:5500/paginaLogin.html'" class="nav_botao btn_login">Login</button>
+                <a href="#secaoServicos"><button class="nav_botao">Serviços</button></a>
+                <a href="#secaoProjeto"><button class="nav_botao" onclick="projeto()">Projeto</button></a>
+                <a href="#secaoFuncionamento"><button class="nav_botao" >Funcionamento</button></a>
+                <a href="#secaoEquipe"><button class="nav_botao" >Nossa equipe</button></a>
+                <a href="#secaoServicos"><button onclick="window.location.href='http:paginaLogin.html'"
+                    class="nav_botao btn_login">Login</button></a>
             </div>
         </div>
     </header>
+    <img src="./images/senior-hardworking-farmer-agronomist-soybean-field-checking-crops-before-harvest.jpg"
+        class="imagesfundo">
+    <div>
+        <h1 class="tituloPrincipal">
+            Juntos <br> por um mundo <br> melhor.
+        </h1>
+    </div>
+    <div class="conteudo">
 
-        <div class="conteudo">
-            <div class="background_img">
-                <img src="">
+        <div class="background_img">
+            <img src="">
+        </div>
+        <div class="servicos" id="secaoServicos">
+            <div class="titulo">
+                <h1>Nossos Serviços</h1>
             </div>
-            <div class="servicos">
-                <div class="titulo">
-                    <h1>Nossos Serviços</h1>
+            <div class="blocos">
+                <div class="cards bloco1">
+                    <div class="cardimagem">
+                        <img src="./images/dashimage.jpg">
+                    </div>
+                    <div class="descricaoETitulo">
+                        <h1>Dashboard Financeiro</h1>
+                        <p>Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit. Fugit numquam quidem
+                            at et quia officiis voluptates ullam
+                            eius quibusdam. Ullam sint, nesciunt
+                            earum atque quisquam rerum iusto quis
+                            ducimus hic.</p>
+                    </div>
                 </div>
-                <div class="blocos">
-                    <div class="cards bloco1">
-                        <img src="./Dashboard-financeiro.png">
-                        <div class="descricaoETitulo">
-                            <h1>Dashboard Financeiro</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur
-                             adipisicing elit. Fugit numquam quidem
-                              at et quia officiis voluptates ullam
-                               eius quibusdam. Ullam sint, nesciunt
-                                earum atque quisquam rerum iusto quis
-                                 ducimus hic.</p>
-                                </div>
+                <div class="cards bloco2">
+                    <div class="cardimagem">
+                        <img src="./images/calculadora.jpg">
                     </div>
-                    <div class="cards bloco2">
-                        <img src="./calculadora.jpg">
-                        <div class="descricaoETitulo">
-                            <h1>Calculadora Financeira</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur
-                             adipisicing elit. Fugit numquam quidem at
-                              et quia officiis voluptates ullam eius
-                               quibusdam. Ullam sint, nesciunt earum 
-                               atque quisquam rerum iusto quis ducimus
-                                hic.</p>
-                            </div>
+                    <div class="descricaoETitulo">
+                        <h1>Calculadora Financeira</h1>
+                        <p>Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit. Fugit numquam quidem at
+                            et quia officiis voluptates ullam eius
+                            quibusdam. Ullam sint, nesciunt earum
+                            atque quisquam rerum iusto quis ducimus
+                            hic.</p>
                     </div>
-                    <div class="cards bloco3">
-                        <img src="./arduino.png">
-                        <div class="descricaoETitulo">
-                            <h1>Sistema de Arduino</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur 
-                            adipisicing elit. Fugit numquam quidem at et 
+                </div>
+                <div class="cards bloco3">
+                    <div class="cardimagem">
+                        <img src="./images/arduino.png">
+                    </div>
+                    <div class="descricaoETitulo">
+                        <h1>Sistema de Arduino</h1>
+                        <p>Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit. Fugit numquam quidem at et
                             quia officiis voluptates ullam eius quibusdam.
-                             Ullam sint, nesciunt earum atque quisquam r
-                             erum iusto quis ducimus hic.</p>
-                            </div>
+                            Ullam sint, nesciunt earum atque quisquam r
+                            erum iusto quis ducimus hic.</p>
                     </div>
                 </div>
             </div>
-            <div class="sobre_nos">
+        </div>
+        <div class="sobre_nos" id="secaoProjeto">
 
-                <div class="titulo">
-                    <h1>SafeSoja</h1>
-                </div>
-                <div class="sobrenos_content">
-                    <div class="descricaoSobre_nos">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum numquam! Porro 
-                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
-                        similique ex doloribus nobis maiores.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum numquam! Porro 
-                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
-                        similique ex doloribus nobis maiores.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum numquam! Porro 
-                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
-                        similique ex doloribus nobis maiores.</p>
-                    </div>
-                    <div class="sobrenos_img">
-                        <img src="./Grao-soja-onde-e-produzida-maos-agricultor.jpg">
-                    </div>
-                </div>
+            <div class="titulo">
+                <h1>SafeSoja</h1>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="como_funciona">
-                <div class="titulo">
-                    <h1>Como funciona?</h1>
-                </div>
-                <div class="comofunciona_content">
-                    <div class="comofunciona_img">
-                        <img src="./sensor.png">
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum numquam! Porro 
+            <div class="sobrenos_content">
+                <div class="descricaoSobre_nos">
+                    <p class="paragrafo">ALorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
+                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
+                        similique ex doloribus nobis maiores.</p>
+                    <p class="paragrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
+                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
+                        similique ex doloribus nobis maiores.</p>
+                    <p class="paragrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
                         assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
                         similique ex doloribus nobis maiores.</p>
                 </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-
-                <footer>
-                    <div class="div_footer">
-
-                    </div>
-                </footer>
+                <div class="sobrenos_img">
+                    <img class="imagemSobrenos" src="./images/Grao-soja-onde-e-produzida-maos-agricultor.jpg">
+                </div>
             </div>
         </div>
 
-        
-    
+
+
+        <div class="como_funciona" id="secaoFuncionamento">
+
+            <div class="titulo">
+                <h1>Como funciona?</h1>
+            </div>
+            <div class="comofunciona_content">
+                <div class="comofunciona_img">
+                    <img src="./images/sensor.png">
+                </div>
+                <div class="descricaoComo_funciona">
+                    <p class="paragrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
+                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
+                        similique ex doloribus nobis maiores.</p>
+                    <p class="paragrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
+                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
+                        similique ex doloribus nobis maiores.</p>
+                    <p class="paragrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit illum
+                        numquam! Porro
+                        assumenda quas harum temporibus at dolores placeat, nam class minima perferendis officiis,
+                        similique ex doloribus nobis maiores.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="equipe" id="secaoEquipe">
+            <div class="titulo">
+                <h1>Equipe</h1>
+            </div>
+            <div class="cardsgroup">
+
+                <div class="card_membro">
+                    <img src="./images/fotopadraoKauã.png">
+                    <h3>Kauã</h3>
+                    <p>Desenvolvedor</p>
+                </div>
+
+                <div class="card_membro">
+                    <img src="./images/membro2.jpg">
+                    <h3>NADA</h3>
+                    <p>NADA AINDA</p>
+                </div>
+
+                <div class="card_membro">
+                    <img src="./images/membro3.jpg">
+                    <h3>NADA AINDA</h3>
+                    <p>NADA AINDA</p>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer_box">
+                <div class="footer_content">
+                    <div class="footerlogo">
+                        <img src="./images/Logo_da_Safe_Soja.png">
+                    </div>
+                    <div class="footer_contentbox">
+                        <div class="midias">
+                            <h1>Mídias Sociais</h1>
+                            <span>Instagram</span>
+                            <span>Facebook</span>
+                            <span>Linkedin</span>
+                            <span>Github</span>
+                            <span>X</span>
+                        </div>
+                        <div class="servicosF">
+                            <h1>Serviços</h1>
+                            <span>Dashboard</span>
+                            <span>Calculadora</span>
+                        </div>
+                        <div class="recebaNovidades">
+                            <h1>Receba novidades!</h1>
+                            <input type="text" id="ipt_email" placeholder="Insira seu email...">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+    </div>
+
+
+
 </body>
+
 </html>
