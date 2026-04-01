@@ -2,38 +2,281 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SafeSoja</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #0f172a;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .topo {
+            background: linear-gradient(90deg, #14532d, #166534, #15803d);
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .topo h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .topo p {
+            margin-top: 8px;
+            color: #d1fae5;
+        }
+
+        .painel {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .card-form h2 {
+            margin-top: 0;
+            color: #86efac;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #cbd5e1;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            background-color: #334155;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .campo input::placeholder {
+            color: #94a3b8;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            flex: 2;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 180px;
+            background-color: #1e293b;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 15px;
+            color: #cbd5e1;
+        }
+
+        .card p {
+            margin: 12px 0 0 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .detalhes {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .detalhes h2 {
+            margin-top: 0;
+            color: #86efac;
+        }
+
+        .linha {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #334155;
+            border-radius: 10px;
+        }
+
+        .bom {
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .medio {
+            color: #facc15;
+            font-weight: bold;
+        }
+
+        .ruim {
+            color: #f87171;
+            font-weight: bold;
+        }
+
+        .barra {
+            width: 100%;
+            height: 22px;
+            background-color: #334155;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progresso {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #22c55e, #84cc16);
+            text-align: center;
+            line-height: 22px;
+            color: #0f172a;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .painel {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Calculadora SafeSoja</h2>
+    <div class="container">
+        <div class="topo">
+            <h1>Dashboard SafeSoja</h1>
+            <p>Análise de consumo de água, produção e lucro da plantação</p>
+        </div>
 
-    Água por irrigação (litros):<br>
-    <input type="text" id="agua"><br><br>
+        <div class="painel">
+            <div class="card-form">
+                <h2>Inserir dados</h2>
 
-    Vezes no mês:<br>
-    <input type="text" id="vezes"><br><br>
+                <div class="campo">
+                    <label>Água por irrigação (litros)</label>
+                    <input type="text" id="agua" placeholder="Ex: 5000">
+                </div>
 
-    Custo por litro (R$):<br>
-    <input type="text" id="custoAgua"><br><br>
+                <div class="campo">
+                    <label>Vezes no mês</label>
+                    <input type="text" id="vezes" placeholder="Ex: 8">
+                </div>
 
-    Valor por saca (R$):<br>
-    <input type="text" id="valorSaca"><br><br>
+                <div class="campo">
+                    <label>Custo por litro (R$)</label>
+                    <input type="text" id="custoAgua" placeholder="Ex: 0.02">
+                </div>
 
-    Sacas vendidas:<br>
-    <input type="text" id="sacasVendidas"><br><br>
+                <div class="campo">
+                    <label>Valor por saca (R$)</label>
+                    <input type="text" id="valorSaca" placeholder="Ex: 150">
+                </div>
 
-    Sacas perdidas:<br>
-    <input type="text" id="sacasPerdidas"><br><br>
+                <div class="campo">
+                    <label>Sacas vendidas</label>
+                    <input type="text" id="sacasVendidas" placeholder="Ex: 300">
+                </div>
 
-    <button onclick="analisar()">Ver análise</button>
+                <div class="campo">
+                    <label>Sacas perdidas</label>
+                    <input type="text" id="sacasPerdidas" placeholder="Ex: 20">
+                </div>
 
-    <div id="resultado"></div>
+                <button onclick="analisar()">Ver análise</button>
+            </div>
+
+            <div class="dashboard">
+                <div class="cards">
+                    <div class="card">
+                        <h3>Água no mês</h3>
+                        <p id="cardAgua">0 L</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Custo mensal</h3>
+                        <p id="cardCusto">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Faturamento</h3>
+                        <p id="cardFaturamento">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Lucro líquido</h3>
+                        <p id="cardLucro">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <div class="detalhes">
+                    <h2>Eficiência da produção</h2>
+                    <div class="barra">
+                        <div class="progresso" id="barraEficiencia">0%</div>
+                    </div>
+                    <br>
+                    <div id="resultado"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
 <script>
 function analisar() {
-// inputs
     let aguaL = Number(agua.value);
     let vezesM = Number(vezes.value);
     let custoL = Number(custoAgua.value);
@@ -41,56 +284,88 @@ function analisar() {
     let vendidas = Number(sacasVendidas.value);
     let perdidas = Number(sacasPerdidas.value);
 
-//consumo de agua
-    let consumo = aguaL * vezesM;
-    let custoTotalAgua = consumo * custoL;
+    let consumoMes = aguaL * vezesM;
+    let consumoAno = consumoMes * 12;
 
-//valores de produção    
-    let total = vendidas + perdidas;
-    let faturamento = vendidas * valor;
-    let perda = perdidas * valor;
-    let lucro = faturamento - perda - custoTotalAgua;
+    let custoTotalAgua = consumoMes * custoL;
+    let custoAguaAno = custoTotalAgua * 12;
+
+    let totalSacas = vendidas + perdidas;
+
+    let faturamentoReal = vendidas * valor;
+    let faturamentoPotencial = totalSacas * valor;
+    let prejuizoPerdas = perdidas * valor;
+
+    let lucro = faturamentoReal - prejuizoPerdas - custoTotalAgua;
+
     let porcentagemPerda = 0;
     let eficiencia = 0;
+    let lucroPorSaca = 0;
+    let aguaPorSacaVendida = 0;
+    let custoAguaPorSaca = 0;
 
-    if (total > 0) {
-        porcentagemPerda = (perdidas / total) * 100;
-        eficiencia = (vendidas / total) * 100;
+    if (totalSacas > 0) {
+        porcentagemPerda = (perdidas / totalSacas) * 100;
+        eficiencia = (vendidas / totalSacas) * 100;
     }
 
-    let lucroPorSaca = 0;
     if (vendidas > 0) {
         lucroPorSaca = lucro / vendidas;
+        aguaPorSacaVendida = consumoMes / vendidas;
+        custoAguaPorSaca = custoTotalAgua / vendidas;
     }
 
     let situacao = "";
+    let classe = "";
 
     if (eficiencia >= 90) {
         situacao = "Produção excelente";
-    } else if (eficiencia >= 70) {
+        classe = "bom";
+    } else if (eficiencia >= 75) {
         situacao = "Produção boa";
-    } else if (eficiencia >= 50) {
-        situacao = "Produção média";
+        classe = "bom";
+    } else if (eficiencia >= 60) {
+        situacao = "Produção regular";
+        classe = "medio";
     } else {
         situacao = "Produção baixa";
+        classe = "ruim";
     }
 
+    let alerta = "";
+    let classeLucro = "";
+
+    if (lucro > 0) {
+        alerta = "A operação está dando lucro.";
+        classeLucro = "bom";
+    } else if (lucro == 0) {
+        alerta = "A operação está empatada.";
+        classeLucro = "medio";
+    } else {
+        alerta = "A operação está dando prejuízo.";
+        classeLucro = "ruim";
+    }
+
+    cardAgua.innerHTML = `${consumoMes.toFixed(2)} L`;
+    cardCusto.innerHTML = `R$ ${custoTotalAgua.toFixed(2)}`;
+    cardFaturamento.innerHTML = `R$ ${faturamentoReal.toFixed(2)}`;
+    cardLucro.innerHTML = `R$ ${lucro.toFixed(2)}`;
+
+    barraEficiencia.style.width = `${eficiencia.toFixed(2)}%`;
+    barraEficiencia.innerHTML = `${eficiencia.toFixed(2)}%`;
+
     resultado.innerHTML = `
-    <br><b>ANÁLISE</b><br><br>
-
-    Água total: ${consumo} L<br>
-    Custo da água: R$ ${custoTotalAgua.toFixed(2)}<br><br>
-
-    Faturamento: R$ ${faturamento.toFixed(2)}<br>
-    Perda: R$ ${perda.toFixed(2)}<br>
-    Lucro líquido: R$ ${lucro.toFixed(2)}<br><br>
-
-    Desperdício: ${porcentagemPerda.toFixed(2)}%<br>
-    Eficiência: ${eficiencia.toFixed(2)}%<br><br>
-
-    Lucro por saca: R$ ${lucroPorSaca.toFixed(2)}<br><br>
-
-    Situação: ${situacao}
+        <div class="linha"><b>Água usada por ano:</b> ${consumoAno.toFixed(2)} L</div>
+        <div class="linha"><b>Custo anual da água:</b> R$ ${custoAguaAno.toFixed(2)}</div>
+        <div class="linha"><b>Total de sacas produzidas:</b> ${totalSacas}</div>
+        <div class="linha"><b>Faturamento potencial:</b> R$ ${faturamentoPotencial.toFixed(2)}</div>
+        <div class="linha"><b>Prejuízo pelas perdas:</b> R$ ${prejuizoPerdas.toFixed(2)}</div>
+        <div class="linha"><b>Lucro por saca vendida:</b> R$ ${lucroPorSaca.toFixed(2)}</div>
+        <div class="linha"><b>Água por saca vendida:</b> ${aguaPorSacaVendida.toFixed(2)} L</div>
+        <div class="linha"><b>Custo da água por saca:</b> R$ ${custoAguaPorSaca.toFixed(2)}</div>
+        <div class="linha"><b>Taxa de perdas:</b> ${porcentagemPerda.toFixed(2)}%</div>
+        <div class="linha"><b>Situação da produção:</b> <span class="${classe}">${situacao}</span></div>
+        <div class="linha"><b>Diagnóstico:</b> <span class="${classeLucro}">${alerta}</span></div>
     `;
 }
 </script>
