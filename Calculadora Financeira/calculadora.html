@@ -1,67 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <title>Calculadora SafeSoja</title>
+    <title>Document</title>
 </head>
-
 <body>
-    <h3>Calculadora SafeSoja</h3><br>
+    <h2>Calculadora SafeSoja</h2>
 
-    Cargo:
-    <select id="Cargo" onchange="ver()">
-        <option value="">Selecione...</option>
-        <option value="1">Funcionário</option>
-        <option value="2">Cliente</option>
-    </select>
+    Água por irrigação (litros):<br>
+    <input type="text" id="agua"><br><br>
 
-    <div id="texto"></div>
+    Vezes no mês:<br>
+    <input type="text" id="vezes"><br><br>
+
+    Custo por litro (R$):<br>
+    <input type="text" id="custoAgua"><br><br>
+
+    Valor por saca (R$):<br>
+    <input type="text" id="valorSaca"><br><br>
+
+    Sacas vendidas:<br>
+    <input type="text" id="sacasVendidas"><br><br>
+
+    Sacas perdidas:<br>
+    <input type="text" id="sacasPerdidas"><br><br>
+
+    <button onclick="analisar()">Ver análise</button>
+
+    <div id="resultado"></div>
 </body>
+</html>
 
 <script>
-    function ver() {
-        let cargo = Cargo.value;
-        
-        if (cargo == "1") {
-            texto.innerHTML = `
-                <h4>Calculadora do Funcionário</h4>
-                Qual o tamanho do terreno? (hectares)<br>
-                <input type="text" id="terreno"><br><br>
+function analisar() {
+// inputs
+    let aguaL = Number(agua.value);
+    let vezesM = Number(vezes.value);
+    let custoL = Number(custoAgua.value);
+    let valor = Number(valorSaca.value);
+    let vendidas = Number(sacasVendidas.value);
+    let perdidas = Number(sacasPerdidas.value);
 
-                Qual o nível de umidade do hectare?<br>
-                <input type="text" id="umidade"><br><br>
+//consumo de agua
+    let consumo = aguaL * vezesM;
+    let custoTotalAgua = consumo * custoL;
 
-                <button onclick="calcular()">Calcular</button>
-                <div id="resultado"></div>
-            `;
-        } else if (cargo == "2") {
-            texto.innerHTML = `
-                <h4>Calculadora do Cliente</h4>
-                Qual o preço de venda? (saca)<br>
-                <input type="text" id="preco"><br><br>
+//valores de produção    
+    let total = vendidas + perdidas;
+    let faturamento = vendidas * valor;
+    let perda = perdidas * valor;
+    let lucro = faturamento - perda - custoTotalAgua;
+    let porcentagemPerda = 0;
+    let eficiencia = 0;
 
-                Quantos sacos foram vendidos?<br>
-                <input type="text" id="venda"><br><br>
-
-                Quanto de água foi utilizado? (litros)<br>
-                <input type="text" id="agua"><br><br>
-
-                <button onclick="calcularCliente()">Calcular</button>
-                <div id="resultado"></div>
-            `;
-        }
+    if (total > 0) {
+        porcentagemPerda = (perdidas / total) * 100;
+        eficiencia = (vendidas / total) * 100;
     }
 
-    function calcular() {
-        resultado.innerHTML = `Consumo estimado: X litros`;
+    let lucroPorSaca = 0;
+    if (vendidas > 0) {
+        lucroPorSaca = lucro / vendidas;
     }
 
-    function calcularCliente() {
-        resultado.innerHTML = `
-             Lucro estimado: R$ </b>
-        `;
+    let situacao = "";
+
+    if (eficiencia >= 90) {
+        situacao = "Produção excelente";
+    } else if (eficiencia >= 70) {
+        situacao = "Produção boa";
+    } else if (eficiencia >= 50) {
+        situacao = "Produção média";
+    } else {
+        situacao = "Produção baixa";
     }
+
+    resultado.innerHTML = `
+    <br><b>ANÁLISE</b><br><br>
+
+    Água total: ${consumo} L<br>
+    Custo da água: R$ ${custoTotalAgua.toFixed(2)}<br><br>
+
+    Faturamento: R$ ${faturamento.toFixed(2)}<br>
+    Perda: R$ ${perda.toFixed(2)}<br>
+    Lucro líquido: R$ ${lucro.toFixed(2)}<br><br>
+
+    Desperdício: ${porcentagemPerda.toFixed(2)}%<br>
+    Eficiência: ${eficiencia.toFixed(2)}%<br><br>
+
+    Lucro por saca: R$ ${lucroPorSaca.toFixed(2)}<br><br>
+
+    Situação: ${situacao}
+    `;
+}
 </script>
-
-</html>
