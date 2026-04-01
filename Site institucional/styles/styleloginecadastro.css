@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFF2E8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Navbar (se quiser manter no login) */
+header {
+    background-color: #FFF2E8;
+    height: 50px;
+    width: 100%;
+    padding: 2px;
+    box-shadow: 0px 3px 5px rgb(187, 187, 187);
+    position: fixed;
+    top: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav_botao {
+    font-size: 20px;
+    background-color: transparent;
+    border: 0px;
+    margin: 0px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* CONTAINER LOGIN/CADASTRO */
+.login_container {
+    width: 320px;
+    margin: 120px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+}
+
+.login_container h2 {
+    margin: 0;
+    font-weight: normal;
+    color: rgb(2, 65, 2);
+}
+
+/* INPUTS */
+.login_container input {
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.login_container input:focus {
+    border: 1px solid #FCC752;
+    box-shadow: 0px 0px 5px #FCC752;
+}
+
+/* BOTÃO */
+.btn_entrar {
+    height: 40px;
+    border: none;
+    border-radius: 25px;
+    background-color: #FCC752;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn_entrar:hover {
+    background-color: #e6b347;
+}
+
+/* MENSAGEM */
+#div_mensagem {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.btn_cadastro {
+    margin-top: 10px;
+    background-color: #00a859;
+    color: black;
+    border: 2px solid #00a859;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn_cadastro:hover {
+    background-color: #00a859;
+    color: white;
+}
