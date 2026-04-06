@@ -1,15 +1,6 @@
 CREATE DATABASE ProjetoPI2026_01;
 USE ProjetoPI2026_01;
 
-/*
-Andressa Lustro Lima RA 01261005
-Anthony de Sousa Batista RA 01261135
-Elisandro Morais Santana RA 01261053
-Gustavo Torres de Moraes RA 01261060
-Matheus Maceu Ferreira da Silva RA 01261105
-Pietro Dell'Arno RA 01261055
-Tawan Lander da Fonseca Rodrigues de Paula Moura RA 01261067
-*/
 -- Tabela 1
 CREATE TABLE terreno( -- Referencia empresa
 id INT PRIMARY KEY AUTO_INCREMENT, -- Cria uma coluna para armazenar a chave primária da identificação do terreno
