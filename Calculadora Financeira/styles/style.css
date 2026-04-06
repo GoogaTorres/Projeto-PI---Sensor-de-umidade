@@ -1,0 +1,375 @@
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAF9F6;
+}
+
+
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+/* Barra de navegação */
+
+header {
+    background-color: #FFF2E8;
+    height: 50px;
+    width: 100%;
+    padding: 2px;
+    box-shadow: 0px 3px 5px rgb(122, 122, 122);;
+    position: fixed;
+    z-index: 10; /*Serve para dar prioridade para a header, 
+    fazendo com que ela sempre fique por cima de tudo
+    */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img{
+    height: 50px;
+}
+
+
+
+.nav_botao {
+    font-size: 20px;
+    background-color: transparent;
+    border: 0px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.btn_login {
+    width: 120px;
+    height: 40px;
+    padding: 7px;
+    background-color: #FCC752;
+    border-radius: 30px;
+    align-items: center;
+}
+
+.botoes button {
+    font-size: 1.5vw;
+}
+
+/*talves o carrosel, mas por enquanto uma imagem estatica*/
+
+.imagesfundo {
+    position: relative;
+    width: 100%;
+    filter: brightness(60%);
+    margin-bottom: 40px;
+}
+
+.tituloPrincipal {
+    font-size: 80px;
+    gap: 1px;
+    position: absolute;
+    top: 30vh;
+    left: 40vh;
+    color: yellow;
+    
+}
+/*            Nossos Serviços               */
+
+.background_img {
+    height: 0px;
+}
+
+.servicos {
+    margin-bottom: 13vw;
+    padding-top: 80px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 75px;
+    
+}
+
+.titulo h1 {
+    font-weight: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(2, 65, 2);
+    font-size: 28px;
+}
+
+.blocos {
+    display: flex;
+    justify-content: center;
+    gap: 4vw;
+}
+
+.blocos .cards {
+    height: 400px;
+    width: 250px;
+    border-radius: 50px;
+    background-color: #f7d6b1;
+    border: 5px;
+    box-shadow: 5px 7px 5px rgb(187, 187, 187);;
+    overflow: hidden;  /*para que a imagem de fundo não vaze para fora do card*/
+}
+
+.descricaoETitulo {
+    border-top: 2px solid rgb(7, 44, 0) ;
+    padding-top: 4px;
+}
+
+.descricaoETitulo h1 {
+    font-size: 23px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.descricaoETitulo p {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cardimagem {
+    height: 40%;
+    overflow: hidden;
+}
+
+.cards img {
+    width: 100%;
+}
+
+.cards .descricaoETitulo {
+    margin: 10px;
+}
+
+
+/*Sobre nós/        -------SafeSoja-----          */
+.sobre_nos {
+    margin-bottom: 14vw;
+    padding-top: 9vw;
+}
+
+.sobre_nos .sobrenos_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.paragrafo {
+    font-size: 1.5vw;
+    margin: 0;
+}
+
+.descricaoSobre_nos {
+    width: 55%;
+    padding-left: 5vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;   /*distancia entre os paragrafos*/
+}
+
+
+.sobre_nos img {
+    height: 100%;
+    width: 100%;
+    margin-left: vw;
+}
+
+.sobrenos_img {
+    height: 30vw;
+    overflow: hidden;
+    border-radius: 40px 0px 0px 40px;
+    display: flex;
+}
+
+
+
+
+/*-----------------como funciona?-------------*/
+
+.como_funciona {
+    margin-bottom: 100px;
+    padding-top: 80px;
+}
+
+.comofunciona_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction:row;
+}
+
+.como_funciona img {
+    height: 100%;
+    width: 100%;
+}
+
+.comofunciona_img {
+    height: 30vw;
+    overflow: hidden;
+    border-radius: 40px 0px 0px 40px;
+    display: flex;
+}
+
+.descricaoComo_funciona {
+    width: 55%;
+    padding-left: 5vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;   /*distancia entre os paragrafos*/
+}
+
+
+/*              Login          */
+.login_container {
+    width: 300px;
+    margin: 120px auto; /* centraliza na tela */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.login_container h2 {
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(2, 65, 2);
+    cursor: pointer;
+}
+
+.input_login,
+.input_senha {
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* efeito quando clica */
+.input_login:focus,
+.input_senha:focus {
+    border: 1px solid #FCC752;
+    box-shadow: 0px 0px 5px #FCC752;
+}
+
+.btn_entrar {
+    height: 40px;
+    border: none;
+    border-radius: 25px;
+    background-color: #FCC752;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* hover do botão */
+.btn_entrar:hover {
+    background-color: #e6b347;
+}
+
+/*      footer       */
+
+.footer_box {
+    display: flex;
+    padding: 20px 30px;
+    height: 200px;
+    background-color: rgb(30, 71, 30);
+    border-top: 5px solid black;
+}
+
+.footer_content{
+    display: flex;
+    align-items: center;
+}
+
+
+.footerlogo {
+    background-color: #FAF9F6;
+    height: max-content;
+    width: max-content;
+    padding: 10px;
+    border-radius: 60px;
+}
+.footerlogo img {
+    height: 90px;
+}
+.footer_contentbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+    height: 90%;
+    width: 55vw;
+    border-radius: 20px;
+    background-color: #FAF9F6;
+    margin-left: 15vw;
+}
+
+.footer_contentbox .midias, .servicosF, .recebaNovidades{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer_contentbox h1 {
+    font-size: 20px;
+}
+
+/* CARDS equipe*/
+.equipe {
+    margin-top: 150px;
+    padding-top: 9vw;
+}
+
+.cardsgroup {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 250px;
+}
+
+
+.card_membro {
+    width: 200px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card_membro:hover {
+    transform: scale(1.05);
+}
+
+.card_membro img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.card_membro h3 {
+    margin: 10px 0 5px;
+}
+
+.card_membro p {
+    color: gray;
+}
