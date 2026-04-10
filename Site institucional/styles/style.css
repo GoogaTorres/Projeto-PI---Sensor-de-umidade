@@ -17,10 +17,12 @@ h1 {
 /* Barra de navegação */
 
 header {
+    display: flex;
+    align-items: center;
     background-color: #FFF2E8;
     height: 50px;
     width: 100%;
-    padding: 2px;
+    padding: 5px;
     box-shadow: 0px 3px 5px rgb(122, 122, 122);;
     position: fixed;
     z-index: 10; /*Serve para dar prioridade para a header, 
@@ -32,6 +34,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .logo img{
@@ -58,7 +61,7 @@ header {
 }
 
 .botoes button {
-    font-size: 1.5vw;
+    font-size: 0.88rem;
 }
 
 /*talves o carrosel, mas por enquanto uma imagem estatica*/
@@ -146,6 +149,13 @@ header {
 
 .cards .descricaoETitulo {
     margin: 10px;
+}
+.cards .descricaoETitulo h1{
+    text-align: center;
+}
+.cards .descricaoETitulo p{
+    text-align: center;
+    margin-top: 13%;
 }
 
 
@@ -290,13 +300,14 @@ header {
     display: flex;
     padding: 20px 30px;
     height: 200px;
-    background-color: rgb(30, 71, 30);
+    background-color: #694A38;
     border-top: 5px solid black;
 }
 
 .footer_content{
     display: flex;
     align-items: center;
+    filter: initial
 }
 
 

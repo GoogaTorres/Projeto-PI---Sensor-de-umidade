@@ -24,13 +24,15 @@
 
             </div>
         </div>
-        <div class="login_container">
+    </header>
+    <div class="login_container" id="login_container"></div>
 
-            <h2> Insira um email valido</h2>
+    <script>
+        let container = ` <h2> Insira um email</h2>
 
             <input type="text" placeholder="Usuário" id="input_cadastro">
 
-            <h2> Insira uma senha valida</h2>
+            <h2> Insira uma senha</h2>
 
             <input type="text" placeholder="Senha" id="input_criesenha">
 
@@ -38,11 +40,10 @@
 
             <button class="btn_entrar" onclick="Criar()">Criar</button>
                 <b style="color: red;"></b>
-            <div id="div_mensagem"></div>
-        </div>
-    </header>
+            <div id="div_mensagem"></div>`
 
-    <script>
+            login_container.innerHTML = container
+
          function irLogin() {
 
          window.location.href = "http:paginaLogin.html";
@@ -56,24 +57,23 @@
 
 
 
-            if (senha.length < 8) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`
+            if (senha == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`
             } else if (senha == senha.toLowerCase()) {
                 div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras maiusculas</b>`
             } else if (senha == senha.toUpperCase()) {
                 div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras minusculas</b>`
-            } else if (email.endsWith('.com') && email.includes('@') && repita == senha) {
-                div_mensagem.innerHTML = `<p>Seu usuário foi criado ✅</p>
-            <button class="btn_entrar" onclick="irLogin()">Ir para login</button>`
-            } else if (senha == '') {
-                div_mensagem.innerHTML = `Insira uma senha `
+            } else if (senha.length < 8) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`
             } else if (repita != senha) {
-                div_mensagem.innerHTML = `Senha não está igual `
+                div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `
             } else if (email == '') {
-                div_mensagem.innerHTML = `Insira um email`
-            } else {
-                div_mensagem.innerHTML = `email invalido`
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`
+            } else if (email.endsWith('.com') && email.includes('@') && repita == senha) {
+                container = `<p>Seu usuário foi criado ✅</p>
+            <button class="btn_entrar" onclick="irLogin()">Ir para login</button>`
             }
+            login_container.innerHTML = container
          
         }
 
