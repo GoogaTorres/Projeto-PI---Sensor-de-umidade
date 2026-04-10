@@ -1,142 +1,4 @@
-        /*barra de navegaão*/
-header {
-    background-color: #FFF2E8;
-    height: 50px;
-    width: 100%;
-    padding: 2px;
-    box-shadow: 0px 3px 5px rgb(187, 187, 187);
-    top: 0;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo img {
-    height: 50px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.nav_botao {
-    font-size: 20px;
-    background-color: transparent;
-    border: 0px;
-    margin: 0px 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/*calculadora*/
-
-.container {
-    width: 90%;
-    margin: 30px auto;
-}
-
-body {
-    background-color: #FFF2E8;
-}
-
-.topo {
-    background: linear-gradient(270deg, #c59f49, #daac48, #FCC752);
-    padding: 20px;
-    border-radius: 18px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.painel{
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.campo input {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    outline: none;
-    background-color: #FFF2E8;
-    color: black;
-    box-sizing: border-box;
-}
-
-.campo label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
-}
-
-.card-form {
-    background-color: #FCC752;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-.card-form button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #22c55e, #16a34a);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.card-form h2 {
-    margin-top: 0;
-    color: rgb(2, 65, 2);
-}
-
-.card p{
-    font-weight: bolder;
-    font-size: 35px;
-}
-
-.campo {
-    margin-bottom: 15px;
-}
-
-.dashboard {
-    flex: 2;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cards {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.card {
-    flex: 1;
-    min-width: 180px;
-    background-color: #FCC752;
-    padding: 18px;
-    border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-.detalhes {
-    background-color: #FCC752;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-/*
+ <style>
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
@@ -324,4 +186,83 @@ body {
                 flex-direction: column;
             }
         }
-            */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topo">
+            <h1>Dashboard SafeSoja</h1>
+            <p>Análise de consumo de água, produção e lucro da plantação</p>
+        </div>
+
+        <div class="painel">
+            <div class="card-form">
+                <h2>Inserir dados</h2>
+
+                <div class="campo">
+                    <label>Água por irrigação (litros)</label>
+                    <input type="text" id="agua" placeholder="Ex: 5000">
+                </div>
+
+                <div class="campo">
+                    <label>Vezes no mês</label>
+                    <input type="text" id="vezes" placeholder="Ex: 8">
+                </div>
+
+                <div class="campo">
+                    <label>Custo por litro (R$)</label>
+                    <input type="text" id="custoAgua" placeholder="Ex: 0.02">
+                </div>
+
+                <div class="campo">
+                    <label>Valor por saca (R$)</label>
+                    <input type="text" id="valorSaca" placeholder="Ex: 150">
+                </div>
+
+                <div class="campo">
+                    <label>Sacas vendidas</label>
+                    <input type="text" id="sacasVendidas" placeholder="Ex: 300">
+                </div>
+
+                <div class="campo">
+                    <label>Sacas perdidas</label>
+                    <input type="text" id="sacasPerdidas" placeholder="Ex: 20">
+                </div>
+
+                <button onclick="analisar()">Ver análise</button>
+            </div>
+
+            <div class="dashboard">
+                <div class="cards">
+                    <div class="card">
+                        <h3>Água no mês</h3>
+                        <p id="cardAgua">0 L</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Custo mensal</h3>
+                        <p id="cardCusto">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Faturamento</h3>
+                        <p id="cardFaturamento">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Lucro líquido</h3>
+                        <p id="cardLucro">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <div class="detalhes">
+                    <h2>Eficiência da produção</h2>
+                    <div class="barra">
+                        <div class="progresso" id="barraEficiencia">0%</div>
+                    </div>
+                    <br>
+                    <div id="resultado"></div>
+                </div>
+            </div>
+        </div>
+    </div>
