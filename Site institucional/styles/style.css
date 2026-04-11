@@ -16,7 +16,7 @@ h1 {
 }
 /* Barra de navegação */
 
-header {
+/* header {
     display: flex;
     align-items: center;
     background-color: #FFF2E8;
@@ -25,20 +25,55 @@ header {
     padding: 5px;
     box-shadow: 0px 3px 5px rgb(122, 122, 122);;
     position: fixed;
-    z-index: 10; /*Serve para dar prioridade para a header, 
+    z-index: 10;  Serve para dar prioridade para a header, 
     fazendo com que ela sempre fique por cima de tudo
-    */
-}
-
-.header {
+    
+}.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-}
+} */
+
+
+/* VERSÃO COM BORDA ARREDONDADA E CENTER */
+
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    margin-top: 15px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    
+}.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 35px;
+    margin-top: 14px;
+    padding: 5px;
+    padding-left: 15px;
+    width: 80%;
+    background-color: #FFF2E8;
+    box-shadow: 0px 3px 5px rgb(122, 122, 122);
+}   
 
 .logo img{
     height: 50px;
+}
+
+.logo_inicial img{
+    height: 50px;
+}
+
+.logo :hover {
+    cursor: pointer;
 }
 
 
@@ -238,76 +273,26 @@ header {
     gap: 50px;   /*distancia entre os paragrafos*/
 }
 
-
-/*              Login          */
-.login_container {
-    width: 300px;
-    margin: 120px auto; /* centraliza na tela */
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.login_container h2 {
-    margin-bottom: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(2, 65, 2);
-    cursor: pointer;
-}
-
-.input_login,
-.input_senha {
-    height: 40px;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    padding-left: 15px;
-    font-size: 16px;
-    outline: none;
-    transition: 0.3s;
-}
-
-/* efeito quando clica */
-.input_login:focus,
-.input_senha:focus {
-    border: 1px solid #FCC752;
-    box-shadow: 0px 0px 5px #FCC752;
-}
-
-.btn_entrar {
-    height: 40px;
-    border: none;
-    border-radius: 25px;
-    background-color: #FCC752;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* hover do botão */
-.btn_entrar:hover {
-    background-color: #e6b347;
-}
-
 /*      footer       */
 
 .footer_box {
     display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px 30px;
-    height: 200px;
+    height: 80vh;
     background-color: #694A38;
     border-top: 5px solid black;
 }
 
 .footer_content{
     display: flex;
-    align-items: center;
-    filter: initial
+    filter: initial;
+    gap: 10vw;
+}
+
+.footer_content p, .footer_content h1, .footer_content span {
+    color: white;
 }
 
 
@@ -333,9 +318,14 @@ header {
     margin-left: 15vw;
 }
 
-.footer_contentbox .midias, .servicosF, .recebaNovidades{
+.footer_content h1 {
+    margin-bottom: 25px;
+}
+
+ .midias, .servicosF, .recebaNovidades{
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .footer_contentbox h1 {
@@ -383,4 +373,201 @@ header {
 
 .card_membro p {
     color: gray;
+}
+
+
+/* CONTAINER LOGIN/CADASTRO */
+
+.login_body {
+    background-color: #FFF2E8;
+}
+
+.login_container {
+    width: 320px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+}
+
+
+.login_container h2 {
+    margin: 0;
+    font-weight: normal;
+    color: rgb(2, 65, 2);
+}
+
+/* INPUTS */
+.login_container input {
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.login_container input:focus {
+    border: 1px solid #FCC752;
+    box-shadow: 0px 0px 5px #FCC752;
+}
+
+.login_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    height: 85vh;
+}
+
+/* BOTÃO */
+.btn_entrar {
+    height: 40px;
+    border-radius: 25px;
+    border: none;
+    background-color: #FCC752;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn_entrar:hover {
+    background-color: #e6b347;
+}
+
+/* MENSAGEM */
+#div_mensagem {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.btn_cadastro {
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 25px;
+    background-color: #00a859;
+    border: 2px solid #00a859;
+    color: black;
+    padding: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn_cadastro:hover {
+    color: white;
+    background-color: #00a859;
+}
+
+                    /* Calculadora */
+
+.container {
+    width: 90%;
+    margin: 30px auto;
+    margin-top: 20vh;
+}
+
+body {
+    background-color: #FFF2E8;
+}
+
+.topo {
+    background: linear-gradient(270deg, #c59f49, #daac48, #FCC752);
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.painel{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: Arial, Helvetica, sans-serif;
+    height: min-content;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background-color: #FFF2E8;
+    color: black;
+    box-sizing: border-box;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.card-form {
+    background-color: #FCC752;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.card-form button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card-form h2 {
+    margin-top: 0;
+    color: rgb(2, 65, 2);
+}
+
+.card p{
+    font-weight: bolder;
+    font-size: 35px;
+}
+
+.campo {
+    margin-bottom: 15px;
+}
+
+.dashboard {
+    flex: 2;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1;
+    min-width: 180px;
+    background-color: #FCC752;
+    padding: 18px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.detalhes {
+    background-color: #FCC752;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
