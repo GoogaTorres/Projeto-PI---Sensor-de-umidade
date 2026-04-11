@@ -1,67 +1,205 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <title>Calculadora SafeSoja</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SafeSoja</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
-    <h3>Calculadora SafeSoja</h3><br>
+        <header>
+        <div class="header">
 
-    Cargo:
-    <select id="Cargo" onchange="ver()">
-        <option value="">Selecione...</option>
-        <option value="1">Funcionário</option>
-        <option value="2">Cliente</option>
-    </select>
+            <div class="logo">
+                <img onclick="window.location.href='http:index.html'" src="./images/Logo_da_Safe_Soja.png">
+            </div>
 
-    <div id="texto"></div>
+            <div class="botoes">
+                <button class="nav_botao" onclick="window.location.href='http:stylepaginaDash.html'">Dashboard</button>
+                <button class="nav_botao" onclick="window.location.href='http:index.html'">Página inicial</button>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="container">
+        <div class="topo">
+            <h1>Dashboard SafeSoja</h1>
+            <p>Análise de consumo de água, produção e lucro da plantação</p>
+        </div>
+
+        <div class="painel">
+            <div class="card-form">
+                <h2>Inserir dados</h2>
+
+                <div class="campo">
+                    <label>Água por irrigação (litros)</label>
+                    <input type="text" id="agua" placeholder="Ex: 5000">
+                </div>
+
+                <div class="campo">
+                    <label>Vezes no mês</label>
+                    <input type="text" id="vezes" placeholder="Ex: 8">
+                </div>
+
+                <div class="campo">
+                    <label>Custo por litro (R$)</label>
+                    <input type="text" id="custoAgua" placeholder="Ex: 0.02">
+                </div>
+
+                <div class="campo">
+                    <label>Valor por saca (R$)</label>
+                    <input type="text" id="valorSaca" placeholder="Ex: 150">
+                </div>
+
+                <div class="campo">
+                    <label>Sacas vendidas</label>
+                    <input type="text" id="sacasVendidas" placeholder="Ex: 300">
+                </div>
+
+                <div class="campo">
+                    <label>Sacas perdidas</label>
+                    <input type="text" id="sacasPerdidas" placeholder="Ex: 20">
+                </div>
+
+                <button onclick="analisar()">Ver análise</button>
+            </div>
+
+            <div class="dashboard">
+                <div class="cards">
+                    <div class="card">
+                        <h3>Água no mês</h3>
+                        <p id="cardAgua">0 L</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Custo mensal</h3>
+                        <p id="cardCusto">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Faturamento</h3>
+                        <p id="cardFaturamento">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Lucro líquido</h3>
+                        <p id="cardLucro">R$ 0,00</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Prejuízo pelas perdas</h3>
+                        <p id="cardPrejuizo">R$ 0,00</p>
+                    </div>                    
+                </div>
+
+                <div class="detalhes">
+                    <h2>Eficiência da produção</h2>
+                    <div class="barra">
+                        <div class="progresso" id="barraEficiencia">0%</div>
+                    </div>
+                    <br>
+                    <div id="resultado"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+</html>
 
 <script>
-    function ver() {
-        let cargo = Cargo.value;
-        
-        if (cargo == "1") {
-            texto.innerHTML = `
-                <h4>Calculadora do Funcionário</h4>
-                Qual o tamanho do terreno? (hectares)<br>
-                <input type="text" id="terreno"><br><br>
+function analisar() {
+    let aguaL = Number(agua.value);
+    let vezesM = Number(vezes.value);
+    let custoL = Number(custoAgua.value);
+    let valor = Number(valorSaca.value);
+    let vendidas = Number(sacasVendidas.value);
+    let perdidas = Number(sacasPerdidas.value);
 
-                Qual o nível de umidade do hectare?<br>
-                <input type="text" id="umidade"><br><br>
+    let consumoMes = aguaL * vezesM;
+    let consumoAno = consumoMes * 12;
 
-                <button onclick="calcular()">Calcular</button>
-                <div id="resultado"></div>
-            `;
-        } else if (cargo == "2") {
-            texto.innerHTML = `
-                <h4>Calculadora do Cliente</h4>
-                Qual o preço de venda? (saca)<br>
-                <input type="text" id="preco"><br><br>
+    let custoTotalAgua = consumoMes * custoL;
+    let custoAguaAno = custoTotalAgua * 12;
 
-                Quantos sacos foram vendidos?<br>
-                <input type="text" id="venda"><br><br>
+    let totalSacas = vendidas + perdidas;
 
-                Quanto de água foi utilizado? (litros)<br>
-                <input type="text" id="agua"><br><br>
+    let faturamentoReal = vendidas * valor;
+    let faturamentoPotencial = totalSacas * valor;
+    let prejuizoPerdas = perdidas * valor;
 
-                <button onclick="calcularCliente()">Calcular</button>
-                <div id="resultado"></div>
-            `;
-        }
+    let lucro = faturamentoReal - prejuizoPerdas - custoTotalAgua;
+
+    let porcentagemPerda = 0;
+    let eficiencia = 0;
+    let lucroPorSaca = 0;
+    let aguaPorSacaVendida = 0;
+    let custoAguaPorSaca = 0;
+
+    if (totalSacas > 0) {
+        porcentagemPerda = (perdidas / totalSacas) * 100;
+        eficiencia = (vendidas / totalSacas) * 100;
     }
 
-    function calcular() {
-        resultado.innerHTML = `Consumo estimado: X litros`;
+    if (vendidas > 0) {
+        lucroPorSaca = lucro / vendidas;
+        aguaPorSacaVendida = consumoMes / vendidas;
+        custoAguaPorSaca = custoTotalAgua / vendidas;
     }
 
-    function calcularCliente() {
-        resultado.innerHTML = `
-             Lucro estimado: R$ </b>
-        `;
+    let situacao = "";
+    let classe = "";
+
+    if (eficiencia >= 90) {
+        situacao = "Produção excelente";
+        classe = "bom";
+    } else if (eficiencia >= 75) {
+        situacao = "Produção boa";
+        classe = "bom";
+    } else if (eficiencia >= 60) {
+        situacao = "Produção regular";
+        classe = "medio";
+    } else {
+        situacao = "Produção baixa";
+        classe = "ruim";
     }
+
+    let alerta = "";
+    let classeLucro = "";
+
+    if (lucro > 0) {
+        alerta = "A operação está dando lucro.";
+        classeLucro = "bom";
+    } else if (lucro == 0) {
+        alerta = "A operação está empatada.";
+        classeLucro = "medio";
+    } else {
+        alerta = "A operação está dando prejuízo.";
+        classeLucro = "ruim";
+    }
+
+    cardAgua.innerHTML = `${consumoMes.toFixed(2)} L`;
+    cardCusto.innerHTML = `R$ ${custoTotalAgua.toFixed(2)}`;
+    cardFaturamento.innerHTML = `R$ ${faturamentoReal.toFixed(2)}`;
+    cardLucro.innerHTML = `R$ ${lucro.toFixed(2)}`;
+    cardPrejuizo.innerHTML = `<span style="color: red;">R$ ${prejuizoPerdas.toFixed(2)}</span>`;
+
+    barraEficiencia.style.width = `${eficiencia.toFixed(2)}%`;
+    barraEficiencia.innerHTML = `${eficiencia.toFixed(2)}%`;
+
+    resultado.innerHTML = `
+        <div class="linha"><b>Água usada por ano:</b> ${consumoAno.toFixed(2)} L</div>
+        <div class="linha"><b>Custo anual da água:</b> R$ ${custoAguaAno.toFixed(2)}</div>
+        <div class="linha"><b>Total de sacas produzidas:</b> ${totalSacas}</div>
+        <div class="linha"><b>Faturamento potencial:</b> R$ ${faturamentoPotencial.toFixed(2)}</div>
+        <div class="linha"><b>Lucro por saca vendida:</b> R$ ${lucroPorSaca.toFixed(2)}</div>
+        <div class="linha"><b>Água por saca vendida:</b> ${aguaPorSacaVendida.toFixed(2)} L</div>
+        <div class="linha"><b>Custo da água por saca:</b> R$ ${custoAguaPorSaca.toFixed(2)}</div>
+        <div class="linha"><b>Taxa de perdas:</b> ${porcentagemPerda.toFixed(2)}%</div>
+        <div class="linha"><b>Situação da produção:</b> <span class="${classe}">${situacao}</span></div>
+        <div class="linha"><b>Diagnóstico:</b> <span class="${classeLucro}">${alerta}</span></div>
+    `;
+}
 </script>
-
-</html>
