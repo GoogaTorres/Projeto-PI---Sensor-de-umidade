@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Soja</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+header {
+    background-color: #FFF2E8;
+    height: 50px;
+    width: 100%;
+    box-shadow: 0px 3px 5px rgb(187, 187, 187);
+}
+
+.header {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botoes {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-left: auto;
+}
+
+.nav_botao {
+    font-size: 16px;
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #1f2937;
+}
+
+body {
+    min-height: 100vh;
+    padding: 0;
+    color: #1f2937;
+    background: linear-gradient(180deg, #FFF2E8 0%, #FCE6A9 60%, #F8D36D 100%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 20px 0;
+}
+
+.topo {
+    margin-bottom: 34px;
+    background: linear-gradient(270deg, #c59f49, #daac48, #FCC752);
+    padding: 24px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.topo h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: #1f2937;
+}
+
+.topo p {
+    font-size: 15px;
+    color: #1f2937;
+    margin-top: 8px;
+    max-width: 700px;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.card-info {
+    flex: 1;
+    min-width: 220px;
+    padding: 24px;
+    border-radius: 24px;
+    background-color: #FFF4D6;
+    border: 1px solid rgba(203, 171, 103, 0.35);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    transition: 0.25s;
+}
+
+.card-info:hover {
+    transform: translateY(-4px);
+}
+
+.card-info h3 {
+    font-size: 13px;
+    color: #6b4d15;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.card-info p {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* GRAFICOS */
+.graficos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.grafico-card {
+    flex: 1;
+    min-width: 320px;
+    padding: 24px;
+    border-radius: 28px;
+    background-color: rgba(255, 250, 235, 0.95);
+    border: 1px solid rgba(203, 171, 103, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: 0.25s;
+}
+
+.grafico-card:hover {
+    transform: translateY(-4px);
+}
+
+.grafico-card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    max-width: 260px;
+    margin-bottom: 10px;
+}
+
+.grafico-card span {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #cfbba8;
+}
+
+canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    body { padding: 20px; }
+    .topo h1 { font-size: 26px; }
+    .card-info p { font-size: 24px; }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="header">
+        <div class="logo">
+            <img onclick="window.location.href='../Calculadora Financeira/calculadora.html'" src="../Calculadora Financeira/images/Logo_da_Safe_Soja.png" alt="Safe Soja">
+        </div>
+        <div class="botoes">
+            <button class="nav_botao">Serviços</button>
+            <button class="nav_botao">Projeto</button>
+            <button class="nav_botao" onclick="window.location.href='../Site institucional/beneficios.html'">Benefícios</button>
+            <button class="nav_botao" onclick="window.location.href='../Site institucional/Equipe.html'">Nossa equipe</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="topo">
+        <h1>Safe Soja</h1>
+        <p>Monitoramento inteligente da umidade do solo e comportamento dos sensores em tempo real para apoiar decisões no cultivo.</p>
+    </div>
+
+    <div class="cards">
+        <div class="card-info">
+            <h3>Umidade do solo</h3>
+            <p id="valorAnalogico">--</p>
+        </div>
+
+        <div class="card-info">
+            <h3>Status do sistema</h3>
+            <p id="statusSistema">Ativo</p>
+        </div>
+    </div>
+
+    <div class="graficos">
+        <div class="grafico-card">
+            <h2>Umidade</h2>
+            <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
+            <canvas id="sensorAnalogico"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var sensorAnalogico = new Chart(document.getElementById('sensorAnalogico').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Umidade',
+                data: [],
+                borderColor: '#a3b18a',
+                backgroundColor: 'rgba(163, 177, 138, 0.2)',
+                fill: true,
+                tension: 0.3,
+                borderWidth: 3,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#1f2937', boxWidth: 12, padding: 12, font: { size: 14 } } }
+            },
+            layout: {
+                padding: {
+                    top: 8,
+                    bottom: 8
+                }
+            }
+        }
+    });
+
+    var paginacao = {};
+    var tempo = {};
+
+    function obterDados(grafico, endpoint) {
+        fetch('http://localhost:3300/sensores/' + endpoint)
+            .then(response => response.json())
+            .then(valores => {
+
+                if (paginacao[endpoint] == null) paginacao[endpoint] = 0;
+                if (tempo[endpoint] == null) tempo[endpoint] = 0;
+
+                var ultimaPaginacao = paginacao[endpoint];
+                paginacao[endpoint] = valores.length;
+                valores = valores.slice(ultimaPaginacao);
+
+                valores.forEach((valor) => {
+                    if (grafico.data.labels.length == 10) {
+                        grafico.data.labels.shift();
+                        grafico.data.datasets[0].data.shift();
+                    }
+
+                    grafico.data.labels.push(tempo[endpoint]++);
+                    grafico.data.datasets[0].data.push(parseFloat(valor));
+                    grafico.update();
+
+                    if (endpoint == 'analogico') {
+                        valorAnalogico.innerHTML = parseFloat(valor).toFixed(2) + '%';
+                    }
+                });
+            })
+            .catch(() => {
+                statusSistema.innerHTML = 'Desligado';
+            });
+    }
+
+    setInterval(() => {
+        obterDados(sensorAnalogico, 'analogico');
+    }, 1000);
+</script>
+
+</body>
+</html>
