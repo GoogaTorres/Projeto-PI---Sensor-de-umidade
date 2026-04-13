@@ -163,7 +163,7 @@ body {
     display: block;
     margin-bottom: 15px;
     font-size: 14px;
-    color: #cfbba8;
+    color:  #6b4d15;
 }
 
 canvas {
@@ -220,80 +220,119 @@ canvas {
         <div class="grafico-card">
             <h2>Umidade</h2>
             <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
-            <canvas id="sensorAnalogico"></canvas>
+            <canvas id="sensorDigital"></canvas>
         </div>
     </div>
 
 </div>
 
 <script>
-    var sensorAnalogico = new Chart(document.getElementById('sensorAnalogico').getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Umidade',
-                data: [],
-                borderColor: '#a3b18a',
-                backgroundColor: 'rgba(163, 177, 138, 0.2)',
-                fill: true,
-                tension: 0.3,
-                borderWidth: 3,
-                pointRadius: 3
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { labels: { color: '#1f2937', boxWidth: 12, padding: 12, font: { size: 14 } } }
+   var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Umidade',
+                    data: [],
+                    borderColor: '#6b4d15',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#6b4d15'
+                }]
             },
-            layout: {
-                padding: {
-                    top: 8,
-                    bottom: 8
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: ' #6b4d15'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#6b4d15'
+                        },
+                        grid: {
+                            color: 'rgba(255,255,255,0.08)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#6b4d15',
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: '(Umidade)',
+                            color: 'black'
+                        },
+                        grid: {
+                            color: 'rgba(255,255,255,0.08)'
+                        }
+                    }
                 }
             }
-        }
-    });
+        });
 
-    var paginacao = {};
-    var tempo = {};
+        var paginacao = {};
+        var tempo = {};
 
-    function obterDados(grafico, endpoint) {
-        fetch('http://localhost:3300/sensores/' + endpoint)
-            .then(response => response.json())
-            .then(valores => {
-
-                if (paginacao[endpoint] == null) paginacao[endpoint] = 0;
-                if (tempo[endpoint] == null) tempo[endpoint] = 0;
-
-                var ultimaPaginacao = paginacao[endpoint];
-                paginacao[endpoint] = valores.length;
-                valores = valores.slice(ultimaPaginacao);
-
-                valores.forEach((valor) => {
-                    if (grafico.data.labels.length == 10) {
-                        grafico.data.labels.shift();
-                        grafico.data.datasets[0].data.shift();
+        function obterDados(grafico, endpoint) {
+            fetch('http://localhost:3300/sensores/' + endpoint)
+                .then(response => response.json())
+                .then(valores => {
+                    if (paginacao[endpoint] == null) {
+                        paginacao[endpoint] = 0;
                     }
 
-                    grafico.data.labels.push(tempo[endpoint]++);
-                    grafico.data.datasets[0].data.push(parseFloat(valor));
-                    grafico.update();
-
-                    if (endpoint == 'analogico') {
-                        valorAnalogico.innerHTML = parseFloat(valor).toFixed(2) + '%';
+                    if (tempo[endpoint] == null) {
+                        tempo[endpoint] = 0;
                     }
+
+                    var ultimaPaginacao = paginacao[endpoint];
+                    paginacao[endpoint] = valores.length;
+                    valores = valores.slice(ultimaPaginacao);
+
+                    valores.forEach((valor) => {
+                        if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+                            grafico.data.labels.shift();
+                            grafico.data.datasets[0].data.shift();
+                        }
+
+                        grafico.data.labels.push(tempo[endpoint]++);
+                        grafico.data.datasets[0].data.push(parseFloat(valor));
+                        grafico.update();
+
+                        let dados = grafico.data.datasets[0].data;
+
+let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+
+let media = soma / dados.length;
+                    
+
+                        if (endpoint == 'digital') {
+                            valorDigital.innerHTML = parseFloat(valor);
+                        }
+                         if (endpoint == 'digital') {
+                            valorAnalogico.innerHTML = media.toFixed(2);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao obter dados:', error);
+                    statusSistema.innerHTML = 'Erro';
                 });
-            })
-            .catch(() => {
-                statusSistema.innerHTML = 'Desligado';
-            });
-    }
+        }
 
-    setInterval(() => {
-        obterDados(sensorAnalogico, 'analogico');
-    }, 1000);
+        setInterval(() => {
+            
+            obterDados(sensorDigital, 'digital');
+        }, 1000);
 </script>
 
 </body>
