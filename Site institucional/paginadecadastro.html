@@ -9,6 +9,7 @@
 </head>
 
 <body class="login_body">
+    <div class="fundoLoginECadastro"></div>
     <header>
         <div class="header">
 
@@ -23,6 +24,7 @@
         </div>
 
     </header>
+
 
     <div class="login_box">
 
@@ -60,7 +62,9 @@
 
 
 
-            if (senha == '') {
+            if (email == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`
+            } else if (senha == '') {
                 div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`
             } else if (senha == senha.toLowerCase()) {
                 div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras maiusculas</b>`
@@ -70,16 +74,14 @@
                 div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`
             } else if (repita != senha) {
                 div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `
-            } else if (email == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`
-            } else if (email.endsWith('.com') && email.includes('@') && repita == senha) {
+            } else if (!email.endsWith('.com') && !email.includes('@')) {
                 div_mensagem.innerHTML = `<b style="color: red;">Insira um email válido</b>`
-
             } else {
                 container = `<p>Seu usuário foi criado ✅</p>
             <button class="btn_entrar" onclick="irLogin()">Ir para login</button>`
-            }
-            
+            login_container.innerHTML = container
+            } 
+        
          
         }
 
