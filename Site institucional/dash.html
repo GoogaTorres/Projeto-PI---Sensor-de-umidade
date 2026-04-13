@@ -138,6 +138,7 @@ body {
 }
 
 .grafico-card {
+    height: 350px;
     flex: 1;
     min-width: 320px;
     padding: 24px;
@@ -167,8 +168,8 @@ body {
 }
 
 canvas {
-    width: 100% ;
-    height: auto ;
+    width: 100%;
+    height: 100%;
 }
 
 /* RESPONSIVO */
@@ -242,8 +243,9 @@ canvas {
                     pointBackgroundColor: '#6b4d15'
                 }]
             },
-            options: {
-                responsive: true,
+           options: {
+              responsive: true,
+              maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         labels: {
