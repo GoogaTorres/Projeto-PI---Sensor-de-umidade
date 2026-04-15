@@ -173,8 +173,18 @@ canvas {
         </div>
 
         <div class="card-info">
-            <h3>Status do sistema</h3>
-            <p id="statusSistema">Ativo</p>
+            <h3>Menor umidade registrada</h3>
+            <p id="valorMenorUmidade">--</p>
+        </div>
+
+        <div class="card-info">
+            <h3>Maior umidade registrada</h3>
+            <p id="valorMaiorUmidade">--</p>
+        </div>
+
+        <div class="card-info">
+            <h3>Sensores ativos</h3>
+            <p id="statusSistema">0/1</p>
         </div>
     </div>
 
@@ -255,6 +265,28 @@ canvas {
 
         var paginacao = {};
         var tempo = {};
+        var valorAnalogico = document.getElementById('valorAnalogico');
+        var statusSistema = document.getElementById('statusSistema');
+        var valorMenorUmidade = document.getElementById('valorMenorUmidade');
+        var valorMaiorUmidade = document.getElementById('valorMaiorUmidade');
+
+        function atualizarKpis(dados) {
+            if (!dados || dados.length === 0) {
+                valorAnalogico.innerHTML = '--';
+                valorMenorUmidade.innerHTML = '--';
+                valorMaiorUmidade.innerHTML = '--';
+                return;
+            }
+
+            let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+            let media = soma / dados.length;
+            let menor = Math.min(...dados);
+            let maior = Math.max(...dados);
+
+            valorAnalogico.innerHTML = media.toFixed(2);
+            valorMenorUmidade.innerHTML = menor.toFixed(2);
+            valorMaiorUmidade.innerHTML = maior.toFixed(2);
+        }
 
         function obterDados(grafico, endpoint) {
             fetch('http://localhost:3300/sensores/' + endpoint)
@@ -283,28 +315,17 @@ canvas {
                         grafico.update();
 
                         let dados = grafico.data.datasets[0].data;
-
-let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
-
-let media = soma / dados.length;
-                    
-
-                        if (endpoint == 'digital') {
-                            valorDigital.innerHTML = parseFloat(valor);
-                        }
-                         if (endpoint == 'digital') {
-                            valorAnalogico.innerHTML = media.toFixed(2);
-                        }
+                        atualizarKpis(dados);
+                        statusSistema.innerHTML = '1/1';
                     });
                 })
                 .catch(error => {
                     console.error('Erro ao obter dados:', error);
-                    statusSistema.innerHTML = 'Erro';
+                    statusSistema.innerHTML = '0/1';
                 });
         }
 
         setInterval(() => {
-            
             obterDados(sensorDigital, 'digital');
         }, 1000);
 </script>
