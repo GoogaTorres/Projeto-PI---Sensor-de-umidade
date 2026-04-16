@@ -35,11 +35,11 @@ CREATE TABLE terreno(
 idTerreno INT PRIMARY KEY AUTO_INCREMENT,
 Hectare VARCHAR(45),
 fkEmpresa INT,
-CONSTRAINT fk_empresa_const FOREIGN KEY (fk_empresa) REFERENCES empresa(idEmpresa)
+CONSTRAINT fk_empresa_const FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 ); -- hectare contem sensores 1 2 3 4 
 INSERT INTO terreno VALUES
-(DEFAULT, 'Hectare 1'),
-(DEFAULT, 'Hectare norte' );
+(DEFAULT, 'Hectare 1' ,1),
+(DEFAULT, 'Hectare norte' , 1 );
 
 
 -- CREATE TABLE ENDERECÇO, PARA ARMAZENAR OS ENDEREÇOS DOS USUARIOS E DOS TERRENOS
@@ -69,7 +69,7 @@ identificador VARCHAR(20),
 condicao VARCHAR(11),
 fkHectares INT,
 coordenada VARCHAR(45),
-CONSTRAINT fk_hectares_cont FOREIGN KEY (fk_hectares) REFERENCES terreno(idTerreno),
+CONSTRAINT fk_hectares_cont FOREIGN KEY (fkHectares) REFERENCES terreno(idTerreno),
 CONSTRAINT chk_condicao CHECK (condicao IN ('estável', 'danificado'))-- MOSTRARÁ AS CONDIÇÕES DO SENSOR
 );
 INSERT INTO sensores VALUE 
