@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora SafeSoja</title>
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
@@ -14,10 +14,15 @@
                 <img onclick="window.location.href='index.html'" src="./images/Logo_da_Safe_Soja.png">
             </div>
 
-            <div class="botoes">
-                <button class="nav_botao" onclick="window.location.href='dash.html'">Calculadora</button>
-                <button class="nav_botao" onclick="window.location.href='index.html'">Página inicial</button>
+             <div class="botoes dashcal">
+                <button class="nav_botao" onclick="window.location.href='http:dash.html'">Dashboard</button>
+                <div class="botao-inicial">
+                    <img src="./images/home.png" class="homeicon" alt="">
+                    <button class="nav_botao inicial" onclick="window.location.href='http:index.html'">Página
+                        inicial</button>
+                </div>
             </div>
+
         </div>
     </header>
 
@@ -95,11 +100,16 @@
                         <h3>Taxa de perda</h3>
                         <p id="cardTaxaPerda">0%</p>
                     </div>
+                
                 </div>
 
                 <div class="detalhes">
-                    <h1>Relatório tecnico</h1>
-                    <div id="resposta" class="resposta"></div>
+                    <h2>Relatório de Desempenho</h2>
+                    <br><br>
+                    <div class="descer">
+                    <div id="resultado"></div>
+                    <div id="resultado1"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,10 +190,7 @@
         cardLucro.innerHTML = `<span style="color: ${corLucro};">R$ ${lucro.toFixed(2)}</span>`;
         cardPrejuizo.innerHTML = `<span style="color: red;">R$ ${prejuizoPerdas.toFixed(2)}</span>`;
         cardTaxaPerda.innerHTML = `${porcentagemPerda.toFixed(2)}%`;
-        resposta.innerHTML = `
-   
-     <p class="${classe}">Situação atual: ${situacao}</p>
-    <p class="${classeLucro}">Lucro: ${alerta}</p>
-`;
+        resultado.innerHTML = `Situação atual: <span class="${classe}">${situacao}</span><br>`;
+        resultado1.innerHTML =`Lucro: <span class="${classeLucro}">${alerta}</span>`;
     }
 </script>

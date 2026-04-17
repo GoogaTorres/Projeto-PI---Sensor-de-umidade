@@ -622,7 +622,7 @@ body {
 
 .card {
     flex: 1;
-    min-width: 180px;
+    min-width: 250px;
     background-color: #FCC752;
     padding: 18px;
     border-radius: 18px;
@@ -637,6 +637,13 @@ body {
 }
 
 .resposta {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.descer {
     display: flex;
     justify-content: space-around;
     font-weight: 900;
