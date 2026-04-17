@@ -126,8 +126,15 @@
         let vendidas = Number(sacasVendidas.value);
         let perdidas = Number(sacasPerdidas.value);
 
-        let consumoMes = aguaL * vezesM;
-        let custoTotalAgua = consumoMes * custoL;
+        let consumoMes = 0;
+        for (let i = 0; i < vezesM; i++) {
+            consumoMes += aguaL;
+            
+        let custoTotalAgua = 0;
+        for (let i = 0; i < vezesM; i++) {
+            custoTotalAgua += agual * custoL;
+        }
+            
         let totalSacas = vendidas + perdidas;
 
         let faturamentoReal = vendidas * valor;
