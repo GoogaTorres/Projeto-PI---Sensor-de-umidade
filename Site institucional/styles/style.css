@@ -1,3 +1,7 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -96,6 +100,37 @@ header {
     background-color: #FCC752;
     border-radius: 30px;
     align-items: center;
+}
+
+.dashcal {
+    display: flex;
+    margin-right: 10px;
+}
+
+
+body {
+    padding: 0;
+    color: #1f2937;
+    background: linear-gradient(180deg, #FFF2E8 0%, #FCE6A9 60%, #F8D36D 100%);
+}
+
+.botao-inicial {
+    display: flex;
+    align-items: center;
+    background-color: #00a859;
+    border-radius: 15px;
+    padding: 7px;
+}
+
+.inicial {
+    color: white;
+    padding: 0px;
+    margin: 0px;
+}
+
+.homeicon {
+    height: 15px;
+    margin-right: 7px;
 }
 
 .botoes button {
