@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safe Soja</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
     <link rel="stylesheet" href="./styles/style.css">
 
     <style>
@@ -17,11 +18,12 @@
         }
 
         body {
-            min-height: 100vh;
-            max-height: 100vh;
+            height: 100vh;
             padding: 0;
             color: #1f2937;
             background: linear-gradient(180deg, #FFF2E8 0%, #FCE6A9 60%, #F8D36D 100%);
+            background-attachment: fixed;
+            background-size: cover;
         }
 
         .container {
@@ -213,37 +215,7 @@
 
     </div>
 
-    <div class="cards">
-        <div class="card-info">
-            <h3>Umidade do solo</h3>
-            <p id="valorAnalogico">--</p>
-        </div>
-        
-        <div class="card-info">
-            <h3>Menor umidade registrada</h3>
-            <p id="valorMenorUmidade">--</p>
-        </div>
-
-        <div class="card-info">
-            <h3>Maior umidade registrada</h3>
-            <p id="valorMaiorUmidade">--</p>
-        </div>
-
-        <div class="card-info">
-            <h3>Sensores ativos</h3>
-            <p id="statusSistema">0/1</p>
-        </div>
-    </div>
-
-    <div class="graficos">
-        <div class="grafico-card">
-            <h2>Umidade</h2>
-            <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
-            <canvas id="sensorDigital"></canvas>
-        </div>
-    </div>
-
-</div>
+   
 
 <script>
    var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
@@ -274,6 +246,48 @@
                     legend: {
                         labels: {
                             color: ' #6b4d15'
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line50: {
+                                type: 'line',
+                                yMin: 50,
+                                yMax: 50,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Ideal mínimo',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            line85: {
+                                type: 'line',
+                                yMin: 85,
+                                yMax: 85,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Ideal máximo',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            riskLow: {
+                                type: 'box',
+                                yMin: 0,
+                                yMax: 50,
+                                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                borderWidth: 0
+                            },
+                            riskHigh: {
+                                type: 'box',
+                                yMin: 85,
+                                yMax: 100,
+                                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                borderWidth: 0
+                            }
                         }
                     }
                 },
