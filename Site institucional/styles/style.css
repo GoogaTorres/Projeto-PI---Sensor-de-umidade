@@ -635,3 +635,10 @@ body {
     border-radius: 18px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
+
+.resposta {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 900;
+    font-size: 20px;
+}
