@@ -213,38 +213,6 @@
 
     </div>
 
-    <div class="cards">
-        <div class="card-info">
-            <h3>Umidade do solo</h3>
-            <p id="valorAnalogico">--</p>
-        </div>
-        
-        <div class="card-info">
-            <h3>Menor umidade registrada</h3>
-            <p id="valorMenorUmidade">--</p>
-        </div>
-
-        <div class="card-info">
-            <h3>Maior umidade registrada</h3>
-            <p id="valorMaiorUmidade">--</p>
-        </div>
-
-        <div class="card-info">
-            <h3>Sensores ativos</h3>
-            <p id="statusSistema">0/1</p>
-        </div>
-    </div>
-
-    <div class="graficos">
-        <div class="grafico-card">
-            <h2>Umidade</h2>
-            <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
-            <canvas id="sensorDigital"></canvas>
-        </div>
-    </div>
-
-</div>
-
 <script>
    var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
             type: 'line',
