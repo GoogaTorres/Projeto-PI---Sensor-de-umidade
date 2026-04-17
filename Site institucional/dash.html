@@ -203,6 +203,11 @@
                 <h3>Sensores ativos</h3>
                 <p id="statusSistema">0/1</p>
             </div>
+
+            <div class="card-info">
+                <h3>Alerta</h3>
+                <p id="alerta"></p>
+            </div>
             
         </div>
 
@@ -217,6 +222,7 @@
     </div>
 
 <script>
+
    var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
             type: 'line',
             data: {
@@ -338,12 +344,21 @@
                 return;
             }
 
+            if (dados[dados.length - 1] > 85) {
+                alerta.innerHTML = `<span style="color: red;">Umidade ACIMA do ideal</span>`
+            }else if (dados[dados.length - 1] < 50) {
+                alerta.innerHTML = `<span style="color: red;">Umidade ABAIXO do ideal</span>`
+            }else {
+                alerta.innerHTML = `<span style="color: green;">Umidade ideal</span>`
+
+            }
+
             let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
             let media = soma / dados.length;
             let menor = Math.min(...dados);
             let maior = Math.max(...dados);
 
-            valorAnalogico.innerHTML = media.toFixed(2);
+            valorAnalogico.innerHTML = dados[dados.length - 1];
             valorMenorUmidade.innerHTML = menor.toFixed(2);
             valorMaiorUmidade.innerHTML = maior.toFixed(2);
         }
