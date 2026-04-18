@@ -221,21 +221,8 @@
     </div>
 
 <script>
-        const sensors = [
-            { id: 'Sensor 01', hectare: 'Hectare 1', coords: '-20.1234, -50.2345', baseline: 52 },
-            { id: 'Sensor 02', hectare: 'Hectare 2', coords: '-20.1270, -50.2370', baseline: 58 },
-            { id: 'Sensor 03', hectare: 'Hectare 3', coords: '-20.1301, -50.2402', baseline: 28 },
-            { id: 'Sensor 04', hectare: 'Hectare 4', coords: '-20.1330, -50.2435', baseline: 36 }
-        ];
 
-        const params = new URLSearchParams(window.location.search);
-        const selectedSensorId = params.get('sensor') || 'Sensor 01';
-        const sensorInfo = sensors.find(sensor => sensor.id === selectedSensorId) || sensors[0];
-
-        document.querySelector('.topo h1').textContent = `Dashboard Individual - ${sensorInfo.id}`;
-        document.querySelector('.topo p').textContent = `Visualize os dados do ${sensorInfo.id} em ${sensorInfo.hectare} (${sensorInfo.coords}).`; 
-
-        const sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
+   var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
             type: 'line',
             data: {
                 labels: [],
@@ -252,16 +239,14 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
-                layout: {
+                maintainAspectRatio: false, layout: {
                     padding: {
                         top: 10,
                         bottom: 25,
                         left: 10,
                         right: 10
                     }
-                },
-                plugins: {
+                }, plugins: {
                     legend: {
                         labels: {
                             color: ' #6b4d15'
@@ -269,7 +254,7 @@
                     },
                     annotation: {
                         annotations: {
-                            line55: {
+                                            line55: {
                                 type: 'line',
                                 yMin: 55,
                                 yMax: 55,
@@ -328,7 +313,7 @@
                         beginAtZero: true,
                         ticks: {
                             color: '#6b4d15',
-                            stepSize: 5
+                            stepSize: 1
                         },
                         title: {
                             display: true,
@@ -343,26 +328,13 @@
             }
         });
 
-        const valorAnalogico = document.getElementById('valorAnalogico');
-        const statusSistema = document.getElementById('statusSistema');
-        const valorMenorUmidade = document.getElementById('valorMenorUmidade');
-        const valorMaiorUmidade = document.getElementById('valorMaiorUmidade');
-        const alerta = document.getElementById('alerta');
-
-        let chartData = Array.from({ length: 6 }, () => randomValue(sensorInfo.baseline));
-        let labelCount = 1;
-
-        function randomValue(base) {
-            const offset = (Math.random() * 8 - 4);
-            const next = Math.max(0, Math.min(100, base + offset));
-            return parseFloat(next.toFixed(1));
-        }
-
-        function getStatusLabel(value) {
-            if (value < 55 || value > 80) return 'Crítico';
-            if (value < 60) return 'Atenção';
-            return 'Ideal';
-        }
+        var paginacao = {};
+        var tempo = {};
+        var valorAnalogico = document.getElementById('valorAnalogico');
+        var statusSistema = document.getElementById('statusSistema');
+        var valorMenorUmidade = document.getElementById('valorMenorUmidade');
+        var valorMaiorUmidade = document.getElementById('valorMaiorUmidade');
+        var alerta = document.getElementById('alerta');
 
         function atualizarKpis(dados) {
             if (!dados || dados.length === 0) {
@@ -370,55 +342,69 @@
                 valorMenorUmidade.innerHTML = '--';
                 valorMaiorUmidade.innerHTML = '--';
                 alerta.innerHTML = '';
-                statusSistema.innerHTML = '0/1';
                 return;
             }
 
-            const ultimo = dados[dados.length - 1];
+            var ultimo = dados[dados.length - 1];
             if (ultimo > 80 || ultimo < 55) {
-                alerta.innerHTML = `<span style="color: red;">Umidade CRÍTICA: ${ultimo}%</span>`;
+                alerta.innerHTML = `<span style="color: red;">Umidade CRÍTICA: ${ultimo}</span>`;
             } else if (ultimo >= 55 && ultimo < 60) {
-                alerta.innerHTML = `<span style="color: #92400E;">Umidade em ATENÇÃO: ${ultimo}%</span>`;
+                alerta.innerHTML = `<span style="color: #92400E;">Umidade em ATENÇÃO: ${ultimo}</span>`;
             } else {
-                alerta.innerHTML = `<span style="color: green;">Umidade IDEAL: ${ultimo}%</span>`;
+                alerta.innerHTML = `<span style="color: green;">Umidade IDEAL: ${ultimo}</span>`;
             }
 
-            const menor = Math.min(...dados);
-            const maior = Math.max(...dados);
+            let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+            let media = soma / dados.length;
+            let menor = Math.min(...dados);
+            let maior = Math.max(...dados);
 
-            valorAnalogico.innerHTML = `${ultimo}%`;
-            valorMenorUmidade.innerHTML = `${menor.toFixed(1)}%`;
-            valorMaiorUmidade.innerHTML = `${maior.toFixed(1)}%`;
-            statusSistema.innerHTML = '1/1';
+            valorAnalogico.innerHTML = dados[dados.length - 1];
+            valorMenorUmidade.innerHTML = menor.toFixed(2);
+            valorMaiorUmidade.innerHTML = maior.toFixed(2);
         }
 
-        function updateChart() {
-            if (sensorDigital.data.labels.length >= 10) {
-                sensorDigital.data.labels.shift();
-                sensorDigital.data.datasets[0].data.shift();
-            }
-            sensorDigital.data.labels.push(labelCount++);
-            sensorDigital.data.datasets[0].data.push(chartData[chartData.length - 1]);
-            sensorDigital.update();
-            atualizarKpis(chartData);
+        function obterDados(grafico, endpoint) {
+            fetch('http://localhost:3300/sensores/' + endpoint)
+                .then(response => response.json())
+                .then(valores => {
+                    if (paginacao[endpoint] == null) {
+                        paginacao[endpoint] = 0;
+                    }
+
+                    if (tempo[endpoint] == null) {
+                        tempo[endpoint] = 0;
+                    }
+
+                    var ultimaPaginacao = paginacao[endpoint];
+                    paginacao[endpoint] = valores.length;
+                    valores = valores.slice(ultimaPaginacao);
+
+                    valores.forEach((valor) => {
+                        if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+                            grafico.data.labels.shift();
+                            grafico.data.datasets[0].data.shift();
+                        }
+
+                        grafico.data.labels.push(tempo[endpoint]++);
+                        grafico.data.datasets[0].data.push(parseFloat(valor));
+                        grafico.update();
+
+                        let dados = grafico.data.datasets[0].data;
+                        atualizarKpis(dados);
+                        statusSistema.innerHTML = '1/1';
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao obter dados:', error);
+                    statusSistema.innerHTML = '0/1';
+                });
         }
 
-        function simulateReading() {
-            const lastValue = chartData[chartData.length - 1];
-            const next = randomValue(lastValue);
-            chartData.push(next);
-            if (chartData.length > 10) chartData.shift();
-            updateChart();
-        }
-
-        chartData.forEach(value => {
-            sensorDigital.data.labels.push(labelCount++);
-            sensorDigital.data.datasets[0].data.push(value);
-        });
-        sensorDigital.update();
-        atualizarKpis(chartData);
-
-        setInterval(simulateReading, 1200);
+        setInterval(() => {
+            obterDados(sensorDigital, 'digital');
+        }, 1000);
+    </script>
 
 </body>
 
