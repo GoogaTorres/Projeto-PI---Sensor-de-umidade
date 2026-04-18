@@ -334,10 +334,9 @@ body {
 .footer_box {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
-    padding: 10vh 30px;
-    height: 450px;
+    padding: 10vh 20vw 4vh;
+    height: 650px;
     gap: 50px;
     background-color: #1f3d24;
     border-top: 5px solid black;
@@ -345,6 +344,7 @@ body {
 
 .footer_content {
     display: flex;
+    justify-content: space-between;
     gap: 10vw;
     margin-top: 12vh;
 }
@@ -352,11 +352,21 @@ body {
 .footer_content p,
 .footer_content h1,
 .footer_content span,
-.footer_content2 p {
+.footer_content2 p,
+a {
     color: white;
+    text-decoration: none;
 }
+
+.footer_content h1 {
+    border-bottom: solid white 1px;
+    padding-bottom: 9px;
+}
+
 .footer_content2 {
+    border-top: solid #516e61 2px;
     display: flex;
+    justify-content: space-between;
 
 }
 
@@ -399,6 +409,11 @@ body {
 
 .footer_contentbox h1 {
     font-size: 20px;
+}
+
+#ipt_email {
+    padding: 5px;
+    border-radius: 15px;
 }
 
 /* CARDS equipe*/
