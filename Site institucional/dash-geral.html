@@ -20,6 +20,11 @@
             padding: 24px 20px 40px;
         }
 
+        .instructions{
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
         .topo {
             margin-bottom: 30px;
             background: linear-gradient(270deg, #c59f49, #daac48, #FCC752);
@@ -278,6 +283,19 @@
             <h1>Dashboard Geral</h1>
             <p>Visão ampla da plantação por hectare. Identifique rapidamente quais sensores estão fora da zona ideal e selecione qualquer aparelho para ver o painel individual em detalhes.</p>
         </div>
+    <div class="instructions" style="display: flex;">
+                <div class="overview-card">
+                    <h3>O que olhar primeiro</h3>
+                    <p>Atenção</p>
+                    <small>Veja os sensores em destaque: se algum hectare estiver em vermelho, esse é o ponto de maior urgência.</small>
+                </div>
+                <div class="overview-card">
+                    <h3>Como agir</h3>
+                    <p>Selecionar sensor</p>
+                    <small>Escolha o sensor que deseja analisar e acesse a dashboard individual para ver histórico e alertas.</small>
+                </div>
+    </div>
+
 
         <div class="metrics">
             <div class="metric-card">
@@ -305,18 +323,6 @@
         <div class="hectare-cards" id="hectareCards"></div>
 
         <div class="overview-section">
-            <div class="overview-text">
-                <div class="overview-card">
-                    <h3>O que olhar primeiro</h3>
-                    <p>Atenção</p>
-                    <small>Veja os sensores em destaque: se algum hectare estiver em vermelho, esse é o ponto de maior urgência.</small>
-                </div>
-                <div class="overview-card">
-                    <h3>Como agir</h3>
-                    <p>Selecionar sensor</p>
-                    <small>Escolha o sensor que deseja analisar e acesse a dashboard individual para ver histórico e alertas.</small>
-                </div>
-            </div>
             <div class="overview-chart">
                 <h3>Status por hectare</h3>
                 <ul id="overviewStatusList"></ul>
