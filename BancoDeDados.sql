@@ -20,8 +20,8 @@ email VARCHAR(70),
 senha VARCHAR(25),
 cpf CHAR(14),
 celular CHAR(14),
-fk_empresa INT,
-CONSTRAINT fk_empresa_cont FOREIGN KEY (fk_empresa) REFERENCES empresa(idEmpresa)
+fkEmpresa INT,
+CONSTRAINT fk_empresa_cont FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 INSERT INTO usuario VALUES
 (DEFAULT,'Cliente1','cliente1@email.com', '573.461.230-85','11980242076',1),
@@ -33,7 +33,7 @@ CREATE TABLE terreno(
 idTerreno INT PRIMARY KEY AUTO_INCREMENT,
 Hectare VARCHAR(45),
 fkEmpresa INT,
-CONSTRAINT fk_empresa_const FOREIGN KEY (fk_empresa) REFERENCES empresa(idEmpresa)
+CONSTRAINT fk_empresa_const FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 ); -- hectare contem sensores 1 2 3 4 
 INSERT INTO terreno VALUES
 (DEFAULT, 'Hectare 1'),
@@ -67,7 +67,7 @@ identificador VARCHAR(20),
 condicao VARCHAR(11),
 fkHectares INT,
 coordenada VARCHAR(45),
-CONSTRAINT fk_hectares_cont FOREIGN KEY (fk_hectares) REFERENCES terreno(idTerreno),
+CONSTRAINT fk_hectares_cont FOREIGN KEY (fkHectares) REFERENCES terreno(idTerreno),
 CONSTRAINT chk_condicao CHECK (condicao IN ('estável', 'danificado'))-- MOSTRARÁ AS CONDIÇÕES DO SENSOR
 );
 INSERT INTO sensores VALUE 
@@ -79,11 +79,11 @@ INSERT INTO sensores VALUE
 -- TABELA QUE RECEBERA OS DADOS DO SENSOR ,UMA TABELA DEPENDENTE DE UM SENSOR.
 CREATE TABLE registroDados(
 idDados INT AUTO_INCREMENT,
-fk_sensor INT,
+fkSensor INT,
 umidade INT,  -- AREA QUE VAI RECEBER A UMIDADE -- CONFERIR SE VEM NUMEROS QUEBRADOS
 dthora DATETIME DEFAULT CURRENT_TIMESTAMP,
-CONSTRAINT fk_sensor_const FOREIGN KEY (fk_sensor) REFERENCES sensores(idSensor),
-CONSTRAINT pk_composta PRIMARY KEY(idDados,fk_sensor)
+CONSTRAINT fk_sensor_const FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor),
+CONSTRAINT pk_composta PRIMARY KEY(idDados,fkSensor)
 );
                                     
 -- TABELA PARA ARMAZENAR ALERTAS
@@ -91,11 +91,11 @@ CREATE TABLE alerta(
 idAlerta INT AUTO_INCREMENT,
 tipo VARCHAR(45),
 descricao VARCHAR(100),
-fk_dados INT,
-fk_sensor INT,
-CONSTRAINT fks_composta_D_S PRIMARY KEY(idAlerta,fk_dados,fk_sensor),
-CONSTRAINT fk_dados_sensor_cont FOREIGN KEY (fk_dados) REFERENCES registroDados(idDados),
-CONSTRAINT fk_dados_sensor FOREIGN KEY (fk_sensor) REFERENCES sensores(idSensor)
+fkDados INT,
+fkSensor INT,
+CONSTRAINT fks_composta_D_S PRIMARY KEY(idAlerta,fkDados,fkSensor),
+CONSTRAINT fk_dados_sensor_cont FOREIGN KEY (fkDados) REFERENCES registroDados(idDados),
+CONSTRAINT fk_dados_sensor FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 INSERT INTO alerta VALUES
 (1,'abaixo','umidade está abaixo do previsto', 1,1),
