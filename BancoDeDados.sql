@@ -9,9 +9,7 @@ nome VARCHAR(45),
 cnpj VARCHAR(20)
 );
 INSERT INTO empresa VALUES
-(DEFAULT, 'sojaempresa', '32.726.543/0001-87'),
-(DEFAULT, 'empresasoja', '79.637.748/0001-50'),
-(DEFAULT, 'empresaXPTO', '45.346.841/0001-93');	
+(DEFAULT, 'sojaempresa', '32.726.543/0001-87');
 
 
 -- TABELA USUARIO, PARA ARMAZENAR O CADASTRO DOS USUARIOS
@@ -29,17 +27,16 @@ INSERT INTO usuario VALUES
 (DEFAULT,'Cliente2','cliente2@email.com', '736.305.990-01','11981874411',1),
 (DEFAULT,'Cliente3','cliente3@email.com', '140.975.050-76','11983413665',2);
 
-
 -- TABELA TERRENO, ONDE VOCÊ CONTABILIZA E IDENTIFICA HECTARES
 CREATE TABLE terreno(
 idTerreno INT PRIMARY KEY AUTO_INCREMENT,
 Hectare VARCHAR(45),
 fkEmpresa INT,
-CONSTRAINT fk_empresa_const FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+CONSTRAINT fk_empresa_const FOREIGN KEY (fk_empresa) REFERENCES empresa(idEmpresa)
 ); -- hectare contem sensores 1 2 3 4 
 INSERT INTO terreno VALUES
-(DEFAULT, 'Hectare 1' ,1),
-(DEFAULT, 'Hectare norte' , 1 );
+(DEFAULT, 'Hectare 1'),
+(DEFAULT, 'Hectare 2' );
 
 
 -- CREATE TABLE ENDERECÇO, PARA ARMAZENAR OS ENDEREÇOS DOS USUARIOS E DOS TERRENOS
@@ -69,13 +66,13 @@ identificador VARCHAR(20),
 condicao VARCHAR(11),
 fkHectares INT,
 coordenada VARCHAR(45),
-CONSTRAINT fk_hectares_cont FOREIGN KEY (fkHectares) REFERENCES terreno(idTerreno),
+CONSTRAINT fk_hectares_cont FOREIGN KEY (fk_hectares) REFERENCES terreno(idTerreno),
 CONSTRAINT chk_condicao CHECK (condicao IN ('estável', 'danificado'))-- MOSTRARÁ AS CONDIÇÕES DO SENSOR
 );
 INSERT INTO sensores VALUE 
-(DEFAULT , 'SensorHC1' , 'estável' , 1 , '-156.737073°'),
-(DEFAULT , 'SensorHC2' , 'estável' , 1, '18.756071°' ),
-(DEFAULT , 'SensorHC3' , 'danificado' , 2 , '-167.995082°');
+(DEFAULT , 'Sensor 1' , 'estável' , 1 , '-156.737073°'),
+(DEFAULT , 'Sensor 2' , 'estável' , 1, '18.756071°' ),
+(DEFAULT , 'Sensor 1' , 'danificado' , 2 , '-167.995082°');
 
 
 -- TABELA QUE RECEBERA OS DADOS DO SENSOR ,UMA TABELA DEPENDENTE DE UM SENSOR.
@@ -87,12 +84,7 @@ dthora DATETIME DEFAULT CURRENT_TIMESTAMP,
 CONSTRAINT fk_sensor_const FOREIGN KEY (fk_sensor) REFERENCES sensores(idSensor),
 CONSTRAINT pk_composta PRIMARY KEY(idDados,fk_sensor)
 );
-INSERT INTO registroDados VALUES
-(DEFAULT, 1 , 76 , DEFAULT),
-(DEFAULT, 2 , 80 , DEFAULT),
-(DEFAULT, 1 , 77 , DEFAULT);
-                  
-                  
+                                    
 -- TABELA PARA ARMAZENAR ALERTAS
 CREATE TABLE alerta(
 idAlerta INT AUTO_INCREMENT,
