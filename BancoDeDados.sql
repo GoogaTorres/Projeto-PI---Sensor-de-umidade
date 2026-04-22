@@ -17,6 +17,7 @@ CREATE TABLE usuario(
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
 email VARCHAR(70),
+senha VARCHAR(25),
 cpf CHAR(14),
 celular CHAR(14),
 fk_empresa INT,
