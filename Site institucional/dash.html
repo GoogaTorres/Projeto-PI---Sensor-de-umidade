@@ -186,22 +186,22 @@
         <div class="cards">
             <div class="card-info">
                 <h3>Umidade do solo</h3>
-                <p id="valorAnalogico">--</p>
+                <p id="valorAnalogico">50</p>
             </div>
 
             <div class="card-info">
                 <h3>Menor umidade registrada</h3>
-                <p id="valorMenorUmidade">--</p>
+                <p id="valorMenorUmidade">50</p>
             </div>
 
             <div class="card-info">
                 <h3>Maior umidade registrada</h3>
-                <p id="valorMaiorUmidade">--</p>
+                <p id="valorMaiorUmidade">73</p>
             </div>
 
             <div class="card-info">
                 <h3>Alerta</h3>
-                <p id="alerta"></p>
+                <p id="alerta"><span style="color: red;">Umidade CRÍTICA: 50</span></p>
             </div>
             
         </div>
@@ -225,10 +225,10 @@
    var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
             type: 'line',
             data: {
-                labels: [],
+                labels: [1,2,3,4,5,6,7],
                 datasets: [{
                     label: 'Umidade',
-                    data: [],
+                    data: [60, 62, 64, 73, 66, 50,50],
                     borderColor: '#6b4d15',
                     fill: true,
                     tension: 0.3,
@@ -266,6 +266,7 @@
                                     position: 'start'
                                 }
                             },
+                            
                             line80: {
                                 type: 'line',
                                 yMin: 80,
@@ -364,46 +365,46 @@
             valorMaiorUmidade.innerHTML = maior.toFixed(2);
         }
 
-        function obterDados(grafico, endpoint) {
-            fetch('http://localhost:3300/sensores/' + endpoint)
-                .then(response => response.json())
-                .then(valores => {
-                    if (paginacao[endpoint] == null) {
-                        paginacao[endpoint] = 0;
-                    }
+        // function obterDados(grafico, endpoint) {
+        //     fetch('http://localhost:3300/sensores/' + endpoint)
+        //         .then(response => response.json())
+        //         .then(valores => {
+        //             if (paginacao[endpoint] == null) {
+        //                 paginacao[endpoint] = 0;
+        //             }
 
-                    if (tempo[endpoint] == null) {
-                        tempo[endpoint] = 0;
-                    }
+        //             if (tempo[endpoint] == null) {
+        //                 tempo[endpoint] = 0;
+        //             }
 
-                    var ultimaPaginacao = paginacao[endpoint];
-                    paginacao[endpoint] = valores.length;
-                    valores = valores.slice(ultimaPaginacao);
+        //             var ultimaPaginacao = paginacao[endpoint];
+        //             paginacao[endpoint] = valores.length;
+        //             valores = valores.slice(ultimaPaginacao);
 
-                    valores.forEach((valor) => {
-                        if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                            grafico.data.labels.shift();
-                            grafico.data.datasets[0].data.shift();
-                        }
+        //             valores.forEach((valor) => {
+        //                 if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+        //                     grafico.data.labels.shift();
+        //                     grafico.data.datasets[0].data.shift();
+        //                 }
 
-                        grafico.data.labels.push(tempo[endpoint]++);
-                        grafico.data.datasets[0].data.push(parseFloat(valor));
-                        grafico.update();
+        //                 grafico.data.labels.push(tempo[endpoint]++);
+        //                 grafico.data.datasets[0].data.push(parseFloat(valor));
+        //                 grafico.update();
 
-                        let dados = grafico.data.datasets[0].data;
-                        atualizarKpis(dados);
-                        statusSistema.innerHTML = '1/1';
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao obter dados:', error);
-                    statusSistema.innerHTML = '0/1';
-                });
-        }
+        //                 let dados = grafico.data.datasets[0].data;
+        //                 atualizarKpis(dados);
+        //                 statusSistema.innerHTML = '1/1';
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Erro ao obter dados:', error);
+        //             statusSistema.innerHTML = '0/1';
+        //         });
+        // }
 
-        setInterval(() => {
-            obterDados(sensorDigital, 'digital');
-        }, 1000);
+        // setInterval(() => {
+        //     obterDados(sensorDigital, 'digital');
+        // }, 1000);
     </script>
 
 </body>
