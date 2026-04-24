@@ -46,6 +46,7 @@
             max-width: 760px;
             line-height: 1.6;
         }
+      
 
         .metrics,
         .sensor-overview,
@@ -54,6 +55,7 @@
             gap: 20px;
             flex-wrap: wrap;
             margin-bottom: 28px;
+            
         }
 
         .metric-card,
@@ -66,13 +68,15 @@
             background-color: #FFF4D6;
             border: 1px solid rgba(203, 171, 103, 0.35);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+              border: solid 2px black;
         }
 
         .metric-card h3,
         .overview-card h3,
         .sensor-card h3 {
+            margin-top: 3px;
             margin-bottom: 10px;
-            font-size: 14px;
+            font-size: 22px;
             color: #6b4d15;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -85,6 +89,7 @@
             font-weight: 700;
             color: #1f2937;
             margin-bottom: 12px;
+            
         }
 
         .metric-card small,
@@ -94,6 +99,7 @@
             color: #5a4c18;
             font-size: 0.95rem;
             line-height: 1.5;
+            
         }
 
         .hectare-cards {
@@ -111,19 +117,21 @@
             border: 1px solid rgba(203, 171, 103, 0.35);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+              border: solid 2px black;
         }
 
         .hectare-card:hover,
         .hectare-card.selected {
             transform: translateY(-4px);
-            border-color: #b88c28;
+              border: solid 2px rgb(137, 129, 129);
             background-color: #fff2d9;
         }
 
         .hectare-card h3 {
             margin-bottom: 14px;
-            font-size: 16px;
+            font-size: 20px;
             color: #6b4d15;
+            
         }
 
         .hectare-card small {
@@ -131,6 +139,7 @@
             color: #5a4c18;
             font-size: 0.95rem;
             line-height: 1.5;
+            
         }
 
         .sensor-actions {
@@ -161,16 +170,19 @@
         .status-ok {
             background: #D1FAE5;
             color: #166534;
+              border: solid 1px black;
         }
 
         .status-warning {
             background: #FEF3C7;
             color: #92400E;
+            border: solid 1px black;
         }
 
         .status-alert {
             background: #FECACA;
             color: #991B1B;
+              border: solid 1px black;
         }
 
         .overview-section {
@@ -309,8 +321,8 @@
                 <small>Sensores operando normalmente na plantação.</small>
             </div>
             <div class="metric-card">
-                <h3>Áreas em atenção</h3>
-                <p id="areasAtencao">--</p>
+                <h3 style="color: red;" >Áreas em atenção</h3>
+                <p  id="areasAtencao">2</p>
                 <small>Hectares com umidade próxima do limite de risco.</small>
             </div>
             <div class="metric-card">
@@ -335,9 +347,9 @@
     <script>
         const sensors = [
             { id: 'Sensor 01', hectare: 'Hectare 1', umidade: 51, coords: '-20.1234, -50.2345' },
-            { id: 'Sensor 02', hectare: 'Hectare 2', umidade: 58, coords: '-20.1270, -50.2370' },
+            { id: 'Sensor 02', hectare: 'Hectare 2', umidade: 61, coords: '-20.1270, -50.2370' },
             { id: 'Sensor 03', hectare: 'Hectare 3', umidade: 28, coords: '-20.1301, -50.2402' },
-            { id: 'Sensor 04', hectare: 'Hectare 4', umidade: 36, coords: '-20.1330, -50.2435' }
+            { id: 'Sensor 04', hectare: 'Hectare 4', umidade: 62, coords: '-20.1330, -50.2435' }
         ];
 
         const select = document.getElementById('sensor-select');
@@ -352,7 +364,7 @@
         let selectedHectare = null;
 
         function getStatus(umidade) {
-            if (umidade < 55 || umidade > 80) {
+            if (umidade < 40 || umidade > 80) {
                 return { label: 'Crítico', className: 'status-alert' };
             }
             if (umidade < 60) {
