@@ -295,18 +295,7 @@
             <h1>Dashboard Geral</h1>
             <p>Visão ampla da plantação por hectare. Identifique rapidamente quais sensores estão fora da zona ideal e selecione qualquer aparelho para ver o painel individual em detalhes.</p>
         </div>
-    <div class="instructions" style="display: flex;">
-                <div class="overview-card">
-                    <h3>O que olhar primeiro</h3>
-                    <p>Atenção</p>
-                    <small>Veja os sensores em destaque: se algum hectare estiver em vermelho, esse é o ponto de maior urgência.</small>
-                </div>
-                <div class="overview-card">
-                    <h3>Como agir</h3>
-                    <p>Selecionar sensor</p>
-                    <small>Escolha o sensor que deseja analisar e acesse a dashboard individual para ver histórico e alertas.</small>
-                </div>
-    </div>
+    <!-- KPIs removidas conforme solicitado -->
 
 
         <div class="metrics">
@@ -345,13 +334,33 @@
     </div>
 
     <script>
-        const sensors = [
-            { id: 'Sensor 01', hectare: 'Hectare 1', umidade: 51, coords: '-20.1234, -50.2345' },
-            { id: 'Sensor 02', hectare: 'Hectare 2', umidade: 61, coords: '-20.1270, -50.2370' },
-            { id: 'Sensor 03', hectare: 'Hectare 3', umidade: 28, coords: '-20.1301, -50.2402' },
-            { id: 'Sensor 04', hectare: 'Hectare 4', umidade: 62, coords: '-20.1330, -50.2435' },
-            { id: 'Sensor 05', hectare: 'Hectare 5', umidade: 67, coords: '-20.1344, -50.2467' }
+        // Gerar 5 sensores por hectare (total 25 sensores) com valores aleatórios de umidade
+        const sensors = [];
+        const hectares = 5;
+        const sensoresPorHectare = 5;
+        // Coordenadas base para exemplo
+        const baseCoords = [
+            ['-20.1234', '-50.2345'],
+            ['-20.1270', '-50.2370'],
+            ['-20.1301', '-50.2402'],
+            ['-20.1330', '-50.2435'],
+            ['-20.1344', '-50.2467']
         ];
+        for (let h = 1; h <= hectares; h++) {
+            for (let s = 1; s <= sensoresPorHectare; s++) {
+                // Gera umidade aleatória entre 25% e 90%
+                const umidade = Math.floor(Math.random() * (90 - 25 + 1)) + 25;
+                // Pequena variação nas coordenadas para cada sensor
+                const lat = (parseFloat(baseCoords[h-1][0]) + (s-1)*0.0005).toFixed(4);
+                const lng = (parseFloat(baseCoords[h-1][1]) + (s-1)*0.0005).toFixed(4);
+                sensors.push({
+                    id: `Sensor ${((h-1)*sensoresPorHectare + s).toString().padStart(2, '0')}`,
+                    hectare: `Hectare ${h}`,
+                    umidade,
+                    coords: `${lat}, ${lng}`
+                });
+            }
+        }
 
         const select = document.getElementById('sensor-select');
         const sensorList = document.getElementById('sensor-list');
