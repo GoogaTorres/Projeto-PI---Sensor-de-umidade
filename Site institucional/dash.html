@@ -102,12 +102,13 @@
         }
 
         .grafico-card {
-            height: 350px;
+            height: 420px;
             position: relative;
             overflow: hidden;
             flex: 1;
             min-width: 320px;
             padding: 24px;
+            padding-bottom: 38px;
             border-radius: 28px;
             background-color: rgba(255, 250, 235, 0.95);
             border: 1px solid rgba(203, 171, 103, 0.25);
@@ -220,8 +221,10 @@
                 <h2>Umidade (Sensor 1 - HECTARE 1)</h2>
                 <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
                 <canvas id="sensorDigital"></canvas>
+                <div style="height: 115px;">aa</div>
             </div>
         </div>
+        <div style="height: 15px;"></div>
 
     </div>
 
@@ -259,14 +262,14 @@
                     },
                     annotation: {
                         annotations: {
-                                            line55: {
+                            line55: {
                                 type: 'line',
                                 yMin: 55,
                                 yMax: 55,
-                                borderColor: 'red',
+                                borderColor: 'orange',
                                 borderWidth: 2,
                                 label: {
-                                    content: 'Limite crítico inferior',
+                                    content: 'Limite atenção inferior',
                                     enabled: true,
                                     position: 'start'
                                 }
@@ -276,6 +279,46 @@
                                 type: 'line',
                                 yMin: 80,
                                 yMax: 80,
+                                borderColor: 'orange',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite atenção superior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            atenLow: {
+                                type: 'box',
+                                yMin: 50,
+                                yMax: 55,
+                                backgroundColor: 'rgba(255, 255, 0, 0.22)',
+                                borderWidth: 0
+                            },
+                            atenHigh: {
+                                type: 'box',
+                                yMin: 80,
+                                yMax: 85,
+                                backgroundColor: 'rgba(255, 255, 0, 0.22)',
+                                borderWidth: 0
+                            },
+
+                            line50: {
+                                type: 'line',
+                                yMin: 50,
+                                yMax: 50,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite crítico inferior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            
+                            line85: {
+                                type: 'line',
+                                yMin: 85,
+                                yMax: 85,
                                 borderColor: 'red',
                                 borderWidth: 2,
                                 label: {
@@ -287,20 +330,22 @@
                             riskLow: {
                                 type: 'box',
                                 yMin: 0,
-                                yMax: 55,
+                                yMax: 50,
                                 backgroundColor: 'rgba(255, 0, 0, 0.12)',
                                 borderWidth: 0
                             },
                             riskHigh: {
                                 type: 'box',
-                                yMin: 80,
+                                yMin: 85,
                                 yMax: 100,
                                 backgroundColor: 'rgba(255, 0, 0, 0.12)',
                                 borderWidth: 0
-                            }
+                            },
+
+                            
                         }
                     }
-                },
+                }, 
                 scales: {
                     x: {
                         ticks: {
@@ -352,9 +397,9 @@
             }
 
             var ultimo = dados[dados.length - 1];
-            if (ultimo > 80 || ultimo < 55) {
+            if (ultimo >= 85 || ultimo <= 50) {
                 alerta.innerHTML = `<span style="color: red;">Umidade CRÍTICA: ${ultimo}</span>`;
-            } else if (ultimo >= 55 && ultimo < 60) {
+            } else if (ultimo > 80 && ultimo < 55) {
                 alerta.innerHTML = `<span style="color: #92400E;">Umidade em ATENÇÃO: ${ultimo}</span>`;
             } else {
                 alerta.innerHTML = `<span style="color: green;">Umidade IDEAL: ${ultimo}</span>`;
