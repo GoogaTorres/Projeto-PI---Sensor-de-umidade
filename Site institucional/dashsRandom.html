@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Individual | SafeSoja</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        
+    </style>
+
+</head>
+
+<body class="bodyFundoGradient">
+
+    <header>
+        <div class="header">
+
+            <div class="logo">
+                <img onclick="window.location.href='http:index.html'" src="./images/Logo_da_Safe_Soja.png">
+            </div>
+
+            <div class="botoes dashcal">
+                <button class="nav_botao" onclick="window.location.href='./calculadora.html'">Calculadora</button>
+                <div class="botao-inicial">
+                    <img src="./images/home.png" class="homeicon" alt="">
+                    <button class="nav_botao inicial" onclick="window.location.href='./index.html'">Página
+                        inicial</button>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="container">
+
+        <div class="topo">
+            <h1>Safe Soja</h1>
+            <p>Monitoramento inteligente da umidade do solo e comportamento dos sensores em tempo real para apoiar
+                decisões no cultivo.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card-info">
+                <h3>Umidade do solo em tempo real</h3>
+                <p id="valorAnalogico">50</p>
+            </div>
+
+            <div class="card-info">
+                <h3>Menor umidade registrada no dia </h3>
+                <p id="valorMenorUmidade">50</p>
+            </div>
+
+            <div class="card-info">
+                <h3>Maior umidade registrada no dia </h3>
+                <p id="valorMaiorUmidade">73</p>
+            </div>
+
+            <div class="card-info">
+                <h3>Alerta</h3>
+                <p id="alerta"><span style="color: red;">Umidade CRÍTICA: 50</span></p>
+            </div>
+            
+        </div>
+
+        <div style="margin-bottom: 22px;">
+            <button class="nav_botao" onclick="window.location.href='dash-geral.html'">Voltar à dashboard geral</button>
+        </div>
+
+        <div class="graficos">
+            <div class="grafico-card">
+                <h2>Umidade (Sensor 1 - HECTARE 1)</h2>
+                <span>Variação percentual da umidade captada pelo sensor ao longo do tempo.</span>
+                <canvas id="sensorDigital"></canvas>
+                <div style="height: 115px;">aa</div>
+            </div>
+        </div>
+        <div style="height: 15px;"></div>
+
+    </div>
+
+<script>
+
+    setInterval(gerar, 5000)
+
+    // SORTEAR VALORES ALEATÓRIOS
+    let numerosRandom = []
+let listanumeros = [];
+let contador = 0
+function gerar() {
+
+    let n1 = Math.random() * 70 + 20;
+    let NumSensor = Number(n1.toFixed(0));
+
+    contador++;
+
+    numerosRandom.push(NumSensor);
+    listanumeros.push(contador);
+
+    atualizargraficos(sensorDigital, numerosRandom, listanumeros);
+}
+
+function atualizargraficos(chart, dados, contador) {
+
+    chart.data.datasets[0].data = dados;
+    chart.data.labels = contador;
+
+    chart.update();
+
+    atualizarKpis(dados);
+}
+
+   var sensorDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Umidade',
+                    data: [],
+                    borderColor: '#6b4d15',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#6b4d15'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 25,
+                        left: 10,
+                        right: 10
+                    }
+                }, plugins: {
+                    legend: {
+                        labels: {
+                            color: ' #6b4d15'
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line55: {
+                                type: 'line',
+                                yMin: 55,
+                                yMax: 55,
+                                borderColor: 'orange',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite atenção inferior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            
+                            line80: {
+                                type: 'line',
+                                yMin: 80,
+                                yMax: 80,
+                                borderColor: 'orange',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite atenção superior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            atenLow: {
+                                type: 'box',
+                                yMin: 50,
+                                yMax: 55,
+                                backgroundColor: 'rgba(255, 255, 0, 0.22)',
+                                borderWidth: 0
+                            },
+                            atenHigh: {
+                                type: 'box',
+                                yMin: 80,
+                                yMax: 85,
+                                backgroundColor: 'rgba(255, 255, 0, 0.22)',
+                                borderWidth: 0
+                            },
+
+                            line50: {
+                                type: 'line',
+                                yMin: 50,
+                                yMax: 50,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite crítico inferior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            
+                            line85: {
+                                type: 'line',
+                                yMin: 85,
+                                yMax: 85,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Limite crítico superior',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            },
+                            riskLow: {
+                                type: 'box',
+                                yMin: 0,
+                                yMax: 50,
+                                backgroundColor: 'rgba(255, 0, 0, 0.12)',
+                                borderWidth: 0
+                            },
+                            riskHigh: {
+                                type: 'box',
+                                yMin: 85,
+                                yMax: 100,
+                                backgroundColor: 'rgba(255, 0, 0, 0.12)',
+                                borderWidth: 0
+                            },
+
+                            
+                        }
+                    }
+                }, 
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#6b4d15'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Tempo',
+                            color: 'black'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#6b4d15',
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: '(Umidade)',
+                            color: 'black'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        var paginacao = {};
+        var tempo = {};
+        var valorAnalogico = document.getElementById('valorAnalogico');
+        var statusSistema = document.getElementById('statusSistema');
+        var valorMenorUmidade = document.getElementById('valorMenorUmidade');
+        var valorMaiorUmidade = document.getElementById('valorMaiorUmidade');
+        var alerta = document.getElementById('alerta');
+
+        function atualizarKpis(dados) {
+            if (!dados || dados.length === 0) {
+                valorAnalogico.innerHTML = '--';
+                valorMenorUmidade.innerHTML = '--';
+                valorMaiorUmidade.innerHTML = '--';
+                alerta.innerHTML = '';
+                return;
+            }
+
+            var ultimo = dados[dados.length - 1];
+            if (ultimo >= 85 || ultimo <= 50) {
+                alerta.innerHTML = `<span style="color: red;">Umidade CRÍTICA: ${ultimo}</span>`;
+            } else if ((ultimo > 80 && ultimo < 85) || (ultimo > 50 && ultimo < 55)){
+                alerta.innerHTML = `<span style="color: #92400E;">Umidade em ATENÇÃO: ${ultimo}</span>`;
+            } else {
+                alerta.innerHTML = `<span style="color: green;">Umidade IDEAL: ${ultimo}</span>`;
+            }
+
+            let soma = dados.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+            let media = soma / dados.length;
+            let menor = Math.min(...dados);
+            let maior = Math.max(...dados);
+
+            valorAnalogico.innerHTML = dados[dados.length - 1];
+            valorMenorUmidade.innerHTML = menor.toFixed(2);
+            valorMaiorUmidade.innerHTML = maior.toFixed(2);
+        }
+
+        // function obterDados(grafico, endpoint) {
+        //     fetch('http://localhost:3300/dashs/' + endpoint)
+        //         .then(response => response.json())
+        //         .then(valores => {
+        //             if (paginacao[endpoint] == null) {
+        //                 paginacao[endpoint] = 0;
+        //             }
+
+        //             if (tempo[endpoint] == null) {
+        //                 tempo[endpoint] = 0;
+        //             }
+
+        //             var ultimaPaginacao = paginacao[endpoint];
+        //             paginacao[endpoint] = valores.length;
+        //             valores = valores.slice(ultimaPaginacao);
+
+        //             valores.forEach((valor) => {
+        //                 if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+        //                     grafico.data.labels.shift();
+        //                     grafico.data.datasets[0].data.shift();
+        //                 }
+
+        //                 grafico.data.labels.push(tempo[endpoint]++);
+        //                 grafico.data.datasets[0].data.push(parseFloat(valor));
+        //                 grafico.update();
+
+        //                 let dados = grafico.data.datasets[0].data;
+        //                 atualizarKpis(dados);
+        //                 statusSistema.innerHTML = '1/1';
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Erro ao obter dados:', error);
+        //             statusSistema.innerHTML = '0/1';
+        //         });
+        // }
+
+        // setInterval(() => {
+        //     obterDados(sensorDigital, 'digital');
+        // }, 1000);
+    </script>
+
+</body>
+
+</html>
+
+
