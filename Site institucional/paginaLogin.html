@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./styles/logincss.css">
 </head>
 
-<body>
+<body class="login_body">
 
     <div class="fundoLoginECadastro"></div>
 
@@ -18,17 +18,15 @@
         <div class="header">
 
             <div class="logo">
-
                 <img onclick="window.location.href='./index.html'"
                     src="./images/Logo_da_Safe_Soja.png">
-
             </div>
 
             <div class="dashcal">
 
                 <button class="nav_botao"
                     onclick="window.location.href='./index.html'">
-                    Início
+                    Home
                 </button>
 
             </div>
@@ -41,27 +39,24 @@
 
         <div class="login_container">
 
-            <h2>Login</h2>
+            <h1>Login</h1>
 
-            <input type="text"
-                id="input_email"
-                placeholder="Digite seu email">
+            <h2>Email</h2>
+            <input type="text" id="input_email">
 
-            <input type="password"
-                id="input_senha"
-                placeholder="Digite sua senha">
+            <h2>Senha</h2>
+            <input type="password" id="input_senha">
 
-            <button class="btn_entrar"
-                onclick="Entrar()">
+            <button class="btn_entrar" onclick="Entrar()">
                 Entrar
             </button>
 
-            <button class="btn_cadastro"
-                onclick="window.location.href='./paginadecadastro.html'">
-                Cadastre-se
-            </button>
-
             <div id="div_mensagem"></div>
+
+            <p class="textoCadastro">
+                Não possui conta?
+                <a href="./paginadecadastro.html">Cadastre-se</a>
+            </p>
 
         </div>
 
@@ -107,11 +102,11 @@
 
             if (resposta.ok) {
 
-                resposta.json().then(function (json) {
+                resposta.json().then(json => {
 
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
 
                     div_mensagem.innerHTML =
                         `<b style="color:green;">Login realizado ✅</b>`;
@@ -135,6 +130,9 @@
         .catch(function (erro) {
 
             console.log(erro);
+
+            div_mensagem.innerHTML =
+                `<b style="color:red;">Erro no servidor</b>`;
 
         });
 
