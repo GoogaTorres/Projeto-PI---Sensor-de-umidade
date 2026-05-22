@@ -1,70 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | SafeSoja</title>
-    <link rel="stylesheet" href="./styles/style.css">
+
+    <link rel="stylesheet" href="./styles/logincss.css">
 </head>
 
-<body class="login_body">
+<body>
+
     <div class="fundoLoginECadastro"></div>
+
     <header>
+
         <div class="header">
 
             <div class="logo">
-                <img onclick="window.location.href='./index.html'" src="./images/Logo_da_Safe_Soja.png">
+
+                <img onclick="window.location.href='./index.html'"
+                    src="./images/Logo_da_Safe_Soja.png">
+
             </div>
 
-            <div class="botoes">
-                <div class="botao-inicial"> <img src="./images/home.png" class="homeicon" alt="">
-                <button class="nav_botao" onclick="window.location.href='./index.html'">Página inicial</button>
-                </div>
+            <div class="dashcal">
+
+                <button class="nav_botao"
+                    onclick="window.location.href='./index.html'">
+                    Início
+                </button>
+
             </div>
-        
 
         </div>
 
     </header>
-    
+
     <div class="login_box">
+
         <div class="login_container">
 
-        <h2>Email</h2>
+            <h2>Login</h2>
 
-        <input type="text" placeholder="Usuário" id="input_login">
-        <input type="password" placeholder="Senha" id="input_senha">
+            <input type="text"
+                id="input_email"
+                placeholder="Digite seu email">
 
-        <button class="btn_entrar" onclick="Entrar()">Entrar</button>
-        <button class="btn_cadastro" onclick="window.location.href='./paginadecadastro.html'">Criar conta</button>
+            <input type="password"
+                id="input_senha"
+                placeholder="Digite sua senha">
 
-        <div id="div_mensagem"></div>
+            <button class="btn_entrar"
+                onclick="Entrar()">
+                Entrar
+            </button>
+
+            <button class="btn_cadastro"
+                onclick="window.location.href='./paginadecadastro.html'">
+                Cadastre-se
+            </button>
+
+            <div id="div_mensagem"></div>
+
+        </div>
 
     </div>
-    </div>
-
-
-    <script>
-
-        function Entrar() {
-            let login = input_login.value
-            let senha = input_senha.value
-
-            if (login == 'Kaua@gmail.com' && senha == '123' || login == 'Admin@gmail.com' && senha == '123') {
-
-                window.location.href = "./dash-geral.html"
-
-            }else if(senha == '' || senha != '123'){
-                div_mensagem.innerHTML = `Senha Invalida`
-            } else {
-                div_mensagem.innerHTML = `Usuario Invalido`
-            }
-
-
-        }
-
-
-    </script>
 
 </body>
+
+</html>
+
+<script>
+
+    function Entrar() {
+
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+
+            div_mensagem.innerHTML =
+                `<b style="color:red;">Preencha todos os campos</b>`;
+
+            return false;
+        }
+
+        fetch("/usuarios/autenticar", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                emailServer: emailVar,
+                senhaServer: senhaVar
+
+            })
+
+        })
+
+        .then(function (resposta) {
+
+            if (resposta.ok) {
+
+                resposta.json().then(function (json) {
+
+                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+
+                    div_mensagem.innerHTML =
+                        `<b style="color:green;">Login realizado ✅</b>`;
+
+                    setTimeout(function () {
+
+                        window.location = "./dash-geral.html";
+
+                    }, 1500);
+
+                });
+
+            } else {
+
+                div_mensagem.innerHTML =
+                    `<b style="color:red;">Email ou senha inválidos</b>`;
+            }
+
+        })
+
+        .catch(function (erro) {
+
+            console.log(erro);
+
+        });
+
+    }
+
+</script>

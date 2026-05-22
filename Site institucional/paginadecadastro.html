@@ -1,91 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | SafeSoja</title>
-    <link rel="stylesheet" href="./styles/style.css">
+
+    <link rel="stylesheet" href="./styles/logincss.css">
 </head>
 
-<body class="login_body">
+<body>
+
     <div class="fundoLoginECadastro"></div>
+
     <header>
+
         <div class="header">
 
             <div class="logo">
-                <a href=""><img onclick="window.location.href='./index.html'" src="./images/Logo_da_Safe_Soja.png"></a>
+
+                <img onclick="window.location.href='./index.html'"
+                    src="./images/Logo_da_Safe_Soja.png">
+
             </div>
 
-            <div class="botoes">
-                <div class="botao-inicial"><img src="./images/home.png" class="homeicon" alt="">
-                <button class="nav_botao" onclick="window.location.href='./index.html'">Página inicial</button>
-                </div>
+            <div class="dashcal">
+
+                <button class="nav_botao"
+                    onclick="window.location.href='./index.html'">
+                    Início
+                </button>
+
             </div>
 
         </div>
 
     </header>
 
-
     <div class="login_box">
 
-        <div class="login_container" id="login_container"></div>
+        <div class="login_container">
+
+            <h2>Cadastro</h2>
+
+            <input type="text"
+                id="input_nome"
+                placeholder="Digite seu nome">
+
+            <input type="text"
+                id="input_email"
+                placeholder="Digite seu email">
+
+            <input type="text"
+                id="input_cpf"
+                placeholder="Digite seu CPF">
+
+            <input type="text"
+                id="input_celular"
+                placeholder="Digite seu celular">
+
+            <input type="password"
+                id="input_senha"
+                placeholder="Digite sua senha">
+
+            <input type="password"
+                id="input_repita"
+                placeholder="Repita sua senha">
+
+            <button class="btn_entrar"
+                onclick="Cadastrar()">
+                Criar conta
+            </button>
+
+            <button class="btn_cadastro"
+                onclick="window.location.href='./paginaLogin.html'">
+                Já tenho conta
+            </button>
+
+            <div id="div_mensagem"></div>
+
+        </div>
 
     </div>
 
-    <script>
-        let container = ` <h2> Insira um email</h2>
+</body>
 
-            <input type="text" placeholder="Usuário" id="input_cadastro">
+</html>
 
-            <h2> Insira uma senha</h2>
+<script>
 
-            <input type="text" placeholder="Senha" id="input_criesenha">
+    function Cadastrar() {
 
-            <input type="password" placeholder="Repita Senha" id="input_repita">
+        var nomeVar = input_nome.value;
+        var emailVar = input_email.value;
+        var cpfVar = input_cpf.value;
+        var celularVar = input_celular.value;
+        var senhaVar = input_senha.value;
+        var repitaVar = input_repita.value;
 
-            <button class="btn_entrar" onclick="Criar()">Criar</button>
-                <b style="color: red;"></b>
-            <div id="div_mensagem"></div>`
+        if (
+            nomeVar == "" ||
+            emailVar == "" ||
+            cpfVar == "" ||
+            celularVar == "" ||
+            senhaVar == "" ||
+            repitaVar == ""
+        ) {
 
-            login_container.innerHTML = container
+            div_mensagem.innerHTML =
+                `<b style="color:red;">Preencha todos os campos</b>`;
 
-         function irLogin() {
-
-         window.location.href = "./paginaLogin.html";
-        
-         }
-        function Criar() {
-
-            let email = input_cadastro.value
-            let senha = input_criesenha.value
-            let repita = input_repita.value
-
-
-
-            if (email == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`
-            } else if (senha == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`
-            } else if (senha == senha.toLowerCase()) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras maiusculas</b>`
-            } else if (senha == senha.toUpperCase()) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras minusculas</b>`
-            } else if (senha.length < 8) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`
-            } else if (repita != senha) {
-                div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `
-            } else if (!email.endsWith('.com') && !email.includes('@')) {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira um email válido</b>`
-            } else {
-                container = `<p>Seu usuário foi criado ✅</p>
-            <button class="btn_entrar" onclick="irLogin()">Ir para login</button>`
-            login_container.innerHTML = container
-            } 
-        
-         
+            return false;
         }
 
+        if (!emailVar.includes("@") || !emailVar.includes(".com")) {
 
-    </script>
+            div_mensagem.innerHTML =
+                `<b style="color:red;">Email inválido</b>`;
+
+            return false;
+        }
+
+        if (senhaVar.length < 8) {
+
+            div_mensagem.innerHTML =
+                `<b style="color:red;">Senha deve ter no mínimo 8 caracteres</b>`;
+
+            return false;
+        }
+
+        if (senhaVar != repitaVar) {
+
+            div_mensagem.innerHTML =
+                `<b style="color:red;">As senhas não coincidem</b>`;
+
+            return false;
+        }
+
+        fetch("/usuarios/cadastrar", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                cpfServer: cpfVar,
+                celularServer: celularVar,
+                senhaServer: senhaVar,
+                empresaServer: 1
+
+            })
+
+        })
+
+        .then(function (resposta) {
+
+            if (resposta.ok) {
+
+                div_mensagem.innerHTML =
+                    `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
+
+                setTimeout(function () {
+
+                    window.location = "./paginaLogin.html";
+
+                }, 2000);
+
+            } else {
+
+                div_mensagem.innerHTML =
+                    `<b style="color:red;">Erro ao cadastrar</b>`;
+            }
+
+        })
+
+        .catch(function (erro) {
+
+            console.log(erro);
+
+        });
+
+    }
+
+</script>
