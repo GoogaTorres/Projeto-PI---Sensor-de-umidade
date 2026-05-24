@@ -87,7 +87,7 @@ CONSTRAINT pk_composta PRIMARY KEY(idDados,fkSensor)
 INSERT INTO registroDados VALUES
 (DEFAULT,1,70,DEFAULT);
                                     
--- TABELA PARA ARMAZENAR ALERTAS
+-- TABELA PARA ARMAZENAR ALERTAS 
 CREATE TABLE alerta(
 idAlerta INT AUTO_INCREMENT,
 tipo VARCHAR(45),
