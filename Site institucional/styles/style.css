@@ -168,6 +168,27 @@ header {
 
 }
 
+/* bob ia */
+
+.bobiaicon {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    right: 10px;
+    bottom: 10px;
+    background-color: #00a859;
+    height: 100px;
+    width: 100px;
+    border-radius: 500px;
+    overflow: hidden;
+}
+
+.bobiaicon img {
+    height: 150px;
+}
+
+
 /*            Nossos Serviços               */
 
 .background_img {
