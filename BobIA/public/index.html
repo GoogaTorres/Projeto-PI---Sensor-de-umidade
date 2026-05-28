@@ -5,33 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        html{
+            height: 100%;
+        }
+    </style>
 </head>
 
 <header>
-    <div class="header">
-        <div class="logo_inicial">
-            <img src="./images/Logo_da_Safe_Soja.png">
+        <div class="header">
+
+            <div class="logo">
+                <img onclick="window.location.href='http:index.html'" src="images/image.png">
+            </div>
+
+            <div class="botoes dashcal">
+                <button class="nav_botao" onclick="window.location.href='http://localhost:3335/calculadora.html'">Calculadora</button>
+                <button class="nav_botao" onclick="window.location.href='http://localhost:3335/dash-geral.html'">Dash geral</button>
+                <div class="botao-inicial">
+                    <img src="images/home.png" class="homeicon" alt="">
+                    <button class="nav_botao inicial" onclick="window.location.href='http://localhost:3335/index.html'">Página
+                        inicial</button>
+                </div>
+            </div>
+
         </div>
-        <div class="botoes">
-            <a href="#secaoServicos"><button class="nav_botao">Serviços</button></a>
-            <a href="#secaoProjeto"><button class="nav_botao" onclick="projeto()">Projeto</button></a>
-            <a href="#secaoFuncionamento"><button class="nav_botao">Funcionamento</button></a>
-            <a href="#secaoEquipe"><button class="nav_botao">Nossa equipe</button></a>
-            <a><button onclick="window.location.href='./paginaLogin.html'"
-                    class="nav_botao btn_login">Login</button></a>
-        </div>
-    </div>
+
 </header>
 
-<body>
-
-    <div id="container">
+<body class="fundoBobia">
+    <div id="bobia-container">
         <h1>BobIA</h1>
         <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
         <br><br>
         <button onclick="gerarResposta()">Gerar Resposta</button>
         <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+        <div id="bobiaResposta"></div>
     </div>
 
     <script>
@@ -49,8 +58,8 @@
 
             const data = await response.json();
 
-            resposta.style.display = 'block';
-            document.getElementById('resposta').innerText = data.resultado;
+            bobiaResposta.style.display = 'block';
+            document.getElementById('bobiaResposta').innerText = data.resultado;
         }
 
     </script>
