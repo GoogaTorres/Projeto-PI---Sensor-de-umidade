@@ -1110,3 +1110,40 @@ a {
                 align-items: stretch;
             }
         }
+
+/* BOB IA */
+.fundoBobia{
+    background: linear-gradient(180deg, #FFF2E8 0%, #FCE6A9 60%, #F8D36D 100%);
+    margin-top: 140px;
+}
+
+#bobia-container {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+textarea[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+select,
+button {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#bobiaResposta {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #D0D3D4;
+    border: 1px solid #63666A;
+    text-align: left;
+    display: none;
+}
