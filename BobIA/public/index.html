@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BobIA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+    <div class="header">
+        <div class="logo_inicial">
+            <img src="./images/Logo_da_Safe_Soja.png">
+        </div>
+        <div class="botoes">
+            <a href="#secaoServicos"><button class="nav_botao">Serviços</button></a>
+            <a href="#secaoProjeto"><button class="nav_botao" onclick="projeto()">Projeto</button></a>
+            <a href="#secaoFuncionamento"><button class="nav_botao">Funcionamento</button></a>
+            <a href="#secaoEquipe"><button class="nav_botao">Nossa equipe</button></a>
+            <a><button onclick="window.location.href='./paginaLogin.html'"
+                    class="nav_botao btn_login">Login</button></a>
+        </div>
+    </div>
+</header>
+
+<body>
+
+    <div id="container">
+        <h1>BobIA</h1>
+        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+        <br><br>
+        <button onclick="gerarResposta()">Gerar Resposta</button>
+        <h3>Resposta da IA:</h3>
+        <div id="resposta"></div>
+    </div>
+
+    <script>
+        
+        async function gerarResposta() {
+            const pergunta = document.getElementById('pergunta').value;
+
+            const response = await fetch('/perguntar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pergunta })
+            });
+
+            const data = await response.json();
+
+            resposta.style.display = 'block';
+            document.getElementById('resposta').innerText = data.resultado;
+        }
+
+    </script>
+    
+</body>
+</html>
