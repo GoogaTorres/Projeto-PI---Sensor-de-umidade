@@ -1085,6 +1085,7 @@ a {
             border-radius: 16px;
             padding: 12px 16px;
             font-size: 1rem;
+            display: none;
         }
 
         .sensor-controls button {
