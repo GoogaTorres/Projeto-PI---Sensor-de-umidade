@@ -1,32 +1,24 @@
-var database = require("../database/config");
+let bancoDados = require("../database/config");
 
-function cadastrar(nome, email, senha, cpf, celular, fkEmpresa) {
-  var instrucaoSql = `
-        INSERT INTO usuario
-        (nome, email, senha, cpf, celular, fkEmpresa)
-        VALUES
-        ('${nome}', '${email}', '${senha}',
-        '${cpf}', '${celular}', ${fkEmpresa});
-    `;
+function cadastrar(nome, email, cpf, celular, senha, empresa) {
 
-  console.log(instrucaoSql);
-  return database.executar(instrucaoSql);
+    let instrucaoSql = "INSERT INTO usuario (nome, email, senha, cpf, celular, fkEmpresa) VALUES ('" + nome + "', '" + email + "', '" + senha + "', '" + cpf + "', '" + celular + "', " + empresa + ");";
+
+    console.log(instrucaoSql);
+
+    return bancoDados.executar(instrucaoSql);
 }
 
-function autenticar(email, senha, fkEmpresa) {
-  var instrucaoSql = `
-        SELECT idUsuario, nome, email, cpf, celular, fkEmpresa
-        FROM usuario
-        WHERE email = '${email}'
-        AND senha = '${senha}'
-        AND fkEmpresa = ${fkEmpresa};
-    `;
+function autenticar(email, senha) {
 
-  console.log(instrucaoSql);
-  return database.executar(instrucaoSql);
+    let instrucaoSql = "SELECT * FROM usuario WHERE email = '" + email + "' AND senha = '" + senha + "';";
+
+    console.log(instrucaoSql);
+
+    return bancoDados.executar(instrucaoSql);
 }
 
 module.exports = {
-  autenticar,
-  cadastrar,
+    autenticar: autenticar,
+    cadastrar: cadastrar
 };

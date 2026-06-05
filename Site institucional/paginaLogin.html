@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -48,9 +47,6 @@
             <h2>Senha</h2>
             <input type="password" id="input_senha">
 
-            <h2>Código da Empresa</h2>
-            <input type="text" id="input_empresa">
-
             <button class="btn_entrar" onclick="Entrar()">
                 Entrar
             </button>
@@ -68,82 +64,45 @@
 
 </body>
 
-</html>
-
 <script>
-
     function Entrar() {
+        let emailVar = input_email.value;
+        let senhaVar = input_senha.value;
 
-        var emailVar = input_email.value;
-        var senhaVar = input_senha.value;
-        var empresaVar = input_empresa.value;
-
-        if (emailVar == "" || senhaVar == "" || empresaVar == "") {
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">Preencha todos os campos</b>`;
-
+        if (emailVar == "" || senhaVar == "") {
+            div_mensagem.innerHTML = `<b style="color:red;">Preencha todos os campos</b>`;
             return false;
         }
 
         fetch("/usuarios/autenticar", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
-            body: JSON.stringify({
-
-                emailServer: emailVar,
-                senhaServer: senhaVar,
-                empresaServer: empresaVar
-
-            })
-
+            body: '{"emailServer":"' + emailVar + '","senhaServer":"' + senhaVar + '"}'
         })
-
         .then(function (resposta) {
-
             if (resposta.ok) {
-
-                resposta.json().then(json => {
-
+                resposta.json().then(function (json) {
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.idUsuario;
-                    sessionStorage.EMPRESA_USUARIO = json.fkEmpresa;
+                    sessionStorage.ID_USUARIO = json.id;
 
-                    div_mensagem.innerHTML =
-                        `<b style="color:green;">Login realizado ✅</b>`;
+                    div_mensagem.innerHTML = `<b style="color:green;">Login realizado ✅</b>`;
 
                     setTimeout(function () {
-
                         window.location = "./dash-geral.html";
-
                     }, 1500);
-
                 });
-
             } else {
-
-                div_mensagem.innerHTML =
-                    `<b style="color:red;">Email, senha ou empresa inválidos</b>`;
+                div_mensagem.innerHTML = `<b style="color:red;">Email ou senha inválidos</b>`;
             }
-
         })
-
         .catch(function (erro) {
-
             console.log(erro);
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">Erro no servidor</b>`;
-
+            div_mensagem.innerHTML = `<b style="color:red;">Erro no servidor</b>`;
         });
-
     }
-
 </script>
 
+</html>

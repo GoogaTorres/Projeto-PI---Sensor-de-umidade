@@ -1,10 +1,10 @@
-var express = require("express");
-var router = express.Router();
+let express = require("express");
+let roteador = express.Router();
 
-router.get("/", function (req, res) {
+roteador.get("/", function (requisicao, resposta) {
 
-    res.redirect("/index.html");
+    resposta.redirect("/index.html");
 
 });
 
-module.exports = router;
+module.exports = roteador;

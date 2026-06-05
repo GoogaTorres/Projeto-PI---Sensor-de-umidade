@@ -1,7 +1,7 @@
-var mysql = require("mysql2");
+let mysql = require("mysql2");
 
 // CONEXÃO DO BANCO MYSQL SERVER
-var mySqlConfig = {
+let configuracaoMySql = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
@@ -16,16 +16,16 @@ function executar(instrucao) {
         return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
     }
 
-    return new Promise(function (resolve, reject) {
-        var conexao = mysql.createConnection(mySqlConfig);
+    return new Promise(function (resolver, rejeitar) {
+        let conexao = mysql.createConnection(configuracaoMySql);
         conexao.connect();
         conexao.query(instrucao, function (erro, resultados) {
             conexao.end();
             if (erro) {
-                reject(erro);
+                rejeitar(erro);
             }
             console.log(resultados);
-            resolve(resultados);
+            resolver(resultados);
         });
         conexao.on('error', function (erro) {
             return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
@@ -34,5 +34,5 @@ function executar(instrucao) {
 }
 
 module.exports = {
-    executar
+    executar: executar
 };

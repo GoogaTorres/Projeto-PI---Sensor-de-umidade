@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora | SafeSoja</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/css_calculadora.css">
 </head>
 
 <body class="bodyFundoGradient">
@@ -122,26 +122,18 @@
         </button>
     </div>
 </body>
-</html>
 
 <script>
     function analisar() {
-        let aguaL = Number(agua.value);
-        let vezesM = Number(vezes.value);
-        let custoL = Number(custoAgua.value);
+        let aguaLitros = Number(agua.value);
+        let vezesMes = Number(vezes.value);
+        let custoLitro = Number(custoAgua.value);
         let valor = Number(valorSaca.value);
         let vendidas = Number(sacasVendidas.value);
         let perdidas = Number(sacasPerdidas.value);
 
-        let consumoMes = 0;
-        for (let i = 0; i < vezesM; i++) {
-            consumoMes += aguaL;
-            
-        let custoTotalAgua = 0;
-        for (let i = 0; i < vezesM; i++) {
-            custoTotalAgua += aguaL * custoL;
-        }
-            
+        let consumoMes = aguaLitros * vezesMes;
+        let custoTotalAgua = consumoMes * custoLitro;
         let totalSacas = vendidas + perdidas;
 
         let faturamentoReal = vendidas * valor;
@@ -205,7 +197,8 @@
         cardPrejuizo.innerHTML = `<span style="color: red;">R$ ${prejuizoPerdas.toFixed(2)}</span>`;
         cardTaxaPerda.innerHTML = `${porcentagemPerda.toFixed(2)}%`;
         resultado.innerHTML = `Situação atual: <span class="${classe}">${situacao}</span><br>`;
-        resultado1.innerHTML =`Lucro: <span class="${classeLucro}">${alerta}</span>`;
+        resultado1.innerHTML = `Lucro: <span class="${classeLucro}">${alerta}</span>`;
     }
-}
 </script>
+
+</html>

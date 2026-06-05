@@ -1,65 +1,55 @@
-// var ambiente_processo = 'producao';
-var ambiente_processo = 'desenvolvimento';
+// let ambienteProcesso = 'producao';
+let ambienteProcesso = 'desenvolvimento';
 
-var caminho_env =
-    ambiente_processo === 'producao'
+let caminhoEnv =
+    ambienteProcesso === 'producao'
         ? '.env'
         : '.env.dev';
 
-require("dotenv").config({ path: caminho_env });
+require("dotenv").config({ path: caminhoEnv });
 
-var express = require("express");
-var cors = require("cors");
-var path = require("path");
+let express = require("express");
+let cors = require("cors");
+let path = require("path");
 
-var PORTA_APP = process.env.APP_PORT;
-var HOST_APP = process.env.APP_HOST;
+let PORTA_APP = process.env.APP_PORT;
+let HOST_APP = process.env.APP_HOST;
 
-var app = express();
+let aplicativo = express();
 
-var indexRouter = require("./src/routes/index");
-var usuarioRouter = require("./src/routes/usuarios");
-var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
-var aquariosRouter = require("./src/routes/aquarios");
-var empresasRouter = require("./src/routes/empresas");
+let roteadorIndex = require("./src/routes/index");
+let roteadorUsuario = require("./src/routes/usuarios");
+let roteadorAvisos = require("./src/routes/avisos");
+let roteadorMedidas = require("./src/routes/medidas");
+let roteadorAquarios = require("./src/routes/aquarios");
+let roteadorEmpresas = require("./src/routes/empresas");
 
-app.use(cors());
+aplicativo.use(cors());
 
-app.use(express.json());
+aplicativo.use(express.json());
 
-app.use(express.urlencoded({ extended: false }));
+aplicativo.use(express.urlencoded({ extended: false }));
 
-app.use(
+aplicativo.use(
     express.static(
         path.join(__dirname, "Site institucional")
     )
 );
 
-app.use("/", indexRouter);
+aplicativo.use("/", roteadorIndex);
 
-app.use("/usuarios", usuarioRouter);
+aplicativo.use("/usuarios", roteadorUsuario);
 
-app.use("/avisos", avisosRouter);
+aplicativo.use("/avisos", roteadorAvisos);
 
-app.use("/medidas", medidasRouter);
+aplicativo.use("/medidas", roteadorMedidas);
 
-app.use("/aquarios", aquariosRouter);
+aplicativo.use("/aquarios", roteadorAquarios);
 
-app.use("/empresas", empresasRouter);
+aplicativo.use("/empresas", roteadorEmpresas);
 
-app.listen(PORTA_APP, function () {
+aplicativo.listen(PORTA_APP, function () {
 
-    console.log(`
-    
-    ===========================================
-    
-    SERVIDOR RODANDO
-    
-    http://${HOST_APP}:${PORTA_APP}
-    
-    ===========================================
-    
-    `);
+    console.log("\n    ===========================================\n    \n    SERVIDOR RODANDO\n    \n    http://" + HOST_APP + ":" + PORTA_APP + "\n    \n    ===========================================\n");
 
 });
