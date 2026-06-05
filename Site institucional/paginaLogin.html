@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -47,6 +48,9 @@
             <h2>Senha</h2>
             <input type="password" id="input_senha">
 
+            <h2>Código da Empresa</h2>
+            <input type="text" id="input_empresa">
+
             <button class="btn_entrar" onclick="Entrar()">
                 Entrar
             </button>
@@ -72,8 +76,9 @@
 
         var emailVar = input_email.value;
         var senhaVar = input_senha.value;
+        var empresaVar = input_empresa.value;
 
-        if (emailVar == "" || senhaVar == "") {
+        if (emailVar == "" || senhaVar == "" || empresaVar == "") {
 
             div_mensagem.innerHTML =
                 `<b style="color:red;">Preencha todos os campos</b>`;
@@ -92,7 +97,8 @@
             body: JSON.stringify({
 
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                senhaServer: senhaVar,
+                empresaServer: empresaVar
 
             })
 
@@ -106,7 +112,8 @@
 
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.EMPRESA_USUARIO = json.fkEmpresa;
 
                     div_mensagem.innerHTML =
                         `<b style="color:green;">Login realizado ✅</b>`;
@@ -122,7 +129,7 @@
             } else {
 
                 div_mensagem.innerHTML =
-                    `<b style="color:red;">Email ou senha inválidos</b>`;
+                    `<b style="color:red;">Email, senha ou empresa inválidos</b>`;
             }
 
         })
@@ -139,3 +146,4 @@
     }
 
 </script>
+
