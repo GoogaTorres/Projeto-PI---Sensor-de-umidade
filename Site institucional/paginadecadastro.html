@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -59,6 +60,10 @@
                 id="input_celular"
                 placeholder="Digite seu celular">
 
+            <input type="text"
+                id="input_empresa"
+                placeholder="Código da empresa">
+
             <input type="password"
                 id="input_senha"
                 placeholder="Digite sua senha">
@@ -71,7 +76,6 @@
                 onclick="Cadastrar()">
                 Criar conta
             </button>
-
 
             <div id="div_mensagem"></div>
 
@@ -91,6 +95,7 @@
         var emailVar = input_email.value;
         var cpfVar = input_cpf.value;
         var celularVar = input_celular.value;
+        var empresaVar = input_empresa.value;
         var senhaVar = input_senha.value;
         var repitaVar = input_repita.value;
 
@@ -99,6 +104,7 @@
             emailVar == "" ||
             cpfVar == "" ||
             celularVar == "" ||
+            empresaVar == "" ||
             senhaVar == "" ||
             repitaVar == ""
         ) {
@@ -148,7 +154,7 @@
                 cpfServer: cpfVar,
                 celularServer: celularVar,
                 senhaServer: senhaVar,
-                empresaServer: 1
+                empresaServer: empresaVar
 
             })
 
@@ -184,3 +190,4 @@
     }
 
 </script>
+```
