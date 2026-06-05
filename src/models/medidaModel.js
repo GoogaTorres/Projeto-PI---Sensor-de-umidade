@@ -1,35 +1,22 @@
-var database = require("../database/config");
+let bancoDados = require("../database/config");
 
-function buscarUltimasMedidas(idAquario, limite_linhas) {
+function buscarUltimasMedidas(idAquario, limiteLinhas) {
 
-    var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        momento,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
-                    FROM medida
-                    WHERE fk_aquario = ${idAquario}
-                    ORDER BY id DESC LIMIT ${limite_linhas}`;
+    let instrucaoSql = "SELECT dht11_temperatura as temperatura, dht11_umidade as umidade, momento, DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico FROM medida WHERE fk_aquario = " + idAquario + " ORDER BY id DESC LIMIT " + limiteLinhas;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return bancoDados.executar(instrucaoSql);
 }
 
 function buscarMedidasEmTempoReal(idAquario) {
 
-    var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
-                        fk_aquario 
-                        FROM medida WHERE fk_aquario = ${idAquario} 
-                    ORDER BY id DESC LIMIT 1`;
+    let instrucaoSql = "SELECT dht11_temperatura as temperatura, dht11_umidade as umidade, DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, fk_aquario FROM medida WHERE fk_aquario = " + idAquario + " ORDER BY id DESC LIMIT 1";
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return bancoDados.executar(instrucaoSql);
 }
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
-}
+    buscarUltimasMedidas: buscarUltimasMedidas,
+    buscarMedidasEmTempoReal: buscarMedidasEmTempoReal
+};

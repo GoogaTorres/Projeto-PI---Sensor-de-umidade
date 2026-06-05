@@ -4,6 +4,7 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
@@ -1118,38 +1119,72 @@ a {
 }
 
 #bobia-container {
-    width: 80%;
-    margin: 50px auto;
-    text-align: center;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-sizing: border-box;
 }
 
-textarea[type="text"] {
-    padding: 10px;
+#bobia-container h1 {
+    color: rgb(2, 65, 2);
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+textarea#pergunta {
+    padding: 12px 15px;
     font-size: 16px;
-    border-radius: 25px;
-    width: 800px;
-    border-style: none;
-    box-shadow: 0px 4px 5px #0000002b;
-    height: 25px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    height: 80px;
+    resize: none;
+    outline: none;
+    transition: 0.3s;
+    font-family: inherit;
 }
 
-select,
-button {
-    padding: 10px;
+textarea#pergunta:focus {
+    border: 1px solid #FCC752;
+    box-shadow: 0px 0px 5px #FCC752;
+}
+
+#bobia-container button {
+    padding: 12px;
     font-size: 16px;
     border-radius: 25px;
     cursor: pointer;
-    border-style: none;
-    box-shadow: 0px 4px 5px #0000002b;
+    border: none;
+    background-color: #FCC752;
+    color: #1f2937;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0px 4px 5px rgba(0,0,0,0.1);
+}
+
+#bobia-container button:hover {
+    background-color: #e6b347;
 }
 
 #bobiaResposta {
-    margin-block: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ffffff4a;
-    border: 1px solid #63666a47;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f7d6b147;
+    border: 1px solid rgba(203, 171, 103, 0.35);
     text-align: left;
-    height: 500px;
+    min-height: 50px;
+    max-height: 300px;
+    overflow-y: auto;
+    color: #1f2937;
     display: none;
+    line-height: 1.5;
+    font-size: 15px;
 }

@@ -1,33 +1,33 @@
-// importando os bibliotecas necessárias
-const { GoogleGenAI } = require("@google/genai");
-const express = require("express");
-const path = require("path");
+// importando as bibliotecas necessárias
+let { GoogleGenAI } = require("@google/genai");
+let express = require("express");
+let path = require("path");
 
 // carregando as variáveis de ambiente do projeto do arquivo .env
 require("dotenv").config();
 
 // configurando o servidor express
-const app = express();
-const PORTA_SERVIDOR = process.env.PORTA;
+let aplicativo = express();
+let PORTA_SERVIDOR = process.env.PORTA;
 
 // configurando o gemini (IA)
-const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
+let chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
 
 // configurando o servidor para receber requisições JSON
-app.use(express.json());
+aplicativo.use(express.json());
 
 // configurando o servidor para servir arquivos estáticos
-app.use(express.static(path.join(__dirname, "public")));
+aplicativo.use(express.static(path.join(__dirname, "public")));
 
 // configurando CORS
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-    next();
+aplicativo.use(function (requisicao, resposta, proximo) {
+    resposta.header('Access-Control-Allow-Origin', '*');
+    resposta.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+    proximo();
 });
 
 // inicializando o servidor
-app.listen(PORTA_SERVIDOR, () => {
+aplicativo.listen(PORTA_SERVIDOR, function () {
     console.info(
         `
         ######                ###    #    
@@ -39,41 +39,39 @@ app.listen(PORTA_SERVIDOR, () => {
         ######   ####  #####  ### #     # 
         `
     );
-    console.info(`A API BobIA iniciada, acesse http://localhost:${PORTA_SERVIDOR}`);
+    console.info("A API BobIA iniciada, acesse http://localhost:" + PORTA_SERVIDOR);
 });
 
 // rota para receber perguntas e gerar respostas
-app.post("/perguntar", async (req, res) => {
-    const pergunta = req.body.pergunta;
+aplicativo.post("/perguntar", async function (requisicao, resposta) {
+    let pergunta = requisicao.body.pergunta;
 
     try {
-        const resultado = await gerarResposta(pergunta);
-        res.json({ resultado });
-    } catch (error) {
-        res.status(500).json({ error: 'Erro interno do servidor' });
+        let resultado = await gerarResposta(pergunta);
+        resposta.json({ resultado: resultado });
+    } catch (erro) {
+        resposta.status(500).json({ erro: 'Erro interno do servidor' });
     }
-
 });
 
 // função para gerar respostas usando o gemini
 async function gerarResposta(mensagem) {
-
     try {
         // gerando conteúdo com base na pergunta
-        const modeloIA = chatIA.models.generateContent({
+        let modeloIA = chatIA.models.generateContent({
             model: "gemini-2.5-flash",
-            contents: `Em um paragráfo responda: ${mensagem}`
-
+            contents: "Em um parágrafo responda: " + mensagem
         });
-        const resposta = (await modeloIA).text;
-        const tokens = (await modeloIA).usageMetadata;
+        let resposta = (await modeloIA).text;
+        let tokens = (await modeloIA).usageMetadata;
 
         console.log(resposta);
         console.log("Uso de Tokens:", tokens);
 
         return resposta;
-    } catch (error) {
-        console.error(error);
-        throw error;
+    } catch (erro) {
+        console.error(erro);
+        throw erro;
     }
 }
+

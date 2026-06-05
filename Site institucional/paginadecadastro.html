@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -60,10 +59,6 @@
                 id="input_celular"
                 placeholder="Digite seu celular">
 
-            <input type="text"
-                id="input_empresa"
-                placeholder="Código da empresa">
-
             <input type="password"
                 id="input_senha"
                 placeholder="Digite sua senha">
@@ -77,6 +72,7 @@
                 Criar conta
             </button>
 
+
             <div id="div_mensagem"></div>
 
         </div>
@@ -85,109 +81,63 @@
 
 </body>
 
-</html>
-
 <script>
-
     function Cadastrar() {
-
-        var nomeVar = input_nome.value;
-        var emailVar = input_email.value;
-        var cpfVar = input_cpf.value;
-        var celularVar = input_celular.value;
-        var empresaVar = input_empresa.value;
-        var senhaVar = input_senha.value;
-        var repitaVar = input_repita.value;
+        let nomeVar = input_nome.value;
+        let emailVar = input_email.value;
+        let cpfVar = input_cpf.value;
+        let celularVar = input_celular.value;
+        let senhaVar = input_senha.value;
+        let repitaVar = input_repita.value;
 
         if (
             nomeVar == "" ||
             emailVar == "" ||
             cpfVar == "" ||
             celularVar == "" ||
-            empresaVar == "" ||
             senhaVar == "" ||
             repitaVar == ""
         ) {
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">Preencha todos os campos</b>`;
-
+            div_mensagem.innerHTML = `<b style="color:red;">Preencha todos os campos</b>`;
             return false;
         }
 
         if (!emailVar.includes("@") || !emailVar.includes(".com")) {
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">Email inválido</b>`;
-
+            div_mensagem.innerHTML = `<b style="color:red;">Email inválido</b>`;
             return false;
         }
 
         if (senhaVar.length < 8) {
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">Senha deve ter no mínimo 8 caracteres</b>`;
-
+            div_mensagem.innerHTML = `<b style="color:red;">Senha deve ter no mínimo 8 caracteres</b>`;
             return false;
         }
 
         if (senhaVar != repitaVar) {
-
-            div_mensagem.innerHTML =
-                `<b style="color:red;">As senhas não coincidem</b>`;
-
+            div_mensagem.innerHTML = `<b style="color:red;">As senhas não coincidem</b>`;
             return false;
         }
 
         fetch("/usuarios/cadastrar", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
-            body: JSON.stringify({
-
-                nomeServer: nomeVar,
-                emailServer: emailVar,
-                cpfServer: cpfVar,
-                celularServer: celularVar,
-                senhaServer: senhaVar,
-                empresaServer: empresaVar
-
-            })
-
+            body: '{"nomeServer":"' + nomeVar + '","emailServer":"' + emailVar + '","cpfServer":"' + cpfVar + '","celularServer":"' + celularVar + '","senhaServer":"' + senhaVar + '","empresaServer":1}'
         })
-
         .then(function (resposta) {
-
             if (resposta.ok) {
-
-                div_mensagem.innerHTML =
-                    `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
-
+                div_mensagem.innerHTML = `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
                 setTimeout(function () {
-
                     window.location = "./paginaLogin.html";
-
                 }, 2000);
-
             } else {
-
-                div_mensagem.innerHTML =
-                    `<b style="color:red;">Erro ao cadastrar</b>`;
+                div_mensagem.innerHTML = `<b style="color:red;">Erro ao cadastrar</b>`;
             }
-
         })
-
         .catch(function (erro) {
-
             console.log(erro);
-
         });
-
     }
-
 </script>
-```
+
+</html>

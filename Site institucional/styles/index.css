@@ -1,0 +1,420 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAF9F6;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra de navegação */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    margin-top: 15px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 35px;
+    margin-top: 14px;
+    padding: 5px;
+    padding-left: 15px;
+    width: 80%;
+    background-color: #FFF2E8;
+    box-shadow: 0px 3px 5px rgb(122, 122, 122);
+}
+
+.logo img {
+    height: 50px;
+}
+
+.logo_inicial img {
+    height: 50px;
+}
+
+.logo :hover {
+    cursor: pointer;
+}
+
+.nav_botao {
+    font-size: 20px;
+    background-color: transparent;
+    border: 0px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.btn_login {
+    width: 120px;
+    height: 40px;
+    padding: 7px;
+    background-color: #FCC752;
+    border-radius: 30px;
+    align-items: center;
+}
+
+.dashcal {
+    display: flex;
+    margin-right: 10px;
+}
+
+.botao-inicial {
+    display: flex;
+    align-items: center;
+    background-color: #00a859;
+    border-radius: 15px;
+    padding: 7px;
+}
+
+.inicial {
+    color: white;
+    padding: 0px;
+    margin: 0px;
+}
+
+.homeicon {
+    height: 15px;
+    margin-right: 7px;
+}
+
+.botoes button {
+    font-size: 0.88rem;
+}
+
+/* Imagens de fundo e Título */
+.imagesfundo {
+    position: relative;
+    width: 100%;
+    filter: brightness(60%);
+    margin-bottom: 4vh;
+}
+
+.tituloPrincipal {
+    font-size: 80px;
+    gap: 1px;
+    position: absolute;
+    top: 30vh;
+    left: 40vh;
+    color: yellow;
+}
+
+/* Bob IA Ícone */
+.bobiaicon {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    right: 10px;
+    bottom: 10px;
+    background-color: #00a859;
+    height: 100px;
+    width: 100px;
+    border-radius: 500px;
+    overflow: hidden;
+}
+
+.bobiaicon img {
+    height: 150px;
+}
+
+/* Nossos Serviços */
+.background_img {
+    height: 0px;
+}
+
+.servicos {
+    margin-bottom: 9vw;
+    padding-top: 14vh;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 75px;
+}
+
+.titulo h1 {
+    font-weight: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(2, 65, 2);
+    font-size: 28px;
+}
+
+.blocos {
+    display: flex;
+    justify-content: center;
+    gap: 4vw;
+}
+
+.blocos .cards {
+    height: 400px;
+    width: 250px;
+    border-radius: 50px;
+    background-color: #f7d6b1;
+    border: 5px;
+    box-shadow: 5px 7px 5px rgb(187, 187, 187);
+    overflow: hidden;
+}
+
+.descricaoETitulo {
+    border-top: 2px solid rgb(7, 44, 0);
+    padding-top: 4px;
+}
+
+.descricaoETitulo h1 {
+    font-size: 23px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.descricaoETitulo p {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cardimagem {
+    height: 40%;
+    overflow: hidden;
+}
+
+.cards img {
+    width: 100%;
+}
+
+.cards .descricaoETitulo {
+    margin: 10px;
+}
+
+.cards .descricaoETitulo h1 {
+    text-align: center;
+}
+
+.cards .descricaoETitulo p {
+    text-align: center;
+    margin-top: 13%;
+}
+
+/* Sobre nós / SafeSoja */
+.sobre_nos {
+    margin-bottom: 14vw;
+    padding-top: 9vw;
+}
+
+.sobre_nos .sobrenos_content {
+    margin-top: 14vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.paragrafo {
+    font-size: 1.5vw;
+    margin: 0;
+}
+
+.descricaoSobre_nos {
+    width: 55%;
+    padding-left: 5vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+}
+
+.sobre_nos img {
+    height: 100%;
+    width: 100%;
+}
+
+.sobrenos_img {
+    height: 30vw;
+    overflow: hidden;
+    border-radius: 40px 0px 0px 40px;
+    display: flex;
+}
+
+/* Como funciona? */
+.como_funciona {
+    margin-bottom: 100px;
+    padding-top: 80px;
+}
+
+.comofunciona_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.como_funciona img {
+    height: 100%;
+    width: 100%;
+    border-radius: 0px 40px 40px 0px;
+}
+
+.comofunciona_img {
+    height: 30vw;
+}
+
+.descricaoComo_funciona {
+    width: 55%;
+    padding-left: 5vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Rodapé (Footer) */
+.footer_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10vh 20vw 4vh;
+    height: 650px;
+    gap: 50px;
+    background-color: #1f3d24;
+    border-top: 5px solid black;
+}
+
+.footer_content {
+    display: flex;
+    justify-content: space-between;
+    gap: 10vw;
+    margin-top: 12vh;
+}
+
+.footer_content p,
+.footer_content h1,
+.footer_content span,
+.footer_content2 p,
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer_content h1 {
+    border-bottom: solid white 1px;
+    padding-bottom: 9px;
+}
+
+.footer_content2 {
+    border-top: solid #516e61 2px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerlogo {
+    background-color: #FAF9F6;
+    height: max-content;
+    width: max-content;
+    padding: 10px;
+    border-radius: 60px;
+}
+
+.footerlogo img {
+    height: 90px;
+}
+
+.footer_contentbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+    height: 90%;
+    width: 55vw;
+    border-radius: 20px;
+    background-color: #FAF9F6;
+    margin-left: 15vw;
+}
+
+.footer_content h1 {
+    margin-bottom: 25px;
+}
+
+.midias,
+.servicosF,
+.recebaNovidades {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer_contentbox h1 {
+    font-size: 20px;
+}
+
+#ipt_email {
+    padding: 5px;
+    border-radius: 15px;
+}
+
+/* Cards Equipe */
+.equipe {
+    margin-top: 150px;
+    padding-top: 9vw;
+}
+
+.secaoEquipe {
+    height: 700px;
+}
+
+.cardsgroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 55px;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto 160px;
+    padding: 0 20px;
+}
+
+.card_membro {
+    width: 220px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.card_membro:hover {
+    transform: scale(1.05);
+}
+
+.card_membro img {
+    width: 100%;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.card_membro h3 {
+    margin: 10px 0 5px;
+}
+
+.card_membro p {
+    color: gray;
+}

@@ -1,48 +1,46 @@
-var medidaModel = require("../models/medidaModel");
+let modeloMedida = require("../models/medidaModel");
 
-function buscarUltimasMedidas(req, res) {
+function buscarUltimasMedidas(requisicao, resposta) {
 
-    const limite_linhas = 7;
+    let limiteLinhas = 7;
+    let idAquario = requisicao.params.idAquario;
 
-    var idAquario = req.params.idAquario;
+    console.log("Recuperando as ultimas " + limiteLinhas + " medidas");
 
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
-
-    medidaModel.buscarUltimasMedidas(idAquario, limite_linhas).then(function (resultado) {
+    modeloMedida.buscarUltimasMedidas(idAquario, limiteLinhas).then(function (resultado) {
         if (resultado.length > 0) {
-            res.status(200).json(resultado);
+            resposta.status(200).json(resultado);
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            resposta.status(204).send("Nenhum resultado encontrado!");
         }
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
+        resposta.status(500).json(erro.sqlMessage);
     });
 }
 
 
-function buscarMedidasEmTempoReal(req, res) {
+function buscarMedidasEmTempoReal(requisicao, resposta) {
 
-    var idAquario = req.params.idAquario;
+    let idAquario = requisicao.params.idAquario;
 
-    console.log(`Recuperando medidas em tempo real`);
+    console.log("Recuperando medidas em tempo real");
 
-    medidaModel.buscarMedidasEmTempoReal(idAquario).then(function (resultado) {
+    modeloMedida.buscarMedidasEmTempoReal(idAquario).then(function (resultado) {
         if (resultado.length > 0) {
-            res.status(200).json(resultado);
+            resposta.status(200).json(resultado);
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            resposta.status(204).send("Nenhum resultado encontrado!");
         }
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
+        resposta.status(500).json(erro.sqlMessage);
     });
 }
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
-
-}
+    buscarUltimasMedidas: buscarUltimasMedidas,
+    buscarMedidasEmTempoReal: buscarMedidasEmTempoReal
+};

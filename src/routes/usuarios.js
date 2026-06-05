@@ -1,14 +1,14 @@
-var express = require("express");
-var router = express.Router();
+let express = require("express");
+let roteador = express.Router();
 
-var usuarioController = require("../controllers/usuarioController");
+let controladorUsuario = require("../controllers/usuarioController");
 
-router.post("/cadastrar", function (req, res) {
-    usuarioController.cadastrar(req, res);
+roteador.post("/cadastrar", function (requisicao, resposta) {
+    controladorUsuario.cadastrar(requisicao, resposta);
 });
 
-router.post("/autenticar", function (req, res) {
-    usuarioController.autenticar(req, res);
+roteador.post("/autenticar", function (requisicao, resposta) {
+    controladorUsuario.autenticar(requisicao, resposta);
 });
 
-module.exports = router;
+module.exports = roteador;

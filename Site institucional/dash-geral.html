@@ -5,10 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Geral | SafeSoja</title>
-    <link rel="stylesheet" href="./styles/style.css">
-    <style>
-      
-    </style>
+    <link rel="stylesheet" href="./styles/dash_geral.css">
 </head>
 
 <body class="bodyGeral">
@@ -46,8 +43,8 @@
                 <small>Sensores operando normalmente na plantação.</small>
             </div>
             <div class="metric-card">
-                <h3 style="color: red;" >Áreas em atenção</h3>
-                <p  id="areasAtencao">2</p>
+                <h3 class="text-red">Áreas em atenção</h3>
+                <p id="areasAtencao">2</p>
                 <small>Hectares com umidade próxima do limite de risco.</small>
             </div>
             <div class="metric-card">
@@ -57,16 +54,16 @@
             </div>
         </div>
 
-        <div class="hectare-cards" id="hectareCards"></div>
+        <div class="hectare-cards" id="cardsHectares"></div>
 
 
-        <div class="sensor-controls" id="sensorPanel" style="display:none;">
-            <label id="selectedHectareLabel">Selecione um sensor</label>
-            <select id="sensor-select"></select>
-            <button id="gotoSensor">Ver dashboard individual</button>
+        <div class="sensor-controls" id="painelSensores">
+            <label id="rotuloHectareSelecionado">Selecione um sensor</label>
+            <select id="seletor"></select>
+            <button id="botaoIr" onclick="irParaSensorSelecionado()">Ver dashboard individual</button>
         </div>
 
-        <div class="sensor-actions" id="sensor-list"></div>
+        <div class="sensor-actions" id="listaSensores"></div>
     </div>
 
     <div class="bobiaicon">
@@ -75,150 +72,223 @@
             <img src="./images/BOBIMG.avif" alt="">
         </button>
     </div>
+</body>
 
-    <script>
-        // Gerar 5 sensores por hectare (total 25 sensores) com valores aleatórios de umidade
-        const sensors = [];
-        const hectares = 5;
-        const sensoresPorHectare = 5;
-        // Coordenadas base para exemplo
-        const baseCoords = [
-            ['-20.1234', '-50.2345'],
-            ['-20.1270', '-50.2370'],
-            ['-20.1301', '-50.2402'],
-            ['-20.1330', '-50.2435'],
-            ['-20.1344', '-50.2467']
-        ];
-        for (let h = 1; h <= hectares; h++) {
-            for (let s = 1; s <= sensoresPorHectare; s++) {
-                // Gera umidade aleatória entre 25% e 90%
-                const umidade = Math.floor(Math.random() * (90 - 25 + 1)) + 25;
-                // Pequena variação nas coordenadas para cada sensor
-                const lat = (parseFloat(baseCoords[h-1][0]) + (s-1)*0.0005).toFixed(4);
-                const lng = (parseFloat(baseCoords[h-1][1]) + (s-1)*0.0005).toFixed(4);
-                sensors.push({
-                    id: `Sensor ${((h-1)*sensoresPorHectare + s).toString().padStart(2, '0')}`,
-                    hectare: `Hectare ${h}`,
-                    umidade,
-                    coords: `${lat}, ${lng}`
-                });
-            }
-        }
-
-        const select = document.getElementById('sensor-select');
-        const sensorList = document.getElementById('sensor-list');
-        const gotoButton = document.getElementById('gotoSensor');
-        const sensoresAtivos = document.getElementById('sensoresAtivos');
-        const areasAtencao = document.getElementById('areasAtencao');
-        const maiorRisco = document.getElementById('maiorRisco');
-        const hectareCards = document.getElementById('hectareCards');
-        const sensorPanel = document.getElementById('sensorPanel');
-        const selectedHectareLabel = document.getElementById('selectedHectareLabel');
-        let selectedHectare = null;
-
-        function getStatus(umidade) {
-            if (umidade < 40 || umidade > 80) {
-                return { label: 'Crítico', className: 'status-alert' };
-            }
-            if (umidade < 60) {
-                return { label: 'Atenção', className: 'status-warning' };
-            }
-            return { label: 'Ideal', className: 'status-ok' };
-        }
-
-        function getHectareStatus(hectare) {
-            const items = sensors.filter(sensor => sensor.hectare === hectare);
-            if (!items.length) {
-                return { label: 'Sem dados', className: 'status-ok' };
-            }
-            if (items.some(item => getStatus(item.umidade).label === 'Crítico')) {
-                return { label: 'Crítico', className: 'status-alert' };
-            }
-            if (items.some(item => getStatus(item.umidade).label === 'Atenção')) {
-                return { label: 'Atenção', className: 'status-warning' };
-            }
-            return { label: 'Ideal', className: 'status-ok' };
-        }
-
-        function atualizarIndicadores() {
-            const total = sensors.length;
-            const activeCount = sensors.filter(sensor => getStatus(sensor.umidade).label !== 'Crítico').length;
-            const attentionCount = sensors.filter(sensor => getStatus(sensor.umidade).label === 'Atenção').length;
-            const criticalSensors = sensors.filter(sensor => getStatus(sensor.umidade).label === 'Crítico');
-
-            sensoresAtivos.textContent = `${activeCount}/${total}`;
-            areasAtencao.textContent = attentionCount;
-            maiorRisco.textContent = criticalSensors.length ? criticalSensors[0].hectare : 'Nenhum';
-            
-        }
-
+<script>
+    // Gerar 5 sensores por hectare (total 25 sensores) com valores aleatórios de umidade
+    let sensores = [];
     
+    // Lista de coordenadas mockadas para os 25 sensores (5 sensores por hectare)
+    let coordenadasMock = [
+        '-20.1234, -50.2345', '-20.1239, -50.2350', '-20.1244, -50.2355', '-20.1249, -50.2360', '-20.1254, -50.2365',
+        '-20.1270, -50.2370', '-20.1275, -50.2375', '-20.1280, -50.2380', '-20.1285, -50.2385', '-20.1290, -50.2390',
+        '-20.1301, -50.2402', '-20.1306, -50.2407', '-20.1311, -50.2412', '-20.1316, -50.2417', '-20.1321, -50.2422',
+        '-20.1330, -50.2435', '-20.1335, -50.2440', '-20.1340, -50.2445', '-20.1345, -50.2450', '-20.1350, -50.2455',
+        '-20.1344, -50.2467', '-20.1349, -50.2472', '-20.1354, -50.2477', '-20.1359, -50.2482', '-20.1364, -50.2487'
+    ];
 
-        function renderHectareCards() {
-            const hectares = [...new Set(sensors.map(sensor => sensor.hectare))];
-            hectareCards.innerHTML = '';
-            hectares.forEach(hectare => {
-                const status = getHectareStatus(hectare);
-                const card = document.createElement('div');
-                card.className = 'hectare-card';
-                if (selectedHectare === hectare) card.classList.add('selected');
-                card.innerHTML = `
-                    <h3>${hectare}</h3>
-                    <small>Status: <span class="status-label ${status.className}">${status.label}</span></small>
-                    <small>Sensores ativos: ${sensors.filter(sensor => sensor.hectare === hectare).length}</small>
-                `;
-                card.addEventListener('click', () => {
-                    selectedHectare = hectare;
-                    renderHectareCards();
-                    showSensorsForHectare(hectare);
-                });
-                hectareCards.appendChild(card);
-            });
+    for (let i = 0; i < 25; i++) {
+        // Gera umidade aleatória entre 25% e 90%
+        let umidade = Math.floor(Math.random() * (90 - 25 + 1)) + 25;
+        
+        let numeroSensor = i + 1;
+        let idFormatado = '';
+        if (numeroSensor < 10) {
+            idFormatado = '0' + numeroSensor;
+        } else {
+            idFormatado = numeroSensor.toString();
         }
 
-        function showSensorsForHectare(hectare) {
-            selectedHectareLabel.textContent = `Sensores ativos em ${hectare}`;
-            sensorPanel.style.display = 'flex';
-            select.innerHTML = '';
-            sensorList.innerHTML = '';
-            const filtered = sensors.filter(sensor => sensor.hectare === hectare);
-            filtered.forEach(sensor => {
-                const status = getStatus(sensor.umidade);
-                const globalIndex = sensors.indexOf(sensor);
-                const option = document.createElement('option');
-                option.value = globalIndex;
-                option.textContent = `${sensor.id} — ${sensor.coords}`;
-                select.appendChild(option);
+        // Define o hectare com base no índice do sensor (5 sensores por hectare)
+        let numeroHectare = 1;
+        if (i >= 5) {
+            numeroHectare = 2;
+        }
+        if (i >= 10) {
+            numeroHectare = 3;
+        }
+        if (i >= 15) {
+            numeroHectare = 4;
+        }
+        if (i >= 20) {
+            numeroHectare = 5;
+        }
 
-                const card = document.createElement('div');
-                card.className = 'sensor-card';
-                card.innerHTML = `
+        sensores.push({
+            id: 'Sensor ' + idFormatado,
+            hectare: 'Hectare ' + numeroHectare,
+            umidade: umidade,
+            coords: coordenadasMock[i]
+        });
+    }
+
+    let hectareSelecionado = null;
+
+    function obterEstado(umidade) {
+        if (umidade < 40 || umidade > 80) {
+            return { label: 'Crítico', className: 'status-alert' };
+        }
+        if (umidade < 60) {
+            return { label: 'Atenção', className: 'status-warning' };
+        }
+        return { label: 'Ideal', className: 'status-ok' };
+    }
+
+    function obterEstadoHectare(hectare) {
+        let itens = [];
+        for (let i = 0; i < sensores.length; i++) {
+            if (sensores[i].hectare === hectare) {
+                itens.push(sensores[i]);
+            }
+        }
+        if (itens.length === 0) {
+            return { label: 'Sem dados', className: 'status-ok' };
+        }
+        let temCritico = false;
+        let temAtencao = false;
+        for (let i = 0; i < itens.length; i++) {
+            let estado = obterEstado(itens[i].umidade).label;
+            if (estado === 'Crítico') {
+                temCritico = true;
+            }
+            if (estado === 'Atenção') {
+                temAtencao = true;
+            }
+        }
+        if (temCritico) {
+            return { label: 'Crítico', className: 'status-alert' };
+        }
+        if (temAtencao) {
+            return { label: 'Atenção', className: 'status-warning' };
+        }
+        return { label: 'Ideal', className: 'status-ok' };
+    }
+
+    function atualizarIndicadores() {
+        let total = sensores.length;
+        let quantidadeAtivos = 0;
+        let quantidadeAtencao = 0;
+        let sensoresCriticos = [];
+
+        for (let i = 0; i < sensores.length; i++) {
+            let estado = obterEstado(sensores[i].umidade).label;
+            if (estado !== 'Crítico') {
+                quantidadeAtivos++;
+            }
+            if (estado === 'Atenção') {
+                quantidadeAtencao++;
+            }
+            if (estado === 'Crítico') {
+                sensoresCriticos.push(sensores[i]);
+            }
+        }
+
+        sensoresAtivos.innerHTML = quantidadeAtivos + '/' + total;
+        areasAtencao.innerHTML = quantidadeAtencao;
+        if (sensoresCriticos.length > 0) {
+            maiorRisco.innerHTML = sensoresCriticos[0].hectare;
+        } else {
+            maiorRisco.innerHTML = 'Nenhum';
+        }
+    }
+
+    function desenharCardsHectares() {
+        let listaHectares = [];
+        for (let i = 0; i < sensores.length; i++) {
+            let hect = sensores[i].hectare;
+            let jaExiste = false;
+            for (let j = 0; j < listaHectares.length; j++) {
+                if (listaHectares[j] === hect) {
+                    jaExiste = true;
+                    break;
+                }
+            }
+            if (!jaExiste) {
+                listaHectares.push(hect);
+            }
+        }
+
+        cardsHectares.innerHTML = '';
+        for (let i = 0; i < listaHectares.length; i++) {
+            let hectare = listaHectares[i];
+            let estado = obterEstadoHectare(hectare);
+            let classeSelecionado = '';
+            if (hectareSelecionado === hectare) {
+                classeSelecionado = ' selected';
+            }
+
+            let sensoresAtivosHectare = 0;
+            for (let k = 0; k < sensores.length; k++) {
+                if (sensores[k].hectare === hectare) {
+                    sensoresAtivosHectare++;
+                }
+            }
+
+            cardsHectares.innerHTML += `
+                <div class="hectare-card${classeSelecionado}" onclick="selecionarHectare('${hectare}')">
+                    <h3>${hectare}</h3>
+                    <small>Status: <span class="status-label ${estado.className}">${estado.label}</span></small>
+                    <small>Sensores ativos: ${sensoresAtivosHectare}</small>
+                </div>
+            `;
+        }
+    }
+
+    function selecionarHectare(hectare) {
+        hectareSelecionado = hectare;
+        desenharCardsHectares();
+        exibirSensoresDoHectare(hectare);
+    }
+
+    function exibirSensoresDoHectare(hectare) {
+        rotuloHectareSelecionado.innerHTML = 'Sensores ativos em ' + hectare;
+        painelSensores.style.display = 'flex';
+        seletor.innerHTML = '';
+        listaSensores.innerHTML = '';
+
+        let sensoresFiltrados = [];
+        let indicesOriginais = [];
+        for (let i = 0; i < sensores.length; i++) {
+            if (sensores[i].hectare === hectare) {
+                sensoresFiltrados.push(sensores[i]);
+                indicesOriginais.push(i);
+            }
+        }
+
+        for (let i = 0; i < sensoresFiltrados.length; i++) {
+            let sensor = sensoresFiltrados[i];
+            let indiceGlobal = indicesOriginais[i];
+            let estado = obterEstado(sensor.umidade);
+
+            seletor.innerHTML += `<option value="${indiceGlobal}">${sensor.id} — ${sensor.coords}</option>`;
+
+            listaSensores.innerHTML += `
+                <div class="sensor-card" onclick="irParaSensor('${sensor.id}')">
                     <h3>${sensor.id}</h3>
                     <p>Umidade: ${sensor.umidade}%</p>
                     <small>Coordenada: ${sensor.coords}</small>
-                    <small>Status: <span class="status-label ${status.className}">${status.label}</span></small>
-                `;
-                card.addEventListener('click', () => {
-                    window.location.href = `dash.html?sensor=${encodeURIComponent(sensor.id)}`;
-                });
-                sensorList.appendChild(card);
-            });
+                    <small>Status: <span class="status-label ${estado.className}">${estado.label}</span></small>
+                </div>
+            `;
         }
+    }
 
+    function irParaSensor(sensorId) {
+        window.location.href = 'dash.html?sensor=' + encodeURIComponent(sensorId);
+    }
 
-        function initialize() {
-            atualizarIndicadores();
-            renderHectareCards();
-        }
+    function irParaSensorSelecionado() {
+        if (seletor.value === '') return;
+        let selecionado = sensores[Number(seletor.value)];
+        irParaSensor(selecionado.id);
+    }
 
-        initialize();
+    function inicializar() {
+        atualizarIndicadores();
+        desenharCardsHectares();
+    }
 
-        gotoButton.addEventListener('click', () => {
-            if (select.value === '') return;
-            const selected = sensors[select.value];
-            window.location.href = `dash.html?sensor=${encodeURIComponent(selected.id)}`;
-        });
-    </script>
-</body>
+    inicializar();
+</script>
 
 </html>

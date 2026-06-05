@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        html{
-            height: 100%;
-        }
-    </style>
 </head>
 
 <header>
@@ -42,27 +37,25 @@
         <button onclick="gerarResposta()">Gerar Resposta</button>
         
     </div>
-
-    <script>
-        
-        async function gerarResposta() {
-            const pergunta = document.getElementById('pergunta').value;
-
-            const response = await fetch('/perguntar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ pergunta })
-            });
-
-            const data = await response.json();
-
-            bobiaResposta.style.display = 'block';
-            document.getElementById('bobiaResposta').innerText = data.resultado;
-        }
-
-    </script>
-    
 </body>
+
+<script>
+    async function gerarResposta() {
+        let textoPergunta = pergunta.value;
+
+        let respostaHttp = await fetch('/perguntar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: '{"pergunta":"' + textoPergunta + '"}'
+        });
+
+        let dados = await respostaHttp.json();
+
+        bobiaResposta.style.display = 'block';
+        bobiaResposta.innerHTML = dados.resultado;
+    }
+</script>
+
 </html>
