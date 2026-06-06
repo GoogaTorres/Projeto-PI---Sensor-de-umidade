@@ -100,7 +100,6 @@
             emailVar == "" ||
             cpfVar == "" ||
             celularVar == "" ||
-            empresaVar == "" ||
             senhaVar == "" ||
             repitaVar == ""
         ) {
@@ -109,7 +108,7 @@
         }
 
         if (!emailVar.includes("@") || !emailVar.includes(".com")) {
-            div_mensagem.innerHTML = `<b style="color:red;">Email inválido</b>`;
+            div_mensagem.innerHTML = `<b style="color:red;">Email inválido, deve conter "@" e ".com"</b>`;
             return false;
         }
 
@@ -120,6 +119,44 @@
 
         if (senhaVar != repitaVar) {
             div_mensagem.innerHTML = `<b style="color:red;">As senhas não coincidem</b>`;
+            return false;
+        }
+        if(cpfVar.length != 11){
+            div_mensagem.innerHTML = `<b style="color:red;">O cpf deve conter 14 caracteres, sem pontos ou traços</b>`;
+            return false;
+        }
+        if(celularVar.length != 13){
+            div_mensagem.innerHTML = `<b style="color:red;">O número de celular deve conter 13 caracteres, considerando o DDI e o DDD (Insira sem espaços)</b>`;
+            return false;            
+        }
+
+        //verificacao numero 
+        let numeros = [0,1,2,3,4,5,6,7,8,9]
+        let contemNumber = false
+        for(let i = 0; i < numeros.length; i++){
+            let atual = numeros[i]
+            
+            if (senhaVar.includes(atual)){
+                contemNumber = true
+            }
+        }
+        if (contemNumber == false){
+            div_mensagem.innerHTML = `<b style="color:red;">A senha deve conter algum número</b>`;
+            return false;
+        }
+
+        // verificaco caractere
+        let caracteres = ["!", "@", "#", "$", "%", "^", "&", "*", "_", "+", "-","=", "|",  ":",";", ",", ".", "?",];
+        let temcarac = false;
+        for(let i = 0; i < caracteres.length; i++){
+            let atual = caracteres[i]
+            
+            if (senhaVar.includes(atual)){
+                temcarac = true
+            }
+        }
+        if (temcarac == false){
+            div_mensagem.innerHTML = `<b style="color:red;">A senha deve conter algum caracter</b>`;
             return false;
         }
 
