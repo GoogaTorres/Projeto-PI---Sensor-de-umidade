@@ -122,7 +122,7 @@
             return false;
         }
         if(cpfVar.length != 11){
-            div_mensagem.innerHTML = `<b style="color:red;">O cpf deve conter 14 caracteres, sem pontos ou traços</b>`;
+            div_mensagem.innerHTML = `<b style="color:red;">O cpf deve conter 11 caracteres, sem pontos ou traços</b>`;
             return false;
         }
         if(celularVar.length != 13){
@@ -178,16 +178,27 @@
           })
         .then(function (resposta) {
             if (resposta.ok) {
-                div_mensagem.innerHTML = `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
-                setTimeout(function () {
-                    window.location = "./paginaLogin.html";
-                }, 2000);
+                resposta.json().then(function(json){
+                    var msg = json.mensagem || 'Cadastro realizado ✅';
+                    div_mensagem.innerHTML = `<b style="color:lightgreen;">${msg}</b>`;
+                    setTimeout(function () {
+                        window.location = "./paginaLogin.html";
+                    }, 2000);
+                }).catch(function(){
+                    div_mensagem.innerHTML = `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
+                    setTimeout(function () { window.location = "./paginaLogin.html"; }, 2000);
+                });
             } else {
-                div_mensagem.innerHTML = `<b style="color:red;">Erro ao cadastrar</b>`;
+                resposta.json().then(function(json){
+                    div_mensagem.innerHTML = `<b style="color:red;">${json.mensagem || 'Erro ao cadastrar'}</b>`;
+                }).catch(function(){
+                    div_mensagem.innerHTML = `<b style="color:red;">Erro ao cadastrar</b>`;
+                });
             }
         })
         .catch(function (erro) {
             console.log(erro);
+            div_mensagem.innerHTML = `<b style="color:red;">Erro no servidor</b>`;
         });
     }
 </script>

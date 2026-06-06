@@ -10,9 +10,9 @@ function cadastrar(nome, email, cpf, celular, senha, empresa) {
     return bancoDados.executar(instrucaoSql);
 }
 
-function autenticar(email, senha) {
+function autenticar(email, senha, empresa) {
 
-    let instrucaoSql = `SELECT * FROM usuario WHERE email = '${email}' AND senha = '${senha}';`;
+    let instrucaoSql = `SELECT * FROM usuario WHERE email = '${email}' AND senha = '${senha}' AND fkEmpresa = ${empresa};`;
 
     console.log(instrucaoSql);
 
