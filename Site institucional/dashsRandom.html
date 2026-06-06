@@ -290,6 +290,14 @@
         valorMenorUmidade.innerHTML = menor.toFixed(2);
         valorMaiorUmidade.innerHTML = maior.toFixed(2);
     }
+
+    if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
+        container.innerHTML += `    <div class="bobiaicon">
+        <button onclick="window.location.href='http://localhost:3333'">
+            <img src="./images/BOBIMG.avif" alt="">
+        </button>
+    </div>`
+    }
 </script>
 
 </html>

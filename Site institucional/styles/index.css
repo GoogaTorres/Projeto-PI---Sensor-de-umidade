@@ -72,6 +72,15 @@ header {
     align-items: center;
 }
 
+.btn_logout {
+    width: 120px;
+    height: 40px;
+    padding: 7px;
+    background-color: #fc5252;
+    border-radius: 30px;
+    align-items: center;
+}
+
 .dashcal {
     display: flex;
     margin-right: 10px;
@@ -125,15 +134,24 @@ header {
     align-items: center;
     right: 10px;
     bottom: 10px;
-    background-color: #00a859;
+    background-color: #ffffff;
+    border: 1px black solid;
     height: 100px;
     width: 100px;
     border-radius: 500px;
     overflow: hidden;
+    cursor: pointer;
+}
+
+.bobiaicon button {
+    cursor: pointer;
+    border: 0px;
 }
 
 .bobiaicon img {
-    height: 150px;
+    cursor: pointer;
+    height: 70px;
+    padding-top: 10px;
 }
 
 /* Nossos Serviços */

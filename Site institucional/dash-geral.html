@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./styles/dash_geral.css">
 </head>
 
-<body class="bodyGeral">
+<body class="bodyGeral" onload="carregou()">
     <header>
         <div class="header">
             <div class="logo">
@@ -18,23 +18,25 @@
                 <button class="nav_botao" onclick="window.location.href='./calculadora.html'">Calculadora</button>
                 <div class="botao-inicial">
                     <img src="./images/home.png" class="homeicon" alt="Home">
-                    <button class="nav_botao inicial" onclick="window.location.href='./index.html'">Página inicial</button>
+                    <button class="nav_botao inicial" onclick="window.location.href='./index.html'">Página
+                        inicial</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="containerDashGeral">
+    <div class="containerDashGeral" id="containerGeral">
         <div class="topo">
             <h1>Dashboard Geral</h1>
-            <p>Visão ampla da plantação por hectare. Identifique rapidamente quais sensores estão fora da zona ideal e selecione qualquer aparelho para ver o painel individual em detalhes.</p>
+            <p>Visão ampla da plantação por hectare. Identifique rapidamente quais sensores estão fora da zona ideal e
+                selecione qualquer aparelho para ver o painel individual em detalhes.</p>
         </div>
 
 
         <div class="metrics">
             <div class="metric-card">
                 <h3>Hectares monitorados</h3>
-                <p>5</p>
+                <p id="qtdHectares">--</p>
                 <small>Área total sob monitoramento em tempo real.</small>
             </div>
             <div class="metric-card">
@@ -66,69 +68,102 @@
         <div class="sensor-actions" id="listaSensores"></div>
     </div>
 
-    <div class="bobiaicon">
 
-        <button onclick="window.location.href='http://localhost:3333'">
-            <img src="./images/BOBIMG.avif" alt="">
-        </button>
-    </div>
+
 </body>
 
 <script>
+    let dados = []
+    let listaHectares = []
+
+    function carregou() {
+
+        if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
+        containerGeral.innerHTML += `    <div class="bobiaicon">
+        <button onclick="window.location.href='http://localhost:3333'">
+            <img src="./images/BOBIMG.avif" alt="">
+        </button>
+    </div>`
+    }
+
+        fetch("/dash/carregarDash", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                idServer: sessionStorage.ID_USUARIO
+
+            })
+
+        })
+
+            .then(function (resposta) {
+
+                if (resposta.ok) {
+
+                    resposta.json().then(json => {
+
+                        dados = json;
+
+                        sensores = [];
+
+                        for (let i = 0; i < json.length; i++) {
+
+                            let umidade = Math.floor(Math.random() * (90 - 25 + 1)) + 25;
+
+                            sensores.push({
+                                id: json[i].sensor,
+                                hectare: json[i].hectare,
+                                umidade: umidade,
+                                coords: json[i].coordenada
+                            });
+                        }
+
+                        atualizarIndicadores();
+                        desenharCardsHectares();
+
+                        listaHectares = []
+                        for (let i = 0; i < sensores.length; i++) {
+                            let sensorAtual = sensores[i]
+                            if (!listaHectares.includes(sensorAtual.hectare)) {
+                                listaHectares.push(sensorAtual.hectare)
+                            }
+                        }
+
+                    });
+
+                }
+
+            })
+
+            .catch(function (erro) {
+
+                console.log(erro);
+
+
+            });
+    }
+
     // Gerar 5 sensores por hectare (total 25 sensores) com valores aleatórios de umidade
     let sensores = [];
-    
+
     // Lista de coordenadas mockadas para os 25 sensores (5 sensores por hectare)
-    let coordenadasMock = [
-        '-20.1234, -50.2345', '-20.1239, -50.2350', '-20.1244, -50.2355', '-20.1249, -50.2360', '-20.1254, -50.2365',
-        '-20.1270, -50.2370', '-20.1275, -50.2375', '-20.1280, -50.2380', '-20.1285, -50.2385', '-20.1290, -50.2390',
-        '-20.1301, -50.2402', '-20.1306, -50.2407', '-20.1311, -50.2412', '-20.1316, -50.2417', '-20.1321, -50.2422',
-        '-20.1330, -50.2435', '-20.1335, -50.2440', '-20.1340, -50.2445', '-20.1345, -50.2450', '-20.1350, -50.2455',
-        '-20.1344, -50.2467', '-20.1349, -50.2472', '-20.1354, -50.2477', '-20.1359, -50.2482', '-20.1364, -50.2487'
-    ];
 
-    for (let i = 0; i < 25; i++) {
-        // Gera umidade aleatória entre 25% e 90%
-        let umidade = Math.floor(Math.random() * (90 - 25 + 1)) + 25;
-        
-        let numeroSensor = i + 1;
-        let idFormatado = '';
-        if (numeroSensor < 10) {
-            idFormatado = '0' + numeroSensor;
-        } else {
-            idFormatado = numeroSensor.toString();
-        }
 
-        // Define o hectare com base no índice do sensor (5 sensores por hectare)
-        let numeroHectare = 1;
-        if (i >= 5) {
-            numeroHectare = 2;
-        }
-        if (i >= 10) {
-            numeroHectare = 3;
-        }
-        if (i >= 15) {
-            numeroHectare = 4;
-        }
-        if (i >= 20) {
-            numeroHectare = 5;
-        }
 
-        sensores.push({
-            id: 'Sensor ' + idFormatado,
-            hectare: 'Hectare ' + numeroHectare,
-            umidade: umidade,
-            coords: coordenadasMock[i]
-        });
-    }
 
     let hectareSelecionado = null;
 
     function obterEstado(umidade) {
-        if (umidade < 40 || umidade > 80) {
+        if (umidade < 50 || umidade > 85) {
             return { label: 'Crítico', className: 'status-alert' };
         }
-        if (umidade < 60) {
+        if (umidade < 55 || umidade > 80) {
             return { label: 'Atenção', className: 'status-warning' };
         }
         return { label: 'Ideal', className: 'status-ok' };
@@ -243,26 +278,15 @@
     function exibirSensoresDoHectare(hectare) {
         rotuloHectareSelecionado.innerHTML = 'Sensores ativos em ' + hectare;
         painelSensores.style.display = 'flex';
-        seletor.innerHTML = '';
         listaSensores.innerHTML = '';
 
-        let sensoresFiltrados = [];
-        let indicesOriginais = [];
         for (let i = 0; i < sensores.length; i++) {
-            if (sensores[i].hectare === hectare) {
-                sensoresFiltrados.push(sensores[i]);
-                indicesOriginais.push(i);
-            }
-        }
-
-        for (let i = 0; i < sensoresFiltrados.length; i++) {
-            let sensor = sensoresFiltrados[i];
-            let indiceGlobal = indicesOriginais[i];
+            let sensor = sensores[i];
             let estado = obterEstado(sensor.umidade);
 
-            seletor.innerHTML += `<option value="${indiceGlobal}">${sensor.id} — ${sensor.coords}</option>`;
 
-            listaSensores.innerHTML += `
+            if (sensor.hectare == hectare) {
+                listaSensores.innerHTML += `
                 <div class="sensor-card" onclick="irParaSensor('${sensor.id}')">
                     <h3>${sensor.id}</h3>
                     <p>Umidade: ${sensor.umidade}%</p>
@@ -270,11 +294,18 @@
                     <small>Status: <span class="status-label ${estado.className}">${estado.label}</span></small>
                 </div>
             `;
+            }
         }
+
+        let sensoresFiltrados = [];
+        let indicesOriginais = [];
+
+        
     }
 
     function irParaSensor(sensorId) {
-        window.location.href = 'dash.html?sensor=' + encodeURIComponent(sensorId);
+        window.location.href = 'dash.html?sensor=' + sensorId;
+        sessionStorage.setItem('SENSOR_SELECIONADO',sensorId)
     }
 
     function irParaSensorSelecionado() {
@@ -283,12 +314,9 @@
         irParaSensor(selecionado.id);
     }
 
-    function inicializar() {
-        atualizarIndicadores();
-        desenharCardsHectares();
-    }
 
-    inicializar();
+    
+
 </script>
 
 </html>
