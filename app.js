@@ -15,7 +15,7 @@ let path = require("path");
 let PORTA_APP = process.env.APP_PORT;
 let HOST_APP = process.env.APP_HOST;
 
-let aplicativo = express();
+let app = express();
 
 let roteadorIndex = require("./src/routes/index");
 let roteadorUsuario = require("./src/routes/usuarios");
@@ -23,33 +23,45 @@ let roteadorAvisos = require("./src/routes/avisos");
 let roteadorMedidas = require("./src/routes/medidas");
 let roteadorAquarios = require("./src/routes/aquarios");
 let roteadorEmpresas = require("./src/routes/empresas");
+var dashRouter = require("./src/routes/dash");
 
-aplicativo.use(cors());
+app.use(cors());
 
-aplicativo.use(express.json());
+app.use(express.json());
 
-aplicativo.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
-aplicativo.use(
+app.use(
     express.static(
         path.join(__dirname, "Site institucional")
     )
 );
 
-aplicativo.use("/", roteadorIndex);
+app.use("/", roteadorIndex);
 
-aplicativo.use("/usuarios", roteadorUsuario);
+app.use("/usuarios", roteadorUsuario);
 
-aplicativo.use("/avisos", roteadorAvisos);
+app.use("/dash", dashRouter);
 
-aplicativo.use("/medidas", roteadorMedidas);
+app.use("/avisos", roteadorAvisos);
 
-aplicativo.use("/aquarios", roteadorAquarios);
+app.use("/medidas", roteadorMedidas);
 
-aplicativo.use("/empresas", roteadorEmpresas);
+app.use("/aquarios", roteadorAquarios);
 
-aplicativo.listen(PORTA_APP, function () {
+app.use("/empresas", roteadorEmpresas);
 
-    console.log("\n    ===========================================\n    \n    SERVIDOR RODANDO\n    \n    http://" + HOST_APP + ":" + PORTA_APP + "\n    \n    ===========================================\n");
+app.listen(PORTA_APP, function () {
 
+console.log(`
+    
+    ===========================================
+    
+    SERVIDOR RODANDO
+    
+    http://${HOST_APP}:${PORTA_APP}
+    
+    ===========================================
+    
+    `);
 });
