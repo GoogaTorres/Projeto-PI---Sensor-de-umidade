@@ -105,9 +105,16 @@
                     setTimeout(function () {
                         window.location = "./dash-geral.html";
                     }, 1500);
+                }).catch(function(){
+                    div_mensagem.innerHTML = `<b style="color:green;">Login realizado ✅</b>`;
+                    setTimeout(function () { window.location = "./dash-geral.html"; }, 1500);
                 });
             } else {
-                div_mensagem.innerHTML = `<b style="color:red;">Email, senha ou empresa inválidos</b>`;
+                resposta.json().then(function(json){
+                    div_mensagem.innerHTML = `<b style="color:red;">${json.mensagem || 'Email, senha ou empresa inválidos'}</b>`;
+                }).catch(function(){
+                    div_mensagem.innerHTML = `<b style="color:red;">Email, senha ou empresa inválidos</b>`;
+                });
             }
         })
         .catch(function (erro) {
