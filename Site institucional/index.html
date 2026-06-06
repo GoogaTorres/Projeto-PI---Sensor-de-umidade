@@ -8,19 +8,18 @@
     <link rel="stylesheet" href="./styles/index.css">
 </head>
 
-<body class="bodyFundoGradient">
+<body class="bodyFundoGradient" onload="carregou()">
     <header>
         <div class="header">
             <div class="logo_inicial">
                 <img src="./images/Logo_da_Safe_Soja.png">
             </div>
-            <div class="botoes">
+            <div class="botoes" id="botoes">
                 <a href="#secaoServicos"><button class="nav_botao">Serviços</button></a>
                 <a href="#secaoProjeto"><button class="nav_botao">Projeto</button></a>
                 <a href="#secaoFuncionamento"><button class="nav_botao">Funcionamento</button></a>
                 <a href="#secaoEquipe"><button class="nav_botao">Nossa equipe</button></a>
-                <a><button onclick="window.location.href='./paginaLogin.html'"
-                        class="nav_botao btn_login">Login</button></a>
+
             </div>
         </div>
     </header>
@@ -33,7 +32,7 @@
             A melhor soja <br> em seu melhor <br> estado.
         </h1>
     </div>
-    <div class="conteudo">
+    <div class="conteudo" id="container">
 
         <div class="background_img">
             <img src="">
@@ -125,25 +124,25 @@
                 <div class="card_membro">
                     <img src="./images/fotoKaua.jpeg">
                     <h3>Kauã Andrade</h3>
-                    
+
                 </div>
 
                 <div class="card_membro">
                     <img src="./images/fotoGabriel.jpeg">
                     <h3>Gabriel Eduardo</h3>
-                 
+
                 </div>
 
                 <div class="card_membro">
                     <img src="./images/fotoArthur.jpeg">
                     <h3>Arthur Almeida</h3>
-                    
+
                 </div>
 
                 <div class="card_membro">
                     <img src="./images/fotoNicolas.jpeg">
                     <h3>Nicolas Augusto</h3>
-                    
+
                 </div>
                 <div class="card_membro">
                     <img src="./images/GustavoFoto.jpeg">
@@ -155,7 +154,7 @@
                 </div>
 
             </div>
-            
+
         </div>
 
         <footer>
@@ -188,6 +187,35 @@
 
     </div>
     </div>
+
+    <script>
+        function carregou() {
+            if (sessionStorage.getItem("EMAIL_USUARIO") != null) {
+                botoes.innerHTML += `<a><button onclick="logout()" class="nav_botao btn_logout">Sair</button></a>`
+                container.innerHTML += `
+                <div class="bobiaicon">
+                <button onclick="window.location.href='./dash-geral.html'">
+                <img class="dashicon" src="./images/dashIcon.png" alt="">
+                </button>
+                </div>
+                `
+
+            } else {
+                botoes.innerHTML += `<a><button onclick="window.location.href='./paginaLogin.html'" class="nav_botao btn_login">Login</button></a>`
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("EMAIL_USUARIO")
+            sessionStorage.removeItem("EMPRESA_USUARIO")
+            sessionStorage.removeItem("ID_USUARIO")
+            sessionStorage.removeItem("NOME_USUARIO")
+            sessionStorage.removeItem("SENSOR_SELECIONADO")
+            sessionStorage.removeItem("ADMINISTRADOR")
+
+            location.reload()
+        }
+    </script>
 
 </body>
 

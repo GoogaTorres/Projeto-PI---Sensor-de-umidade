@@ -47,6 +47,9 @@
             <h2>Senha</h2>
             <input type="password" id="input_senha">
 
+            <h2>Código da Empresa</h2>
+            <input type="text" id="input_empresa">
+
             <button class="btn_entrar" onclick="Entrar()">
                 Entrar
             </button>
@@ -68,8 +71,9 @@
     function Entrar() {
         let emailVar = input_email.value;
         let senhaVar = input_senha.value;
+        let empresaVar = input_empresa.value;
 
-        if (emailVar == "" || senhaVar == "") {
+        if (emailVar == "" || senhaVar == "" || empresaVar == "") {
             div_mensagem.innerHTML = `<b style="color:red;">Preencha todos os campos</b>`;
             return false;
         }
@@ -79,14 +83,22 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: '{"emailServer":"' + emailVar + '","senhaServer":"' + senhaVar + '"}'
+            body: JSON.stringify({
+
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                empresaServer: empresaVar
+
+            }) 
         })
         .then(function (resposta) {
             if (resposta.ok) {
                 resposta.json().then(function (json) {
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.EMPRESA_USUARIO = json.fkEmpresa;
+                    sessionStorage.ADMINISTRADOR = json.Administrador;
 
                     div_mensagem.innerHTML = `<b style="color:green;">Login realizado ✅</b>`;
 
@@ -95,7 +107,7 @@
                     }, 1500);
                 });
             } else {
-                div_mensagem.innerHTML = `<b style="color:red;">Email ou senha inválidos</b>`;
+                div_mensagem.innerHTML = `<b style="color:red;">Email, senha ou empresa inválidos</b>`;
             }
         })
         .catch(function (erro) {

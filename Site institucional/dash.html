@@ -32,7 +32,7 @@
 
     </header>
 
-    <div class="container">
+    <div class="container" id="container">
 
         <div class="topo">
             <h1>Safe Soja</h1>
@@ -75,12 +75,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="bobiaicon">
-        <button onclick="window.location.href='http://localhost:3333'">
-            <img src="./images/BOBIMG.avif" alt="">
-        </button>
     </div>
 </body>
 
@@ -322,6 +316,14 @@
     setInterval(function () {
         obterDados(graficoDigital, 'digital');
     }, 1000);
+
+    if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
+        container.innerHTML += `    <div class="bobiaicon">
+        <button onclick="window.location.href='http://localhost:3333'">
+            <img src="./images/BOBIMG.avif" alt="">
+        </button>
+    </div>`
+    }
 </script>
 
 </html>

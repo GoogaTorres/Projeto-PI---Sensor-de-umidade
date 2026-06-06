@@ -59,6 +59,10 @@
                 id="input_celular"
                 placeholder="Digite seu celular">
 
+            <input type="text"
+                id="input_empresa"
+                placeholder="Código da empresa">
+
             <input type="password"
                 id="input_senha"
                 placeholder="Digite sua senha">
@@ -87,6 +91,7 @@
         let emailVar = input_email.value;
         let cpfVar = input_cpf.value;
         let celularVar = input_celular.value;
+        var empresaVar = input_empresa.value;
         let senhaVar = input_senha.value;
         let repitaVar = input_repita.value;
 
@@ -95,6 +100,7 @@
             emailVar == "" ||
             cpfVar == "" ||
             celularVar == "" ||
+            empresaVar == "" ||
             senhaVar == "" ||
             repitaVar == ""
         ) {
@@ -122,8 +128,17 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: '{"nomeServer":"' + nomeVar + '","emailServer":"' + emailVar + '","cpfServer":"' + cpfVar + '","celularServer":"' + celularVar + '","senhaServer":"' + senhaVar + '","empresaServer":1}'
-        })
+            body: JSON.stringify({
+
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                cpfServer: cpfVar,
+                celularServer: celularVar,
+                senhaServer: senhaVar,
+                empresaServer: empresaVar
+
+            })
+          })
         .then(function (resposta) {
             if (resposta.ok) {
                 div_mensagem.innerHTML = `<b style="color:lightgreen;">Cadastro realizado ✅</b>`;
