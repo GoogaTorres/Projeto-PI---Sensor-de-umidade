@@ -2,7 +2,6 @@ var usuarioModel = require("../models/usuarioModel");
 var empresaModel = require("../models/empresaModel");
 
 function cadastrar(req, res) {
-  console.log("cadastrar body", req.body);
   var nome = req.body.nomeServer;
   var email = req.body.emailServer;
   var cpf = req.body.cpfServer;
@@ -15,10 +14,14 @@ function cadastrar(req, res) {
     email == undefined ||
     cpf == undefined ||
     celular == undefined ||
-    senha == undefined ||
-    codigoEmpresa == undefined
+    senha == undefined
   ) {
     res.status(400).json({ mensagem: "Dados incompletos para cadastro." });
+    return;
+  }
+
+  if (codigoEmpresa == undefined || codigoEmpresa === "") {
+    res.status(400).json({ mensagem: "Código da empresa não informado." });
     return;
   }
 
@@ -33,9 +36,8 @@ function cadastrar(req, res) {
     .then(function (resultado) {
       if (resultado.length > 0) {
         var empresaId = resultado[0].idEmpresa || resultado[0].id;
-        console.log("Empresa lookup", codigoEmpresa, "->", resultado[0], "empresaId=", empresaId);
-
-        if (empresaId == undefined || isNaN(empresaId)) {
+        empresaId = Number(empresaId);
+        if (!Number.isInteger(empresaId) || empresaId <= 0) {
           res.status(400).json({ mensagem: "Código da empresa inválido." });
           return;
         }
@@ -50,7 +52,7 @@ function cadastrar(req, res) {
             res.status(500).json(erro.sqlMessage || erro);
           });
       } else {
-        res.status(404).json({ mensagem: "Empresa não encontrada." });
+        res.status(404).json({ mensagem: "Código da empresa inválido." });
       }
     })
     .catch(function (erro) {
@@ -60,17 +62,17 @@ function cadastrar(req, res) {
 }
 
 function autenticar(req, res) {
-  console.log("autenticar body", req.body);
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
   var codigoEmpresa = req.body.empresaServer;
 
-  if (
-    email == undefined ||
-    senha == undefined ||
-    codigoEmpresa == undefined
-  ) {
+  if (email == undefined || senha == undefined) {
     res.status(400).json({ mensagem: "Dados incompletos para autenticação." });
+    return;
+  }
+
+  if (codigoEmpresa == undefined || codigoEmpresa === "") {
+    res.status(400).json({ mensagem: "Código da empresa não informado." });
     return;
   }
 
@@ -79,9 +81,8 @@ function autenticar(req, res) {
     .then(function (resultado) {
       if (resultado.length > 0) {
         var empresaId = resultado[0].idEmpresa || resultado[0].id;
-        console.log("Empresa lookup", codigoEmpresa, "->", resultado[0], "empresaId=", empresaId);
-
-        if (empresaId == undefined || isNaN(empresaId)) {
+        empresaId = Number(empresaId);
+        if (!Number.isInteger(empresaId) || empresaId <= 0) {
           res.status(400).json({ mensagem: "Código da empresa inválido." });
           return;
         }
@@ -92,9 +93,7 @@ function autenticar(req, res) {
             if (resultado.length > 0) {
               res.status(200).json(resultado[0]);
             } else {
-              res
-                .status(403)
-                .json({ mensagem: "Email, senha ou empresa inválidos." });
+              res.status(403).json({ mensagem: "Email, senha ou empresa inválidos." });
             }
           })
           .catch(function (erro) {
@@ -102,7 +101,7 @@ function autenticar(req, res) {
             res.status(500).json(erro.sqlMessage || erro);
           });
       } else {
-        res.status(404).json({ mensagem: "Empresa não encontrada." });
+        res.status(404).json({ mensagem: "Código da empresa inválido." });
       }
     })
     .catch(function (erro) {
