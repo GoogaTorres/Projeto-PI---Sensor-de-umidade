@@ -58,19 +58,21 @@ aplicativo.post("/perguntar", async function (requisicao, resposta) {
 async function gerarResposta(mensagem) {
     try {
         // gerando conteúdo com base na pergunta
-        let modeloIA = chatIA.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: "Em um parágrafo responda: " + mensagem
+        const response = await chatIA.generateContent({
+            contents: [{
+                parts: [{
+                    text: "Em um parágrafo responda: " + mensagem
+                }]
+            }]
         });
-        let resposta = (await modeloIA).text;
-        let tokens = (await modeloIA).usageMetadata;
-
+        
+        const resposta = response.response.text();
         console.log(resposta);
-        console.log("Uso de Tokens:", tokens);
+        console.log("Resposta gerada com sucesso!");
 
         return resposta;
     } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao gerar resposta:", erro);
         throw erro;
     }
 }
