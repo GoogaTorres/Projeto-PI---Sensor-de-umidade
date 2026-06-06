@@ -35,14 +35,16 @@
 
         <div class="metrics">
             <div class="metric-card">
-                <h3>Hectares monitorados</h3>
-                <p id="qtdHectares">--</p>
-                <small>Área total sob monitoramento em tempo real.</small>
+                <h3>Total de sensores</h3>
+                <p id="qtdSensores">--</p>
+                <small>Quantidade total de sensores.</small>
             </div>
+            <p id="sensoresAtivos" style="display: none;">--</p> 
+            <!-- Se apagar a linha acima o código quebra -->
             <div class="metric-card">
-                <h3>Sensores ativos</h3>
-                <p id="sensoresAtivos">--</p>
-                <small>Sensores operando normalmente na plantação.</small>
+                <h3>Sensores inativos</h3>
+                <p id="sensoresInativos">--</p> 
+                <small>Sensores inoperantes na plantação.</small>
             </div>
             <div class="metric-card">
                 <h3 class="text-red">Áreas em atenção</h3>
@@ -52,8 +54,14 @@
             <div class="metric-card">
                 <h3>Maior risco</h3>
                 <p id="maiorRisco">--</p>
-                <small>Área com maior prioridade de intervenção.</small>
+                <small>O risco é calculado a partir da umidade de sensores ativos.</small>
             </div>
+        </div>
+
+        <div class="infoStatus" id="infoStatus">
+            <h3>Como o status é medido</h3>
+            <small>Status crítico: Umidade abaixo de 50% ou acima de 85%.<br>
+                Status atenção: Umidade abaixo de 55% ou acima de 80%.</small>
         </div>
 
         <div class="hectare-cards" id="cardsHectares"></div>
@@ -166,6 +174,9 @@
         if (umidade < 55 || umidade > 80) {
             return { label: 'Atenção', className: 'status-warning' };
         }
+        if (umidade == null){
+            return { label: 'Inativo', className: 'status-inactive'}
+        }
         return { label: 'Ideal', className: 'status-ok' };
     }
 
@@ -181,6 +192,7 @@
         }
         let temCritico = false;
         let temAtencao = false;
+        let temInativo = false;
         for (let i = 0; i < itens.length; i++) {
             let estado = obterEstado(itens[i].umidade).label;
             if (estado === 'Crítico') {
@@ -189,6 +201,9 @@
             if (estado === 'Atenção') {
                 temAtencao = true;
             }
+            if (estado === 'Inativo') {
+                temInativo = true;
+            }
         }
         if (temCritico) {
             return { label: 'Crítico', className: 'status-alert' };
@@ -196,12 +211,16 @@
         if (temAtencao) {
             return { label: 'Atenção', className: 'status-warning' };
         }
+        if (temInativo) {
+            return { label: 'Inativo', className: 'status-inactive' };
+        }
         return { label: 'Ideal', className: 'status-ok' };
     }
 
     function atualizarIndicadores() {
         let total = sensores.length;
         let quantidadeAtivos = 0;
+        let quantidadeInativos = [];
         let quantidadeAtencao = 0;
         let sensoresCriticos = [];
 
@@ -213,6 +232,9 @@
             if (estado === 'Atenção') {
                 quantidadeAtencao++;
             }
+            if (estado === 'Inativo') {
+                quantidadeInativos.push(sensores[i]);
+            }
             if (estado === 'Crítico') {
                 sensoresCriticos.push(sensores[i]);
             }
@@ -220,6 +242,8 @@
 
         sensoresAtivos.innerHTML = quantidadeAtivos + '/' + total;
         areasAtencao.innerHTML = quantidadeAtencao;
+        sensoresInativos.innerHTML = quantidadeInativos.length;
+        qtdSensores.innerHTML = total;
         if (sensoresCriticos.length > 0) {
             maiorRisco.innerHTML = sensoresCriticos[0].hectare;
         } else {
