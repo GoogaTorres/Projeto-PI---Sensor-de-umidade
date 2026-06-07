@@ -75,25 +75,25 @@ async function iniciarConexaoSerial(valoresSensorAnalogico, valoresSensorDigital
 
 // funcao para criar e configurar o servidor web Express
 function iniciarServidor(valoresSensorAnalogico, valoresSensorDigital) {
-    let aplicativoExpress = express();
+    let appExpress = express();
 
     // configuracoes de CORS
-    aplicativoExpress.use(function (requisicao, resposta, proximo) {
+    appExpress.use(function (requisicao, resposta, proximo) {
         resposta.header('Access-Control-Allow-Origin', '*');
         resposta.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         proximo();
     });
 
     // inicia o servidor na porta especificada
-    aplicativoExpress.listen(PORTA_SERVIDOR, function () {
+    appExpress.listen(PORTA_SERVIDOR, function () {
         console.log('API executada com sucesso na porta ' + PORTA_SERVIDOR);
     });
 
     // define os endpoints da API para cada tipo de sensor
-    aplicativoExpress.get('/sensores/analogico', function (requisicao, resposta) {
+    appExpress.get('/sensores/analogico', function (requisicao, resposta) {
         return resposta.json(valoresSensorAnalogico);
     });
-    aplicativoExpress.get('/sensores/digital', function (requisicao, resposta) {
+    appExpress.get('/sensores/digital', function (requisicao, resposta) {
         return resposta.json(valoresSensorDigital);
     });
 }

@@ -39,11 +39,11 @@
                 <p id="qtdSensores">--</p>
                 <small>Quantidade total de sensores.</small>
             </div>
-            <p id="sensoresAtivos" style="display: none;">--</p> 
+            <p id="sensoresAtivos" style="display: none;">--</p>
             <!-- Se apagar a linha acima o código quebra -->
             <div class="metric-card">
                 <h3>Sensores inativos</h3>
-                <p id="sensoresInativos">--</p> 
+                <p id="sensoresInativos"></p>
                 <small>Sensores inoperantes na plantação.</small>
             </div>
             <div class="metric-card">
@@ -87,12 +87,14 @@
     function carregou() {
 
         if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
-        containerGeral.innerHTML += `    <div class="bobiaicon">
+            containerGeral.innerHTML += `    <div class="bobiaicon">
         <button onclick="window.location.href='http://localhost:3333'">
             <img src="./images/BOBIMG.avif" alt="">
         </button>
     </div>`
-    }
+        }
+
+        
 
         fetch("/dash/carregarDash", {
 
@@ -128,7 +130,8 @@
                                 id: json[i].sensor,
                                 hectare: json[i].hectare,
                                 umidade: umidade,
-                                coords: json[i].coordenada
+                                coords: json[i].coordenada,
+                                condicao: json[i].condicao
                             });
                         }
 
@@ -141,7 +144,13 @@
                             if (!listaHectares.includes(sensorAtual.hectare)) {
                                 listaHectares.push(sensorAtual.hectare)
                             }
+
+                            if (sensorAtual.condicao == "inativo") {
+                                sensoresInativos.innerHTML += `Hectar: ${sensorAtual.hectare} (${sensorAtual.id}) <br>`
+                            }
+                            
                         }
+
 
                     });
 
@@ -174,10 +183,29 @@
         if (umidade < 55 || umidade > 80) {
             return { label: 'Atenção', className: 'status-warning' };
         }
-        if (umidade == null){
-            return { label: 'Inativo', className: 'status-inactive'}
+        if (umidade == null) {
+            return { label: 'Inativo', className: 'status-inactive' }
         }
         return { label: 'Ideal', className: 'status-ok' };
+    }
+
+    function obterEstadoSensor(sensor) {
+        let umidade = sensor.umidade
+        if (sensor.condicao == "ativo") {
+            if (umidade < 50 || umidade > 85) {
+                return { label: 'Crítico', className: 'status-alert' };
+            }
+            if (umidade < 55 || umidade > 80) {
+                return { label: 'Atenção', className: 'status-warning' };
+            }
+            if (umidade == null) {
+                return { label: 'Inativo', className: 'status-inactive' }
+            }
+            return { label: 'Ideal', className: 'status-ok' };
+        } else {
+            return { label: 'Inativo', className: 'status-inativo' };
+
+        }
     }
 
     function obterEstadoHectare(hectare) {
@@ -201,8 +229,9 @@
             if (estado === 'Atenção') {
                 temAtencao = true;
             }
-            if (estado === 'Inativo') {
+            if (itens[i].condicao === 'Inativo') {
                 temInativo = true;
+
             }
         }
         if (temCritico) {
@@ -232,7 +261,7 @@
             if (estado === 'Atenção') {
                 quantidadeAtencao++;
             }
-            if (estado === 'Inativo') {
+            if (sensores.condicao === 'inativo') {
                 quantidadeInativos.push(sensores[i]);
             }
             if (estado === 'Crítico') {
@@ -242,7 +271,6 @@
 
         sensoresAtivos.innerHTML = quantidadeAtivos + '/' + total;
         areasAtencao.innerHTML = quantidadeAtencao;
-        sensoresInativos.innerHTML = quantidadeInativos.length;
         qtdSensores.innerHTML = total;
         if (sensoresCriticos.length > 0) {
             maiorRisco.innerHTML = sensoresCriticos[0].hectare;
@@ -306,7 +334,7 @@
 
         for (let i = 0; i < sensores.length; i++) {
             let sensor = sensores[i];
-            let estado = obterEstado(sensor.umidade);
+            let estado = obterEstadoSensor(sensor);
 
 
             if (sensor.hectare == hectare) {
@@ -324,12 +352,12 @@
         let sensoresFiltrados = [];
         let indicesOriginais = [];
 
-        
+
     }
 
     function irParaSensor(sensorId) {
         window.location.href = 'dash.html?sensor=' + sensorId;
-        sessionStorage.setItem('SENSOR_SELECIONADO',sensorId)
+        sessionStorage.setItem('SENSOR_SELECIONADO', sensorId)
     }
 
     function irParaSensorSelecionado() {
@@ -339,7 +367,7 @@
     }
 
 
-    
+
 
 </script>
 
