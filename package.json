@@ -4,7 +4,10 @@
   "main": "app.js",
 
   "scripts": {
-    "start": "node app.js",
+    "start": "node app.js & node data/main.js & node BobIA/main.js",
+    "start:data-wiz": "node app.js",
+    "start:BobIA": "node BobIA/main.js",
+    "start:data-aquino": "node data/main.js",
     "dev": "concurrently \"node app.js\" \"node BobIA/main.js\" \"node data/main.js\""
   },
 
