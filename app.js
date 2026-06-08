@@ -19,11 +19,9 @@ let app = express();
 
 let roteadorIndex = require("./src/routes/index");
 let roteadorUsuario = require("./src/routes/usuarios");
-let roteadorAvisos = require("./src/routes/avisos");
-let roteadorMedidas = require("./src/routes/medidas");
-let roteadorAquarios = require("./src/routes/aquarios");
 let roteadorEmpresas = require("./src/routes/empresas");
 var dashRouter = require("./src/routes/dash");
+let dashindividual = require("./src/routes/dashindividual");
 
 app.use(cors());
 
@@ -43,13 +41,9 @@ app.use("/usuarios", roteadorUsuario);
 
 app.use("/dash", dashRouter);
 
-app.use("/avisos", roteadorAvisos);
-
-app.use("/medidas", roteadorMedidas);
-
-app.use("/aquarios", roteadorAquarios);
-
 app.use("/empresas", roteadorEmpresas);
+
+app.use("/dashindividual", dashindividual);
 
 app.listen(PORTA_APP, function () {
 

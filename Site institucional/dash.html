@@ -82,10 +82,10 @@
     let graficoDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
         type: 'line',
         data: {
-            labels: [1, 2, 3, 4, 5, 6, 7],
+            labels: [],
             datasets: [{
                 label: 'Umidade',
-                data: [60, 62, 64, 73, 66, 50, 50],
+                data: [],
                 borderColor: '#6b4d15',
                 fill: true,
                 tension: 0.3,
@@ -228,6 +228,15 @@
     let paginacao = {};
     let tempo = {};
 
+    // Extrair idSensor da URL - forma simples
+    let idSensor = 1; // valor padrão
+    let url = window.location.href;
+    
+    if (url.includes('idSensor=')) {
+        let parametro = url.split('idSensor=')[1];
+        idSensor = parseInt(parametro);
+    }
+
     function atualizarKpis(dados) {
         if (!dados || dados.length === 0) {
             valorAnalogico.innerHTML = '--';
@@ -266,42 +275,46 @@
     }
 
     function obterDados(grafico, pontoFinal) {
-        fetch('http://localhost:3300/sensores/' + pontoFinal)
+        fetch('http://localhost:3335/dashindividual/buscardadosdash', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idSensor: idSensor
+            })
+        })
             .then(function (resposta) {
                 return resposta.json();
             })
-            .then(function (valores) {
-                if (paginacao[pontoFinal] == null) {
-                    paginacao[pontoFinal] = 0;
+            .then(function (registros) {
+                if (!registros || registros.length === 0) {
+                    return;
                 }
 
-                if (tempo[pontoFinal] == null) {
-                    tempo[pontoFinal] = 0;
+                // Pegar apenas o ÚLTIMO registro (mais recente)
+                let ultimoRegistro = registros[registros.length - 1];
+                let umidade = ultimoRegistro.umidade;
+                let hora = ultimoRegistro.momento_grafico;
+
+                // Se o gráfico já tem 10 pontos, remove o primeiro
+                if (grafico.data.labels.length >= 10) {
+                    grafico.data.labels.shift();
+                    grafico.data.datasets[0].data.shift();
                 }
 
-                let ultimaPaginacao = paginacao[pontoFinal];
-                paginacao[pontoFinal] = valores.length;
-                
-                // Usando slice simplificado sem ES6 implícito
-                let valoresNovos = valores.slice(ultimaPaginacao);
+                // Adiciona o novo ponto
+                grafico.data.labels.push(hora);
+                grafico.data.datasets[0].data.push(Number(umidade));
+                grafico.update();
 
-                for (let i = 0; i < valoresNovos.length; i++) {
-                    let valor = valoresNovos[i];
-                    if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                        grafico.data.labels.shift();
-                        grafico.data.datasets[0].data.shift();
-                    }
+                // Atualiza os KPIs com todos os dados do gráfico
+                let dados = grafico.data.datasets[0].data;
+                atualizarKpis(dados);
 
-                    grafico.data.labels.push(tempo[pontoFinal]++);
-                    grafico.data.datasets[0].data.push(Number(valor));
-                    grafico.update();
-
-                    let dados = grafico.data.datasets[0].data;
-                    atualizarKpis(dados);
-                    let statusSistema = document.getElementById('statusSistema');
-                    if (statusSistema) {
-                        statusSistema.innerHTML = '1/1';
-                    }
+                let statusSistema = document.getElementById('statusSistema');
+                if (statusSistema) {
+                    statusSistema.innerHTML = '1/1';
                 }
             })
             .catch(function (erro) {
@@ -316,6 +329,9 @@
     setInterval(function () {
         obterDados(graficoDigital, 'digital');
     }, 1000);
+
+    // Chamar imediatamente quando a página carregar
+    obterDados(graficoDigital, 'digital');
 
     if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
         container.innerHTML += `    <div class="bobiaicon">

@@ -16,9 +16,9 @@ async function iniciarConexaoSerial(valoresSensorAnalogico, valoresSensorDigital
     // conexao com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
-            host: '127.0.0.1',
-            user: 'cliente',
-            password: 'Sptech#2024',
+            host: '10.18.33.45',
+            user: 'Usuario',
+            password: 'Usuario#123',
             database: 'SafeSoja',
             port: 3307
         }

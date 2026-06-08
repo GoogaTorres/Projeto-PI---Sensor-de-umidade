@@ -4,8 +4,7 @@ const express = require("express");
 const path = require("path");
 
 // carregando as variáveis de ambiente do projeto do arquivo .env
-require("dotenv").config();
-
+require("dotenv").config({ path: require("path").resolve(__dirname, "../.env.dev") });
 // configurando o servidor express
 const app = express();
 const PORTA_SERVIDOR = process.env.PORTA;
