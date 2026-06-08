@@ -158,11 +158,40 @@ INSERT INTO registroDados VALUES
 (DEFAULT,1,70,DEFAULT);
 
 
+-- Visão geral dos sensores e suas respectivas localizações/empresas
+CREATE VIEW vw_sensores_geral AS
+SELECT 
+    e.idEmpresa,
+    e.nome AS nome_empresa,
+    t.idTerreno,
+    t.hectare AS nome_hectare,
+    s.idSensor AS id_sensor,
+    s.identificador AS nome_sensor,
+    s.condicao AS status_sensor,
+    s.coordenada AS coordenadas
+FROM sensores s
+JOIN terreno t ON s.fkHectares = t.idTerreno
+JOIN empresa e ON t.fkEmpresa = e.idEmpresa;
+
+-- Histórico de registros de umidade com informações complementares de sensores
+CREATE VIEW vw_registro_completo AS
+SELECT 
+    r.idDados AS id_leitura,
+    e.nome AS nome_empresa,
+    t.hectare AS nome_hectare,
+    s.identificador AS nome_sensor,
+    r.umidade AS valor_umidade,
+    r.dthora AS data_hora_leitura
+FROM registroDados r
+JOIN sensores s ON r.fkSensor = s.idSensor
+JOIN terreno t ON s.fkHectares = t.idTerreno
+JOIN empresa e ON t.fkEmpresa = e.idEmpresa;
+
 SELECT * FROM empresa;
 SELECT * FROM usuario;
 SELECT * FROM terreno;
 SELECT * FROM endereco;
 SELECT * FROM sensores;
 SELECT * FROM registroDados;
-SELECT * FROM alerta;
-
+SELECT * FROM vw_sensores_geral;
+SELECT * FROM vw_registro_completo;
