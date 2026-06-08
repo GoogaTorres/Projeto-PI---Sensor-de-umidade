@@ -30,3 +30,6 @@ Desenvolver uma <b>dashboard</b> dos dados de <b>umidade do solo</b> coletados e
 | **🌐 Site** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) | Utilizaremos o HTML para o corpo do site, CSS para o design e Javascript para as funcionalidades|
 | **🗄️ Banco de Dados** | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) | Utilizaremos para o armazenamento e manuseio de dados |
 | **🤖 Sensores** | ![Arduino](https://img.shields.io/badge/Arduino-F2F5F7?style=flat&logo=arduino&logoColor=black) | Utilizaremos o arduino que será integrado aos sensores para medir a umidade do solo |
+
+# 📖 Manual de instalação
+[ManualDeInstalação.pdf](https://github.com/user-attachments/files/28718084/ManualDeInstalacao.pdf)
