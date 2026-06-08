@@ -3,12 +3,17 @@ const { GoogleGenAI } = require("@google/genai");
 const express = require("express");
 const path = require("path");
 
-// carregando as variáveis de ambiente do projeto do arquivo .env
-require("dotenv").config();
+// carregando as variáveis de ambiente do projeto do arquivo .env ou .env.dev
+const fs = require("fs");
+let envPath = path.join(__dirname, "../.env");
+if (!fs.existsSync(envPath)) {
+    envPath = path.join(__dirname, "../.env.dev");
+}
+require("dotenv").config({ path: envPath });
 
 // configurando o servidor express
 const app = express();
-const PORTA_SERVIDOR = process.env.PORTA;
+const PORTA_SERVIDOR = process.env.PORTA || 3336;
 
 // configurando o gemini (IA)
 const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
