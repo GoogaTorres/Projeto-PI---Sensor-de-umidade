@@ -35,3 +35,6 @@ Desenvolver uma <b>dashboard</b> dos dados de <b>umidade do solo</b> coletados e
 * [📄 Baixar Manual do Cliente em PDF](./Manual%20do%20Cliente%20%E2%80%94%20SafeSoja.pdf)
 * [📝 Visualizar Manual do Cliente em Markdown](./Manual-do-Cliente-SafeSoja.md)
 
+# 📃 Documentação SafeSoja
+[DocumentaçãoSafeSoja.pdf](https://github.com/user-attachments/files/28718811/DocumentacaoSafeSoja.pdf)
+
