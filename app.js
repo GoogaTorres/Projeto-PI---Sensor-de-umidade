@@ -24,6 +24,7 @@ let roteadorMedidas = require("./src/routes/medidas");
 let roteadorAquarios = require("./src/routes/aquarios");
 let roteadorEmpresas = require("./src/routes/empresas");
 var dashRouter = require("./src/routes/dash");
+let dashindividual = require("./src/routes/dashindividual");
 
 app.use(cors());
 
@@ -51,6 +52,7 @@ app.use("/aquarios", roteadorAquarios);
 
 app.use("/empresas", roteadorEmpresas);
 
+app.use("/dashindividual", dashindividual);
 app.listen(PORTA_APP, function () {
 
 console.log(`
