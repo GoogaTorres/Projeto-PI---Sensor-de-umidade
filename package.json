@@ -4,7 +4,7 @@
   "main": "app.js",
 
   "scripts": {
-    "start": "node app.js & node data/main.js & node BobIA/main.js",
+    "start": "concurrently \"node app.js\" \"node data/main.js\" \"node BobIA/main.js\"",
     "start:data-wiz": "node app.js",
     "start:BobIA": "node BobIA/main.js",
     "start:data-aquino": "node data/main.js",
@@ -12,6 +12,7 @@
   },
 
   "dependencies": {
+    "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.18.2",
@@ -19,6 +20,5 @@
   },
 
   "devDependencies": {
-    "concurrently": "^8.2.0"
   }
 }
