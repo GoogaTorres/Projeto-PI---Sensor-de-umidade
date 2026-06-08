@@ -79,8 +79,6 @@
 </body>
 
 <script>
-    setInterval(gerar, 5000);
-
     // SORTEAR VALORES ALEATÓRIOS
     let numerosAleatorios = [];
     let listaNumeros = [];
@@ -92,18 +90,23 @@
 
         contador++;
 
-        numerosAleatorios.push(numeroSensor);
-        listaNumeros.push(contador);
+        // Se o gráfico já tem 10 pontos, remove o primeiro
+        if (graficoDigital.data.labels.length >= 10) {
+            graficoDigital.data.labels.shift();
+            graficoDigital.data.datasets[0].data.shift();
+        }
 
-        atualizarGraficos(graficoDigital, numerosAleatorios, listaNumeros);
-    }
+        // Adiciona o novo ponto
+        graficoDigital.data.labels.push(contador);
+        graficoDigital.data.datasets[0].data.push(numeroSensor);
+        graficoDigital.update();
 
-    function atualizarGraficos(grafico, dados, contador) {
-        grafico.data.datasets[0].data = dados;
-        grafico.data.labels = contador;
-        grafico.update();
+        // Atualiza os KPIs com os dados do gráfico
+        let dados = graficoDigital.data.datasets[0].data;
         atualizarKpis(dados);
     }
+
+    setInterval(gerar, 5000);
 
     let graficoDigital = new Chart(document.getElementById('sensorDigital').getContext('2d'), {
         type: 'line',

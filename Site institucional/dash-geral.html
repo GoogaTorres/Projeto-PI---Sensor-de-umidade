@@ -355,10 +355,17 @@
 
     }
 
-    function irParaSensor(sensorId) {
+function irParaSensor(sensorId) {
+    // Validação: Se é Sensor 1 do Hectare 1
+    if (sensorId === 'Sensor 1' && hectareSelecionado === 'Hectare 1') {
+        // Vai para dashboard com dados reais do Arduino
         window.location.href = 'dash.html?sensor=' + sensorId;
-        sessionStorage.setItem('SENSOR_SELECIONADO', sensorId)
+    } else {
+        // Todos os outros sensores vão para dashboard com dados aleatórios
+        window.location.href = 'dashsRandom.html?sensor=' + sensorId;
     }
+    sessionStorage.setItem('SENSOR_SELECIONADO', sensorId);
+}
 
     function irParaSensorSelecionado() {
         if (seletor.value === '') return;

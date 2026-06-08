@@ -28,10 +28,10 @@ CREATE TABLE usuario(
 );
 
 INSERT INTO usuario VALUES
-(DEFAULT,'ADM1','ADM1@gmail.com','123123#a','573.461.230-85','11980242076',1,1),
-(DEFAULT,'ADM2','ADM2@gmail.com','123123#a2','345.163.122-12','11987598275',1,2),
-(DEFAULT,'Cliente1','cliente1@gmail.com','123123#c','736.305.990-01','11981874411',0,1),
-(DEFAULT,'Cliente2','cliente2@gmail.com','123123#c2','140.975.050-76','11983413665',0,2);
+(DEFAULT,'ADM1','ADM1@gmail.com','123123#a','57346123085','11980242076',1,1),
+(DEFAULT,'ADM2','ADM2@gmail.com','123123#a2','34516312212','11987598275',1,2),
+(DEFAULT,'Cliente1','cliente1@gmail.com','123123#c','73630599001','11981874411',0,1),
+(DEFAULT,'Cliente2','cliente2@gmail.com','123123#c2','14097505076','11983413665',0,2);
 
 CREATE TABLE terreno(
     idTerreno INT PRIMARY KEY AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE sensores(
         REFERENCES terreno(idTerreno),
 
     CONSTRAINT chk_condicao
-        CHECK (condicao IN ('estavel','alerta','critico','inativo'))
+        CHECK (condicao IN ('ativo','inativo'))
 );
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
@@ -157,6 +157,27 @@ CREATE TABLE registroDados(
 INSERT INTO registroDados VALUES
 (DEFAULT,1,70,DEFAULT);
 
+CREATE TABLE alerta(
+    idAlerta INT AUTO_INCREMENT,
+    tipo VARCHAR(45),
+    descricao VARCHAR(100),
+    fkDados INT,
+    fkSensor INT,
+
+    CONSTRAINT fks_composta_D_S
+        PRIMARY KEY(idAlerta,fkDados,fkSensor),
+
+    CONSTRAINT fk_dados_sensor_cont
+        FOREIGN KEY (fkDados)
+        REFERENCES registroDados(idDados),
+
+    CONSTRAINT fk_dados_sensore
+        FOREIGN KEY (fkSensor)
+        REFERENCES sensores(idSensor)
+);
+
+INSERT INTO alerta VALUES
+(1,'critico','umidade está abaixo do previsto',1,3);
 
 -- Visão geral dos sensores e suas respectivas localizações/empresas
 CREATE VIEW vw_sensores_geral AS
@@ -193,5 +214,7 @@ SELECT * FROM terreno;
 SELECT * FROM endereco;
 SELECT * FROM sensores;
 SELECT * FROM registroDados;
+SELECT * FROM alerta;
 SELECT * FROM vw_sensores_geral;
 SELECT * FROM vw_registro_completo;
+

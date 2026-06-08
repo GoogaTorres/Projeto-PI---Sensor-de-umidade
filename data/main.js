@@ -91,11 +91,11 @@ async function iniciarConexaoSerial(valoresSensorAnalogico, valoresSensorDigital
     // conexao com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
-            host: clean(process.env.DB_HOST) || '127.0.0.1',
-            user: clean(process.env.DB_USER) || 'root',
-            password: clean(process.env.DB_PASSWORD) || '',
-            database: clean(process.env.DB_DATABASE) || 'SafeSoja',
-            port: Number(clean(process.env.DB_PORT)) || 3306
+            host: '127.0.0.1',
+            user: 'cliente',
+            password: 'Sptech#2024',
+            database: 'SafeSoja',
+            port: 3307
         }
     ).promise();
 
@@ -112,9 +112,7 @@ async function iniciarConexaoSerial(valoresSensorAnalogico, valoresSensorDigital
     });
     
     if (!portaArduino) {
-        console.warn('AVISO: O arduino real nao foi encontrado. Entrando em modo simulado completo.');
-        iniciarSimulacao(valoresSensorAnalogico, valoresSensorDigital, poolBancoDados);
-        return;
+        throw new Error('O arduino nao foi encontrado em nenhuma porta serial');
     }
 
     // Se encontrou o Arduino real, inicia a simulação em segundo plano apenas para os outros sensores (2 a 5)
@@ -130,12 +128,12 @@ async function iniciarConexaoSerial(valoresSensorAnalogico, valoresSensorDigital
 
     // evento acionado quando a porta serial e aberta
     conexaoArduino.on('open', function () {
-        console.log('A leitura REAL do arduino foi iniciada na porta ' + portaArduino.path + ' utilizando taxa de ' + TAXA_TRANSMISSAO_SERIAL);
+        console.log('A leitura do arduino foi iniciada na porta ' + portaArduino.path + ' utilizando taxa de ' + TAXA_TRANSMISSAO_SERIAL);
     });
 
     // processa os dados recebidos do Arduino (referentes ao sensor 1)
     conexaoArduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async function (dadosBrutos) {
-        console.log("Dados recebidos do Arduino Real: " + dadosBrutos);
+        console.log( dadosBrutos);
         let valoresRecebidos = dadosBrutos.split(';');
         let valorSensorDigital = Number(valoresRecebidos[0]);
         let valorSensorAnalogico = Number(valoresRecebidos[1]);
