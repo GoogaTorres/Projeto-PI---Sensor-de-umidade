@@ -31,5 +31,7 @@ Desenvolver uma <b>dashboard</b> dos dados de <b>umidade do solo</b> coletados e
 | **🗄️ Banco de Dados** | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) | Utilizaremos para o armazenamento e manuseio de dados |
 | **🤖 Sensores** | ![Arduino](https://img.shields.io/badge/Arduino-F2F5F7?style=flat&logo=arduino&logoColor=black) | Utilizaremos o arduino que será integrado aos sensores para medir a umidade do solo |
 
-# 📖 Manual de instalação
-[ManualDeInstalação.pdf](https://github.com/user-attachments/files/28718084/ManualDeInstalacao.pdf)
+# 📖 Manual do Cliente (SafeSoja)
+* [📄 Baixar Manual do Cliente em PDF](./Manual%20do%20Cliente%20%E2%80%94%20SafeSoja.pdf)
+* [📝 Visualizar Manual do Cliente em Markdown](./Manual-do-Cliente-SafeSoja.md)
+
