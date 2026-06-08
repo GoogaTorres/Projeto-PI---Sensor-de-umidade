@@ -157,27 +157,6 @@ CREATE TABLE registroDados(
 INSERT INTO registroDados VALUES
 (DEFAULT,1,70,DEFAULT);
 
-CREATE TABLE alerta(
-    idAlerta INT AUTO_INCREMENT,
-    tipo VARCHAR(45),
-    descricao VARCHAR(100),
-    fkDados INT,
-    fkSensor INT,
-
-    CONSTRAINT fks_composta_D_S
-        PRIMARY KEY(idAlerta,fkDados,fkSensor),
-
-    CONSTRAINT fk_dados_sensor_cont
-        FOREIGN KEY (fkDados)
-        REFERENCES registroDados(idDados),
-
-    CONSTRAINT fk_dados_sensore
-        FOREIGN KEY (fkSensor)
-        REFERENCES sensores(idSensor)
-);
-
-INSERT INTO alerta VALUES
-(1,'critico','umidade está abaixo do previsto',1,3);
 
 SELECT * FROM empresa;
 SELECT * FROM usuario;
