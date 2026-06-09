@@ -24,6 +24,10 @@ Desenvolver uma <b>dashboard</b> dos dados de <b>umidade do solo</b> coletados e
 # <span style='font-size: 1.1em'>🤔 | Contexto </span>
 <span style ="font-size: 1.1em;text-align: justify">👉 A <b>soja</b> é a <b>principal oleaginosa</b> cultivada no mundo. Sendo o <b>Brasil</b> um dos <b>maiores produtores e exportadores</b> de soja do mundo. A cultura da soja é responsável por grande parte do <b>abastecimento interno</b> e das exportações do agronegócio, o que torna sua <b>produtividade um fator determinante para o país.</b> Por essa via, o sucesso da produção agrícola depende diretamente das condições ambientais, especialmente da <b>disponibilidade de água no solo.</b> A irrigação inadequada pode gerar sérios impactos, seja pelo excesso quanto pela falta de água, comprometendo o desenvolvimento da planta, reduzindo a produtividade e <b>aumentando os custos</b> da produção.<br>Diante do cenário apresentado, a soja tem como <b>necessidade hídrica 450mm a 800mm</b> de água durante toda sua fase de germinação até sua maturação. Portanto um sistema de controle de umidade de solo se faz necessário para evitar apodrecimento ou ressecamento da mesma. <br>O <b>projeto</b> tem como <b>objetivo</b> desenvolver um <b>sistema de monitoramento</b> para plantações utilizando <b>sensores</b> conectados ao <b>Arduino</b>, possibilitando um manejo mais eficiente e <b>evitando/reduzindo desperdícios</b>. O sensor de umidade do solo será o principal componente, tendo em vista que o <b>uso de sensores pode reduzir em até 20% o desperdício de água</b> por safra.</span>
 
+# Preview
+
+<img width="1339" height="634" alt="Image" src="https://github.com/user-attachments/assets/3aa7a25e-e56a-402b-8729-0bc525eccf5c" />
+
 # <span style="font-size: 1.1em"> </> | Linguagens e Tecnologias</span>
 | Lugar aplicado | Nome da Tecnologia | Descrição |
 |--------|-------------|-----------|
