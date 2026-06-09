@@ -26,6 +26,7 @@ Desenvolver uma <b>dashboard</b> dos dados de <b>umidade do solo</b> coletados e
 
 # Preview
 
+<img width="1339" height="637" alt="Image" src="https://github.com/user-attachments/assets/06d03e23-9572-4ab4-ada5-f47976917c5f" />
 <img width="1339" height="634" alt="Image" src="https://github.com/user-attachments/assets/3aa7a25e-e56a-402b-8729-0bc525eccf5c" />
 
 # <span style="font-size: 1.1em"> </> | Linguagens e Tecnologias</span>
