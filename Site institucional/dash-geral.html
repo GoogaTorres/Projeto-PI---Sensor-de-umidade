@@ -191,7 +191,6 @@
                   umidade = 0;
                 }
 
-                // Sensor real
                 else if (
                   json[i].sensor == "Sensor 1" &&
                   json[i].hectare == "Hectare 1"
@@ -199,7 +198,7 @@
                   umidade = json[i].umidade;
                 }
 
-                // Sensores simulados
+                
                 else {
                   umidade = Math.floor(Math.random() * 66) + 25;
                 }
@@ -212,7 +211,6 @@
                   condicao: json[i].condicao,
                 });
               }
-              // Armazenar sensores em sessionStorage para manter consistência
               sessionStorage.setItem(
                 "SENSORES_DADOS",
                 JSON.stringify(sensores),
@@ -254,7 +252,6 @@
           sensores[i].id == "Sensor 1" &&
           sensores[i].hectare == "Hectare 1"
         ) {
-          // Não altera o Sensor 1, pois ele é o sensor real
           continue;
         } else {
           sensores[i].umidade = Math.floor(Math.random() * 66) + 25;
@@ -271,10 +268,8 @@
       }
     }
 
-    // Gerar 5 sensores por hectare (total 25 sensores) com valores aleatórios de umidade
     let sensores = [];
 
-    // Lista de coordenadas mockadas para os 25 sensores (5 sensores por hectare)
 
     let hectareSelecionado = null;
 
@@ -474,14 +469,11 @@
     }
 
     function irParaSensor(sensorId) {
-      // Validação: Se é Sensor 1 do Hectare 1
       if (sensorId === "Sensor 1" && hectareSelecionado === "Hectare 1") {
-        // Vai para dashboard com dados reais do Arduino
         window.location.href = "dash.html?sensor=" + sensorId;
       } else if (sensorId == "Inativo") {
         window.location.href = "dashInativo.html";
       } else {
-        // Todos os outros sensores vão para dashboard com dados aleatórios
         window.location.href = "dashsRandom.html?sensor=" + sensorId;
       }
       sessionStorage.setItem("SENSOR_SELECIONADO", sensorId);

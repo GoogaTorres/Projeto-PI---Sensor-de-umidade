@@ -79,56 +79,47 @@
 </body>
 
 <script>
-    // Recuperar dados dos sensores do sessionStorage
     let sensoresDados = [];
     let sensorSelecionado = null;
-    let umidadeBase = 60; // valor padrão
+    let umidadeBase = 60; 
     let contador = 0;
 
-    // Ao carregar a página, recupera dados
     function inicializarDados() {
         let sensoresArmazenados = sessionStorage.getItem('SENSORES_DADOS');
         if (sensoresArmazenados) {
             sensoresDados = JSON.parse(sensoresArmazenados);
         }
 
-        // Obtém o sensor selecionado
         let sensorId = sessionStorage.getItem('SENSOR_SELECIONADO');
         
-        // Busca a umidade do sensor nos dados armazenados
         for (let i = 0; i < sensoresDados.length; i++) {
             if (sensoresDados[i].id === sensorId) {
                 sensorSelecionado = sensoresDados[i];
-                umidadeBase = sensorSelecionado.umidade; // Use a umidade do sensor
+                umidadeBase = sensorSelecionado.umidade; 
                 break;
             }
         }
     }
 
     function gerar() {
-        // Gera variação em torno da umidade base do sensor
-        let variacao = Math.floor(Math.random() * 10) - 5; // Variação de -5 a +5
-        let numeroSensor = Math.max(20, Math.min(90, umidadeBase + variacao)); // Mantém entre 20 e 90
+        let variacao = Math.floor(Math.random() * 10) - 5; 
+        let numeroSensor = Math.max(20, Math.min(90, umidadeBase + variacao)); 
 
         contador++;
 
-        // Se o gráfico já tem 10 pontos, remove o primeiro
         if (graficoDigital.data.labels.length >= 10) {
             graficoDigital.data.labels.shift();
             graficoDigital.data.datasets[0].data.shift();
         }
 
-        // Adiciona o novo ponto
         graficoDigital.data.labels.push(contador);
         graficoDigital.data.datasets[0].data.push(numeroSensor);
         graficoDigital.update();
 
-        // Atualiza os KPIs com os dados do gráfico
         let dados = graficoDigital.data.datasets[0].data;
         atualizarKpis(dados);
     }
 
-    // Inicializa dados quando a página carrega
     inicializarDados();
 
     setInterval(gerar, 5000);

@@ -228,8 +228,7 @@
     let paginacao = {};
     let tempo = {};
 
-    // Extrair idSensor da URL - forma simples
-    let idSensor = 1; // valor padrão
+    let idSensor = 1; 
     let url = window.location.href;
     
     if (url.includes('idSensor=')) {
@@ -293,23 +292,19 @@
                     return;
                 }
 
-                // Pegar apenas o ÚLTIMO registro (mais recente)
                 let ultimoRegistro = registros[registros.length - 1];
                 let umidade = ultimoRegistro.umidade;
                 let hora = ultimoRegistro.momento_grafico;
 
-                // Se o gráfico já tem 10 pontos, remove o primeiro
                 if (grafico.data.labels.length >= 10) {
                     grafico.data.labels.shift();
                     grafico.data.datasets[0].data.shift();
                 }
 
-                // Adiciona o novo ponto
                 grafico.data.labels.push(hora);
                 grafico.data.datasets[0].data.push(Number(umidade));
                 grafico.update();
 
-                // Atualiza os KPIs com todos os dados do gráfico
                 let dados = grafico.data.datasets[0].data;
                 atualizarKpis(dados);
 
@@ -331,7 +326,6 @@
         obterDados(graficoDigital, 'digital');
     }, 1000);
 
-    // Chamar imediatamente quando a página carregar
     obterDados(graficoDigital, 'digital');
 
     if (sessionStorage.getItem('ADMINISTRADOR') == '1') {
