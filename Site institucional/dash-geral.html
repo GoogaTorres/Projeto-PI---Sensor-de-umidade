@@ -33,25 +33,25 @@
         </div>
 
 
-        <div class="metrics">
-            <div class="metric-card">
+        <div class="metricas">
+            <div class="metrica-card">
                 <h3>Total de sensores</h3>
                 <p id="qtdSensores">--</p>
                 <small>Quantidade total de sensores.</small>
             </div>
             <p id="sensoresAtivos" style="display: none;">--</p>
             <!-- Se apagar a linha acima o código quebra -->
-            <div class="metric-card">
+            <div class="metrica-card">
                 <h3>Sensores inativos</h3>
                 <p id="sensoresInativos"></p>
                 <small>Sensores inoperantes na plantação.</small>
             </div>
-            <div class="metric-card">
+            <div class="metrica-card">
                 <h3 class="text-red">Áreas em atenção</h3>
                 <p id="areasAtencao">2</p>
                 <small>Hectares com umidade próxima do limite de risco.</small>
             </div>
-            <div class="metric-card">
+            <div class="metrica-card">
                 <h3>Maior risco</h3>
                 <p id="maiorRisco">--</p>
                 <small>O risco é calculado a partir da umidade de sensores ativos.</small>
@@ -59,9 +59,12 @@
         </div>
 
         <div class="infoStatus" id="infoStatus">
-            <h3>Como o status é medido</h3>
-            <small>Status crítico: Umidade abaixo de 50% ou acima de 85%.<br>
-                Status atenção: Umidade abaixo de 55% ou acima de 80%.</small>
+             
+            <small><div class="indicador indIdeal"></div>Ideal: Entre 80 e 55 de umidade  |</small>
+            <small><div class="indicador indAlerta"></div>Alerta: Acima de 80 e abaixo de 55  |</small>
+            <small><div class="indicador indCritico"></div>Crítico: Acima de 85 e abaixo de 50  |</small>
+            <small><div class="indicador indInativo"></div>Inativo: Houve algum problema com o sensor</small>
+       
         </div>
 
         <div class="hectare-cards" id="cardsHectares"></div>
@@ -396,7 +399,17 @@
                estado.label = 'Inativo'
             }
             if (sensor.hectare == hectare) {
-                listaSensores.innerHTML += `
+                if (estado.label = 'Inativo' && sensor.id != "Sensor 1") {
+                    listaSensores.innerHTML += `
+                <div class="sensor-card" onclick="irParaSensor('Inativo')">
+                    <h3>${sensor.id}</h3>
+                    <p>Umidade: ${sensor.umidade}%</p>
+                    <small>Coordenada: ${sensor.coords}</small>
+                    <small>Status: <span class="status-label ${estado.className}">${estado.label}</span></small>
+                </div>
+            `;
+                }else {
+                    listaSensores.innerHTML += `
                 <div class="sensor-card" onclick="irParaSensor('${sensor.id}')">
                     <h3>${sensor.id}</h3>
                     <p>Umidade: ${sensor.umidade}%</p>
@@ -404,6 +417,7 @@
                     <small>Status: <span class="status-label ${estado.className}">${estado.label}</span></small>
                 </div>
             `;
+                }
             }
         }
 
@@ -418,6 +432,8 @@ function irParaSensor(sensorId) {
     if (sensorId === 'Sensor 1' && hectareSelecionado === 'Hectare 1') {
         // Vai para dashboard com dados reais do Arduino
         window.location.href = 'dash.html?sensor=' + sensorId;
+    }else if (sensorId == 'Inativo') {
+        window.location.href = 'dashInativo.html'
     } else {
         // Todos os outros sensores vão para dashboard com dados aleatórios
         window.location.href = 'dashsRandom.html?sensor=' + sensorId;

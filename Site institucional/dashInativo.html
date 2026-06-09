@@ -107,8 +107,8 @@
 
     function gerar() {
         // Gera variação em torno da umidade base do sensor
-        let variacao = Math.floor(Math.random() * 10) - 5; // Variação de -5 a +5
-        let numeroSensor = Math.max(20, Math.min(90, umidadeBase + variacao)); // Mantém entre 20 e 90
+        let variacao = 0 // Variação de -5 a +5
+        let numeroSensor = 0; // Mantém entre 20 e 90
 
         contador++;
 
@@ -282,15 +282,6 @@
     let paginacao = {};
     let tempo = {};
 
-  let contado = 0;
-
-for (let i = 0; i < 10; i++) {
-    let aleatorio = Math.floor(Math.random() * 66) + 25;
-    contado++;
-
-    graficoDigital.data.datasets[0].data.push(aleatorio);
-    graficoDigital.data.labels.push(contado);
-}
 
 graficoDigital.update();
 atualizarKpis(graficoDigital.data.datasets[0].data);
