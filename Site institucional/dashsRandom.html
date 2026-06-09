@@ -79,14 +79,36 @@
 </body>
 
 <script>
-    // SORTEAR VALORES ALEATÓRIOS
-    let numerosAleatorios = [];
-    let listaNumeros = [];
+    // Recuperar dados dos sensores do sessionStorage
+    let sensoresDados = [];
+    let sensorSelecionado = null;
+    let umidadeBase = 60; // valor padrão
     let contador = 0;
 
+    // Ao carregar a página, recupera dados
+    function inicializarDados() {
+        let sensoresArmazenados = sessionStorage.getItem('SENSORES_DADOS');
+        if (sensoresArmazenados) {
+            sensoresDados = JSON.parse(sensoresArmazenados);
+        }
+
+        // Obtém o sensor selecionado
+        let sensorId = sessionStorage.getItem('SENSOR_SELECIONADO');
+        
+        // Busca a umidade do sensor nos dados armazenados
+        for (let i = 0; i < sensoresDados.length; i++) {
+            if (sensoresDados[i].id === sensorId) {
+                sensorSelecionado = sensoresDados[i];
+                umidadeBase = sensorSelecionado.umidade; // Use a umidade do sensor
+                break;
+            }
+        }
+    }
+
     function gerar() {
-        let n1 = Math.random() * 70 + 20;
-        let numeroSensor = Number(n1.toFixed(0));
+        // Gera variação em torno da umidade base do sensor
+        let variacao = Math.floor(Math.random() * 10) - 5; // Variação de -5 a +5
+        let numeroSensor = Math.max(20, Math.min(90, umidadeBase + variacao)); // Mantém entre 20 e 90
 
         contador++;
 
@@ -105,6 +127,9 @@
         let dados = graficoDigital.data.datasets[0].data;
         atualizarKpis(dados);
     }
+
+    // Inicializa dados quando a página carrega
+    inicializarDados();
 
     setInterval(gerar, 5000);
 
@@ -257,6 +282,18 @@
     let paginacao = {};
     let tempo = {};
 
+  let contado = 0;
+
+for (let i = 0; i < 10; i++) {
+    let aleatorio = Math.floor(Math.random() * 66) + 25;
+    contado++;
+
+    graficoDigital.data.datasets[0].data.push(aleatorio);
+    graficoDigital.data.labels.push(contado);
+}
+
+graficoDigital.update();
+atualizarKpis(graficoDigital.data.datasets[0].data);
     function atualizarKpis(dados) {
         if (!dados || dados.length === 0) {
             valorAnalogico.innerHTML = '--';

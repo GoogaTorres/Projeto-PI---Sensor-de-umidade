@@ -98,46 +98,46 @@ CREATE TABLE sensores(
 );
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 1, '-156.737073°'),
-(DEFAULT, 'Sensor 2', 'alerta',  1, '18.756071°'),
-(DEFAULT, 'Sensor 3', 'critico', 1, '-167.995082°'),
-(DEFAULT, 'Sensor 4', 'estavel', 1, '-131.465381°'),
-(DEFAULT, 'Sensor 5', 'alerta',  1, '-120.123456°');
+(DEFAULT, 'Sensor 1', 'ativo', 1, '-156.737073°'),
+(DEFAULT, 'Sensor 2', 'ativo',  1, '18.756071°'),
+(DEFAULT, 'Sensor 3', 'ativo', 1, '-167.995082°'),
+(DEFAULT, 'Sensor 4', 'inativo', 1, '-131.465381°'),
+(DEFAULT, 'Sensor 5', 'ativo',  1, '-120.123456°');
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 2, '-150.123456°'),
-(DEFAULT, 'Sensor 2', 'alerta',  2, '12.345678°'),
-(DEFAULT, 'Sensor 3', 'critico', 2, '-160.987654°'),
-(DEFAULT, 'Sensor 4', 'estavel', 2, '-130.456123°'),
+(DEFAULT, 'Sensor 1', 'ativo', 2, '-150.123456°'),
+(DEFAULT, 'Sensor 2', 'ativo',  2, '12.345678°'),
+(DEFAULT, 'Sensor 3', 'ativo', 2, '-160.987654°'),
+(DEFAULT, 'Sensor 4', 'ativo', 2, '-130.456123°'),
 (DEFAULT, 'Sensor 5', 'inativo', 2, '-110.654321°'); -- 1 Inativo
 
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 3, '-145.111111°'),
-(DEFAULT, 'Sensor 2', 'alerta',  3, '15.222222°'),
-(DEFAULT, 'Sensor 3', 'critico', 3, '-155.333333°'),
-(DEFAULT, 'Sensor 4', 'estavel', 3, '-125.444444°'),
-(DEFAULT, 'Sensor 5', 'alerta',  3, '-115.555555°');
+(DEFAULT, 'Sensor 1', 'ativo', 3, '-145.111111°'),
+(DEFAULT, 'Sensor 2', 'inativo',  3, '15.222222°'),
+(DEFAULT, 'Sensor 3', 'ativo', 3, '-155.333333°'),
+(DEFAULT, 'Sensor 4', 'ativo', 3, '-125.444444°'),
+(DEFAULT, 'Sensor 5', 'ativo',  3, '-115.555555°');
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 4, '-140.666666°'),
-(DEFAULT, 'Sensor 2', 'alerta',  4, '20.777777°'),
-(DEFAULT, 'Sensor 3', 'critico', 4, '-150.888888°'),
-(DEFAULT, 'Sensor 4', 'estavel', 4, '-120.999999°'),
-(DEFAULT, 'Sensor 5', 'critico', 4, '-110.111222°');
+(DEFAULT, 'Sensor 1', 'inativo', 4, '-140.666666°'),
+(DEFAULT, 'Sensor 2', 'ativo',  4, '20.777777°'),
+(DEFAULT, 'Sensor 3', 'ativo', 4, '-150.888888°'),
+(DEFAULT, 'Sensor 4', 'ativo', 4, '-120.999999°'),
+(DEFAULT, 'Sensor 5', 'ativo', 4, '-110.111222°');
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 5, '-135.222333°'),
-(DEFAULT, 'Sensor 2', 'alerta',  5, '25.333444°'),
-(DEFAULT, 'Sensor 3', 'critico', 5, '-145.444555°'),
-(DEFAULT, 'Sensor 4', 'estavel', 5, '-115.555666°'),
+(DEFAULT, 'Sensor 1', 'ativo', 5, '-135.222333°'),
+(DEFAULT, 'Sensor 2', 'ativo',  5, '25.333444°'),
+(DEFAULT, 'Sensor 3', 'ativo', 5, '-145.444555°'),
+(DEFAULT, 'Sensor 4', 'ativo', 5, '-115.555666°'),
 (DEFAULT, 'Sensor 5', 'inativo', 5, '-105.666777°');
 
 INSERT INTO sensores (idSensor, identificador, condicao, fkHectares, coordenada) VALUES
-(DEFAULT, 'Sensor 1', 'estavel', 6, '-130.777888°'),
-(DEFAULT, 'Sensor 2', 'alerta',  6, '30.888999°'),
-(DEFAULT, 'Sensor 3', 'critico', 6, '-140.999000°'),
-(DEFAULT, 'Sensor 4', 'estavel', 6, '-110.111333°'),
+(DEFAULT, 'Sensor 1', 'ativo', 6, '-130.777888°'),
+(DEFAULT, 'Sensor 2', 'ativo',  6, '30.888999°'),
+(DEFAULT, 'Sensor 3', 'ativo', 6, '-140.999000°'),
+(DEFAULT, 'Sensor 4', 'ativo', 6, '-110.111333°'),
 (DEFAULT, 'Sensor 5', 'inativo', 6, '-100.222444°');
 
 CREATE TABLE registroDados(
